@@ -35,8 +35,9 @@
           "ambient occlusion",
           "shadow mapping"
         ],
-        "sources": ["arxiv", "acm"],
+        "sources": ["arxiv", "acm", "siggraph"],
         "arxiv_categories": ["cs.GR"],
+        "conferences": ["SIGGRAPH", "SIGGRAPH Asia", "Eurographics", "I3D"],
         "schedule": "0 22 * * *"
       },
       "directories": {
@@ -69,8 +70,9 @@
           "mesh generation",
           "curvature estimation"
         ],
-        "sources": ["arxiv", "acm"],
+        "sources": ["arxiv", "acm", "siggraph"],
         "arxiv_categories": ["cs.GR"],
+        "conferences": ["SIGGRAPH", "SIGGRAPH Asia", "Eurographics", "I3D"],
         "schedule": "0 22 * * *"
       },
       "directories": {
