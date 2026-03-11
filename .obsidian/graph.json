@@ -1,0 +1,12 @@
+{
+  "background": true,
+  "animate": true,
+  "links": true,
+  "nodeStyle": "diamond",
+  "edgeCount": 25,
+  "zoomSpeed": 1,
+  "nodeSize": 0.5,
+  "linkSize": 0.5,
+  "gravity": -50,
+  "repulsion": 20
+}

@@ -1,0 +1,152 @@
+{
+  "version": "1.0",
+  "vault_path": "~/knowledge-vault",
+  "sync": {
+    "enabled": true,
+    "git_remote": "https://github.com/zhanzhan1848/knowledge_obsidian.git",
+    "auto_push": true,
+    "branch": "main"
+  },
+  "templates": {
+    "paper": "Templates/paper.md",
+    "book": "Templates/book.md",
+    "concept": "Templates/concept.md"
+  },
+  "agents": [
+    {
+      "id": "shengcai",
+      "name": "生菜",
+      "emoji": "🥬",
+      "domain": "rendering",
+      "domain_name": "计算机图形学渲染",
+      "openclaw_agent": "shengcai",
+      "enabled": true,
+      "search": {
+        "keywords": [
+          "ray tracing",
+          "path tracing",
+          "real-time rendering",
+          "global illumination",
+          "PBR",
+          "rasterization",
+          "BVH",
+          "ray marching",
+          "phong shading",
+          "ambient occlusion",
+          "shadow mapping"
+        ],
+        "sources": ["arxiv", "acm"],
+        "arxiv_categories": ["cs.GR"],
+        "schedule": "0 22 * * *"
+      },
+      "directories": {
+        "root": "shengcai",
+        "moc": "shengcai/00-MOC",
+        "papers": "shengcai/01-Papers",
+        "concepts": "shengcai/02-Concepts",
+        "books": "shengcai/03-Books",
+        "projects": "shengcai/04-Projects",
+        "assets": "shengcai/05-Assets"
+      }
+    },
+    {
+      "id": "wawaicai",
+      "name": "娃娃菜",
+      "emoji": "🥬",
+      "domain": "geometry",
+      "domain_name": "计算机图形学几何处理",
+      "openclaw_agent": "wawaicai",
+      "enabled": true,
+      "search": {
+        "keywords": [
+          "mesh processing",
+          "geometry processing",
+          "point cloud",
+          "subdivision surface",
+          "parametrization",
+          "remeshing",
+          "simplification",
+          "mesh generation",
+          "curvature estimation"
+        ],
+        "sources": ["arxiv", "acm"],
+        "arxiv_categories": ["cs.GR"],
+        "schedule": "0 22 * * *"
+      },
+      "directories": {
+        "root": "wawaicai",
+        "moc": "wawaicai/00-MOC",
+        "papers": "wawaicai/01-Papers",
+        "concepts": "wawaicai/02-Concepts",
+        "books": "wawaicai/03-Books",
+        "projects": "wawaicai/04-Projects",
+        "assets": "wawaicai/05-Assets"
+      }
+    },
+    {
+      "id": "caixin",
+      "name": "菜心",
+      "emoji": "🥬",
+      "domain": "fluid",
+      "domain_name": "流体力学",
+      "openclaw_agent": "caixin",
+      "enabled": true,
+      "search": {
+        "keywords": [
+          "CFD",
+          "fluid simulation",
+          "navier-stokes",
+          "SPH",
+          "LBM",
+          "vortex method",
+          "turbulence",
+          "computational fluid dynamics"
+        ],
+        "sources": ["arxiv"],
+        "arxiv_categories": ["cs.FL", "physics.flu-dyn"],
+        "schedule": "0 22 * * *"
+      },
+      "directories": {
+        "root": "caixin",
+        "moc": "caixin/00-MOC",
+        "papers": "caixin/01-Papers",
+        "concepts": "caixin/02-Concepts",
+        "books": "caixin/03-Books",
+        "projects": "caixin/04-Projects",
+        "assets": "caixin/05-Assets"
+      }
+    },
+    {
+      "id": "doumiao",
+      "name": "豆苗",
+      "emoji": "🌱",
+      "domain": "fluid-rendering",
+      "domain_name": "流体渲染",
+      "openclaw_agent": "doumiao",
+      "enabled": true,
+      "search": {
+        "keywords": [
+          "fluid rendering",
+          "water rendering",
+          "smoke rendering",
+          "fire simulation",
+          "ocean rendering",
+          "particle system",
+          "volume rendering"
+        ],
+        "sources": ["arxiv"],
+        "arxiv_categories": ["cs.GR"],
+        "schedule": "0 22 * * *"
+      },
+      "directories": {
+        "root": "doumiao",
+        "moc": "doumiao/00-MOC",
+        "papers": "doumiao/01-Papers",
+        "concepts": "doumiao/02-Concepts",
+        "books": "doumiao/03-Books",
+        "projects": "doumiao/04-Projects",
+        "assets": "doumiao/05-Assets"
+      }
+    }
+  ]
+}
