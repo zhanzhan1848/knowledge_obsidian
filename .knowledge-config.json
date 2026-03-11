@@ -149,6 +149,47 @@
         "projects": "doumiao/04-Projects",
         "assets": "doumiao/05-Assets"
       }
+    },
+    {
+      "id": "youmaicai",
+      "name": "油麦菜",
+      "emoji": "🥬",
+      "domain": "llm-nlp",
+      "domain_name": "LLM 自然语言处理",
+      "openclaw_agent": "youmaicai",
+      "enabled": true,
+      "search": {
+        "keywords": [
+          "large language model",
+          "LLM",
+          "transformer",
+          "attention mechanism",
+          "GPT",
+          "BERT",
+          "natural language processing",
+          "NLP",
+          "language model",
+          "fine-tuning",
+          "RLHF",
+          "instruction tuning",
+          "prompt engineering",
+          "multimodal",
+          "reasoning"
+        ],
+        "sources": ["arxiv"],
+        "arxiv_categories": ["cs.AI", "cs.CL", "cs.NE", "cs.LG"],
+        "arxiv_rss": "https://rss.arxiv.org/rss/cs.AI+cs.DM+cs.DS+cs.GR+cs.NE",
+        "schedule": "0 22 * * *"
+      },
+      "directories": {
+        "root": "youmaicai",
+        "moc": "youmaicai/00-MOC",
+        "papers": "youmaicai/01-Papers",
+        "concepts": "youmaicai/02-Concepts",
+        "books": "youmaicai/03-Books",
+        "projects": "youmaicai/04-Projects",
+        "assets": "youmaicai/05-Assets"
+      }
     }
   ]
 }

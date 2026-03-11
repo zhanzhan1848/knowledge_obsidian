@@ -20,6 +20,9 @@ tags: [moc, index]
 ### 流体渲染 (豆苗 🌱)
 - [[doumiao/00-MOC/流体渲染]]
 
+### LLM/NLP (油麦菜 🥬)
+- [[youmaicai/00-MOC/LLM自然语言处理]]
+
 ---
 
 ## 按类型浏览
@@ -29,15 +32,18 @@ tags: [moc, index]
 - 几何: [[wawaicai/01-Papers]]
 - 流体: [[caixin/01-Papers]]
 - 流体渲染: [[doumiao/01-Papers]]
+- LLM/NLP: [[youmaicai/01-Papers]]
 
 ### 概念
 - 渲染: [[shengcai/02-Concepts]]
 - 几何: [[wawaicai/02-Concepts]]
 - 流体: [[caixin/02-Concepts]]
 - 流体渲染: [[doumiao/02-Concepts]]
+- LLM/NLP: [[youmaicai/02-Concepts]]
 
 ### 书籍
 - 渲染: [[shengcai/03-Books]]
 - 几何: [[wawaicai/03-Books]]
 - 流体: [[caixin/03-Books]]
 - 流体渲染: [[doumiao/03-Books]]
+- LLM/NLP: [[youmaicai/03-Books]]
