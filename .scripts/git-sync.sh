@@ -1,27 +1,26 @@
 #!/bin/bash
-# Git 同步脚本 - 自动提交并推送知识库更新
-
-set -e
+# Git sync script for knowledge vault
+# Usage: ./git-sync.sh "commit message"
 
 VAULT_PATH="$HOME/knowledge-vault"
-cd "$VAULT_PATH"
+cd "$VAULT_PATH" || exit 1
 
-echo "🔄 Syncing knowledge vault to GitHub..."
-
-# 检查是否有变更
-if git diff --quiet && git diff --cached --quiet; then
-    echo "✅ No changes to commit"
-    exit 0
+# Check if git is initialized
+if [ ! -d ".git" ]; then
+    echo "Initializing git repository..."
+    git init
+    git remote add origin https://github.com/zhanzhan1848/knowledge_obsidian.git
 fi
 
-# 添加所有变更
-git add .
+# Add all changes
+git add -A
 
-# 提交
-COMMIT_MSG="Auto: Update knowledge base $(date '+%Y-%m-%d %H:%M:%S')"
-git commit -m "$COMMIT_MSG"
+# Commit with timestamp or custom message
+MESSAGE="${1:-Auto-sync: $(date '+%Y-%m-%d %H:%M:%S')}"
+git commit -m "$MESSAGE"
 
-# 推送
+# Push to remote
+git pull --rebase origin main 2>/dev/null || true
 git push origin main
 
-echo "✅ Knowledge vault synced successfully!"
+echo "✅ Git sync completed: $MESSAGE"
