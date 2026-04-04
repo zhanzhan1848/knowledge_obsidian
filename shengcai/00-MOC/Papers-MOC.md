@@ -1,5 +1,16 @@
 # 论文索引 (Papers MOC)
 
+## 2026-04
+
+### 2026-04-04
+- [[LightHarmony3D-2603.29209]] - 3DGS 全局光照与阴影的网格插入 ⭐高优先级
+- [[PhyGaP-2603.14001]] - 偏振线索物理接地 Gaussian Splatting ⭐高优先级
+- [[GTSR-2603.22036]] - 半透明表面重建的次表面散射 3DGS ⭐高优先级
+- [[Ref-DGS-2603.07664]] - 反射双 Gaussian Splatting（中/远场镜面）
+- [[PolGS++-2603.10801]] - 偏振引导快速反射表面重建
+- [[E2EGS-2603.14684]] - 事件相机无姿态 3DGS 重建 ⭐高优先级
+- [[3DGEER-2505.24053]] - 通用相机精确高效 3D Gaussian 渲染 ⭐高优先级
+
 ## 2026-03
 
 ### 2026-03-17
@@ -32,6 +43,13 @@
 ## 分类
 
 ### Gaussian Splatting
+- [[2026-04-04-LightHarmony3D-2603.29209]]
+- [[2026-04-04-PhyGaP-2603.14001]]
+- [[2026-04-04-GTSR-2603.22036]]
+- [[2026-04-04-Ref-DGS-2603.07664]]
+- [[2026-04-04-PolGS++-2603.10801]]
+- [[2026-04-04-E2EGS-2603.14684]]
+- [[2026-04-04-3DGEER-2505.24053]]
 - [[2026-03-17-Gaussian-Photon-Fields]]
 - [[2026-03-17-4D-Synchronized-Fields]]
 - [[2026-03-17-Qonvolution-Gaussian-Splatting]]
@@ -39,7 +57,20 @@
 - [[2026-03-09_Spherical-GOF_Panoramic_Gaussian]]
 
 ### Global Illumination
+- [[2026-04-04-LightHarmony3D-2603.29209]]
 - [[2026-03-17-Gaussian-Photon-Fields]]
+
+### Ray Tracing & Real-time Rendering
+- [[2026-04-04-Ref-DGS-2603.07664]]
+- [[2026-04-04-3DGEER-2505.24053]]
+
+### PBR & Material
+- [[2026-04-04-PhyGaP-2603.14001]]
+- [[2026-04-04-GTSR-2603.22036]]
+- [[2026-04-04-PolGS++-2603.10801]]
+
+### Event Camera & Pose-Free
+- [[2026-04-04-E2EGS-2603.14684]]
 
 ### GPU Optimization
 - [[2026-03-17-Texture-Lookup-Bezier-GPU]]
@@ -48,6 +79,12 @@
 - [[2026-03-17-GPU-Fluid-Granular-Solver]]
 
 ### Neural Rendering
+- [[2026-04-04-LightHarmony3D-2603.29209]]
+- [[2026-04-04-PhyGaP-2603.14001]]
+- [[2026-04-04-GTSR-2603.22036]]
+- [[2026-04-04-Ref-DGS-2603.07664]]
+- [[2026-04-04-E2EGS-2603.14684]]
+- [[2026-04-04-3DGEER-2505.24053]]
 - [[2026-03-17-Gaussian-Photon-Fields]]
 - [[2026-03-17-4D-Synchronized-Fields]]
 - [[2026-03-17-Qonvolution-Gaussian-Splatting]]
