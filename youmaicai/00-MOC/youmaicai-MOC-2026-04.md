@@ -17,4 +17,15 @@
 
 ---
 
-*最后更新: 2026-04-13*
+### Week 2 (2026-04-14)
+
+| 日期 | 论文 | 核心标签 |
+|------|------|----------|
+| 2026-04-14 | SECL: Self-Calibrating Language Models | TTT, calibration, self-supervision |
+| 2026-04-14 | HumorGen: Cognitive Synergy for Humor Generation | humor generation, MoT, persona |
+| 2026-04-14 | Deliberative Alignment Safety Uncertainty | safety, alignment, RLHF |
+| 2026-04-14 | Cross-Lingual Hateful Language Detection | multilingual, LLM ensemble, synthetic annotation |
+
+---
+
+*最后更新: 2026-04-14*
