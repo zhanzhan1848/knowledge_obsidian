@@ -28,4 +28,24 @@
 
 ---
 
-*最后更新: 2026-04-14*
+---
+
+### Week 4 (2026-04-27)
+
+| 日期 | 论文 | 核心标签 |
+|------|------|----------|
+| 2026-04-27 | Math Takes Two | emergent reasoning, communication |
+| 2026-04-27 | LLM Self-Correction | self-correction, RLVR, control theory |
+| 2026-04-27 | Where Should LoRA Go | LoRA, hybrid LM, Mamba |
+| 2026-04-27 | Shared Lexical Task Representations | prompt sensitivity, attention heads |
+| 2026-04-27 | RLVR Causally Important Reasoning | RLVR, CIR, chain-of-thought |
+| 2026-04-27 | Neuro-symbolic VLM via RL | neuro-symbolic, VLM, RL |
+| 2026-04-27 | Universal Transformers Need Memory | ACT, memory tokens, adaptive computation |
+| 2026-04-27 | LayerBoost | attention reduction, efficient LLM |
+| 2026-04-27 | Memanto | semantic memory, agent, long-horizon |
+| 2026-04-27 | KARITA | temporal adaptation, knowledge augmentation |
+| 2026-04-27 | ESRRSim | strategic reasoning risks, safety, taxonomy |
+| 2026-04-27 | Ukrainian RAG | multilingual RAG, local deployment |
+| 2026-04-27 | Multimodal FM Acceleration | hardware, MFM, efficient inference |
+
+*最后更新: 2026-04-27*
