@@ -1,5 +1,13 @@
 # 论文索引 (Papers MOC)
 
+## 2026-05
+
+### 2026-05-05
+- [[Power-Foam-Unifying-Real-Time-Differentiable-Ray-Tracing-and-Rasterization]] - 统一 ray tracing 与 rasterization 的有界幂图 ⭐高优先级
+- [[Real-time-Global-Illumination-for-Dynamic-3D-Gaussian-Scenes]] - 动态 3D Gaussian 场景实时 GI (40+ fps) ⭐高优先级
+- [[Vertex-Features-for-Neural-Global-Illumination]] - 顶点特征神经 GI，内存降至 1/5 ⭐高优先级
+- [[Rethinking-Collision-Detection-on-GPU-Ray-Tracing-Architecture]] - Mochi GPU RT 架构碰撞检测优化
+
 ## 2026-04
 
 ### 2026-04-04
@@ -57,10 +65,14 @@
 - [[2026-03-09_Spherical-GOF_Panoramic_Gaussian]]
 
 ### Global Illumination
+- [[2026-05-05-Real-time-Global-Illumination-for-Dynamic-3D-Gaussian-Scenes]]
+- [[2026-05-05-Vertex-Features-for-Neural-Global-Illumination]]
 - [[2026-04-04-LightHarmony3D-2603.29209]]
 - [[2026-03-17-Gaussian-Photon-Fields]]
 
 ### Ray Tracing & Real-time Rendering
+- [[2026-05-05-Power-Foam-Unifying-Real-Time-Differentiable-Ray-Tracing-and-Rasterization]]
+- [[2026-05-05-Rethinking-Collision-Detection-on-GPU-Ray-Tracing-Architecture]]
 - [[2026-04-04-Ref-DGS-2603.07664]]
 - [[2026-04-04-3DGEER-2505.24053]]
 
@@ -79,6 +91,8 @@
 - [[2026-03-17-GPU-Fluid-Granular-Solver]]
 
 ### Neural Rendering
+- [[2026-05-05-Power-Foam-Unifying-Real-Time-Differentiable-Ray-Tracing-and-Rasterization]]
+- [[2026-05-05-Vertex-Features-for-Neural-Global-Illumination]]
 - [[2026-04-04-LightHarmony3D-2603.29209]]
 - [[2026-04-04-PhyGaP-2603.14001]]
 - [[2026-04-04-GTSR-2603.22036]]
