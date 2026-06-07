@@ -1,0 +1,42 @@
+---
+title: "High-order thermodynamic nonequilibrium in three-dimensional compressible flows: Kinetic moment closure and multigradient coupling"
+arXiv: "2606.04032"
+date: "2026-06-04"
+tags: [compressible flow, Burnett, discrete Boltzmann, moment closure, shock wave]
+status: new
+---
+
+# 🥢 可行性分析：高阶热力学非平衡可压缩流
+
+## 研究问题
+3D 可压缩流中**高阶热力学非平衡 (TNE)** 的描述
+
+## 方法
+- **Chapman-Enskog 分析**：推导三阶矩约束
+- **超 Burnett 级离散玻尔兹曼模型**：D3V91（91 个离散速度）
+- **多梯度耦合**：奇阶矩由温度梯度主导，偶阶矩由速度梯度主导
+
+## 关键发现
+1. 高阶 TNE 有**多梯度**而非单梯度起源
+2. TNE 从近线性 regime 过渡到近似指数 regime
+3. 捕捉冲击管波结构
+
+## 推荐结论
+✅ **推荐关注** — 离散玻尔兹曼方法高阶扩展
+
+## 关键词
+- Discrete Boltzmann Method
+- Burnett Equations
+- Moment Closure
+- Compressible Flow
+- Thermodynamic Nonequilibrium
+- Shock Wave
+
+## 相关概念
+- [[DiscreteBoltzmann]]
+- [[CompressibleFlow]]
+- [[MomentClosure]]
+- [[Burnett]]
+
+## 来源
+- arXiv: https://arxiv.org/abs/2606.04032
