@@ -105,4 +105,4 @@ agent: shengcai
 ## 同步状态
 
 - [x] 论文笔记已保存到 `~/knowledge-vault/shengcai/01-Papers/2026-06/`
-- [ ] Git 同步待执行
+- [x] Git 同步已完成 ✅

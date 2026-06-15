@@ -1,44 +1,41 @@
-# Daily Summary - 2026-06-06
+# Daily Summary — 2026-06-15
 
-## 论文搜索任务
+## 搜索概览
+- **搜索范围**: arXiv cs.GR (最近5天), SIGGRAPH 2026, Eurographics
+- **关键词**: mesh processing, geometry processing, point cloud, subdivision surface, parametrization, remeshing, simplification
 
-**搜索范围**：arXiv cs.GR, ACM Digital Library, SIGGRAPH/SIGGRAPH Asia/Eurographics
+## 发现论文 (几何处理相关)
 
-**关键词**：mesh processing, geometry processing, point cloud, subdivision surface, parametrization, remeshing, simplification
+### 🥬 UV参数化
+| 论文 | arXiv | 标签 | 推荐度 |
+|------|-------|------|--------|
+| Continuous Neural Reparameterization for UV Repair | 2606.10050 | UV展开, SIREN, 神经参数化 | ✅ 推荐 |
 
-## 发现论文
+### 🎮 网格动画/关节
+| 论文 | arXiv | 标签 | 推荐度 |
+|------|-------|------|--------|
+| Instruct-Particulate: 3D Object Articulation | 2606.14699 | 关节动画, 神经网格 | ⚠️ 关注 |
 
-| 论文 | 方向 | 来源 | 日期 |
-|------|------|------|------|
-| SQuadGen (2604.27329) | 四边形布局生成 | arXiv | 2026-04-30 |
-| Point Cloud to Mesh Reconstruction Survey (2412.10977) | 点云网格重建综述 | arXiv | 2026-01-05 |
-| Deep Learning Point Cloud Denoising Survey (2508.17011) | 点云去噪综述 | arXiv | 2025-08-23 |
+### 📄 其他 cs.GR 论文 (非几何处理)
+| 论文 | arXiv | 领域 |
+|------|-------|------|
+| HoloPathTracer (SIGGRAPH 2026) | 2606.14173 | 全息渲染 |
+| MoGeFlow: Text-to-Motion | 2606.11656 | 动作生成 |
+| XPR: Point-Based Differentiable Renderer | 2606.11529 | 可微渲染 |
+| AnisoLift: Particle Liquid Enhancement | 2606.10473 | 流体模拟 |
+| AnimaSpark: 3D Object Animation | 2606.10988 | 动画生成 |
 
-## 技术要点
+## 今日重点
 
-### SQuadGen - 简单四边形布局生成
-- **创新**：Chart Distance Fields (CDF) 连续表示
-- **优势**：生成 artist-friendly 简单 quad layouts
-- **应用**：3D 建模、动画、仿真
+### UV Repair with Neural Reparameterization (arXiv:2606.10050)
+**核心亮点**：使用未经训练的 SIREN + Laplace-Beltrami 谱特征实现零翻转的固定-chart UV展开
 
-### Point Cloud to Mesh Reconstruction
-- **五类方法**：PointNet Family, Autoencoder, Deformation, Point-Move, Primitive
-- **选择指南**：按输入特性、输出需求选择合适方法
+**关键数据**：
+- Compact charts: 零翻转 100%
+- Thingi10K/xatlas 47-chart: 42/47 有效零翻转
+- Amara Spatial 25-asset: 1000/1000 严格局部有效 atlas
 
-### Point Cloud Denoising Survey
-- **趋势**：深度学习方法已主导该领域
-- **评估维度**：去噪质量、表面保真度、点分布、计算效率
-
-## 知识库更新
-
-- ✅ 创建笔记3 篇
-- 📁 路径：`/root/knowledge-vault/wawaicai/01-Papers/2026-06/`
-
-## 待分析队列
-
-1. 继续追踪 SQuadGen 开源代码发布
-2. 关注点云重建方法在实时应用中的性能优化
+**传递给 @墨鱼丸**：可用于 UV 展开工具的鲁棒性增强
 
 ---
-
-*🥬 黄喉 | 几何处理专家 | 2026-06-06*
+*由 wawaicai-daily-paper-search cron 生成 | 2026-06-15*
