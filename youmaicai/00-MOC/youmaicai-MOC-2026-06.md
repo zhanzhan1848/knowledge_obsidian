@@ -29,3 +29,16 @@
 | 2026-06-15 | Refusal Beyond a Single Direction: DiM vs INLP | 安全微调, Activation Steering |
 | 2026-06-15 | The Culture Funnel: You Can't Align What isn't in the Data | 文化对齐, 训练数据 |
 | 2026-06-15 | llada.cpp: NPU-aware Mobile Diffusion LLM Inference | 移动端LLM, 推理优化 |
+### Week 3 (2026-06-20)
+
+| 日期 | 论文 | 核心标签 |
+|------|------|----------|
+| 2026-06-20 | AgenticRei: Deontic Policies for Runtime Governance | Agent Governance, Deontic Logic, Enterprise AI |
+| 2026-06-20 | TreeTracer: Visualizing Hidden LLM Bias | LLM Bias, Visual Analytics, Stochastic Generation |
+| 2026-06-20 | LLM Ensembles for EQ-5D PubMed Screening | LLM Ensemble, Biomedical NLP, Systematic Review |
+| 2026-06-20 | BabelTele: Non-Readable Language for LLMs | Context Compression, Model-Native Representation |
+| 2026-06-20 | Dango: L1-Only LLM for SLA Research | Second Language Acquisition, Controlled Study |
+| 2026-06-20 | CAHP: Complementary Attention Head Pruning | Efficient Transformer, Pruning, Model Compression |
+| 2026-06-20 | VibeThinker-3B: Frontier Reasoning in Small LMs | Small Model Reasoning, Post-Training, AIME |
+
+*最后更新: 2026-06-20*
