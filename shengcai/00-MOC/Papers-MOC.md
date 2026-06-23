@@ -1,5 +1,13 @@
 # 论文索引 (Papers MOC)
 
+## 2026-06
+
+### 2026-06-23
+- [[2606.22880-DJM-Displacement-Mapping]] - Displacement Mapping 的 Jacobian 度量基网格简化 ⭐SIGGRAPH 2026
+- [[2606.22481-DOT3D-Lighting-Consistent-Transfer]] - 3DGS 光照一致物体迁移 ⭐EGSR 2026
+- [[2606.21898-Mesh2GS-Plenoptic-Sampling]] - Plenoptic Sampling 理论驱动 Mesh→3DGS 转换 ⭐
+- [[2606.21791-SEU-3DGS-Rendering]] - 3DGS 渲染单粒子翻转 fault tolerance ⭐实用
+
 ## 2026-05
 
 ### 2026-05-05
@@ -69,12 +77,16 @@
 - [[2026-05-05-Vertex-Features-for-Neural-Global-Illumination]]
 - [[2026-04-04-LightHarmony3D-2603.29209]]
 - [[2026-03-17-Gaussian-Photon-Fields]]
+- [[2026-06-23-2606.21898-Mesh2GS-Plenoptic-Sampling]]
+- [[2026-06-23-2606.22481-DOT3D-Lighting-Consistent-Transfer]]
 
 ### Ray Tracing & Real-time Rendering
 - [[2026-05-05-Power-Foam-Unifying-Real-Time-Differentiable-Ray-Tracing-and-Rasterization]]
 - [[2026-05-05-Rethinking-Collision-Detection-on-GPU-Ray-Tracing-Architecture]]
 - [[2026-04-04-Ref-DGS-2603.07664]]
 - [[2026-04-04-3DGEER-2505.24053]]
+- [[2026-06-23-2606.21791-SEU-3DGS-Rendering]]
+- [[2026-06-23-2606.21898-Mesh2GS-Plenoptic-Sampling]]
 
 ### PBR & Material
 - [[2026-04-04-PhyGaP-2603.14001]]
@@ -86,6 +98,9 @@
 
 ### GPU Optimization
 - [[2026-03-17-Texture-Lookup-Bezier-GPU]]
+
+### Geometry & Rasterization
+- [[2026-06-23-2606.22880-DJM-Displacement-Mapping]]
 
 ### Fluid Simulation
 - [[2026-03-17-GPU-Fluid-Granular-Solver]]
@@ -102,3 +117,5 @@
 - [[2026-03-17-Gaussian-Photon-Fields]]
 - [[2026-03-17-4D-Synchronized-Fields]]
 - [[2026-03-17-Qonvolution-Gaussian-Splatting]]
+- [[2026-06-23-2606.21898-Mesh2GS-Plenoptic-Sampling]]
+- [[2026-06-23-2606.22481-DOT3D-Lighting-Consistent-Transfer]]
