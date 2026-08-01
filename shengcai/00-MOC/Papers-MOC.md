@@ -1,5 +1,13 @@
 # 论文索引 (Papers MOC)
 
+## 2026-08
+
+### 2026-08-01
+- [[2607.28047-volume-rendering-neural-inr]] - 时变隐式神经体数据的查询高效随机体绘制 @30-40FPS ⭐神经渲染
+- [[2607.27943-gtc-svbrdf-compression]] - GTC: 2D 高斯压缩 mipmapped SVBRDF，超越 ASTC ⭐PBR
+- [[2607.26525-atlaslc-3dgs-compression]] - AtlasLC: 3DGS 对象压缩，atlas 准备时间 25x 提升 ⭐实用
+- [[2607.26506-global-pass-barriers-rhi]] - 全局 Pass 屏障无逐资源追踪，跨 6 GPU 厂商测试 ⭐GPU 优化
+
 ## 2026-06
 
 ### 2026-06-23
@@ -59,6 +67,7 @@
 ## 分类
 
 ### Gaussian Splatting
+- [[2026-08-01-2607.26525-atlaslc-3dgs-compression]]
 - [[2026-04-04-LightHarmony3D-2603.29209]]
 - [[2026-04-04-PhyGaP-2603.14001]]
 - [[2026-04-04-GTSR-2603.22036]]
@@ -89,6 +98,7 @@
 - [[2026-06-23-2606.21898-Mesh2GS-Plenoptic-Sampling]]
 
 ### PBR & Material
+- [[2026-08-01-2607.27943-gtc-svbrdf-compression]]
 - [[2026-04-04-PhyGaP-2603.14001]]
 - [[2026-04-04-GTSR-2603.22036]]
 - [[2026-04-04-PolGS++-2603.10801]]
@@ -97,6 +107,7 @@
 - [[2026-04-04-E2EGS-2603.14684]]
 
 ### GPU Optimization
+- [[2026-08-01-2607.26506-global-pass-barriers-rhi]]
 - [[2026-03-17-Texture-Lookup-Bezier-GPU]]
 
 ### Geometry & Rasterization
@@ -106,6 +117,8 @@
 - [[2026-03-17-GPU-Fluid-Granular-Solver]]
 
 ### Neural Rendering
+- [[2026-08-01-2607.28047-volume-rendering-neural-inr]]
+- [[2026-08-01-2607.26525-atlaslc-3dgs-compression]]
 - [[2026-05-05-Power-Foam-Unifying-Real-Time-Differentiable-Ray-Tracing-and-Rasterization]]
 - [[2026-05-05-Vertex-Features-for-Neural-Global-Illumination]]
 - [[2026-04-04-LightHarmony3D-2603.29209]]
