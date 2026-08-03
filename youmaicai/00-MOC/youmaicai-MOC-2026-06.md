@@ -41,7 +41,22 @@
 | 2026-06-20 | CAHP: Complementary Attention Head Pruning | Efficient Transformer, Pruning, Model Compression |
 | 2026-06-20 | VibeThinker-3B: Frontier Reasoning in Small LMs | Small Model Reasoning, Post-Training, AIME |
 
-*最后更新: 2026-07-03*
+*最后更新: 2026-08-03*
+
+### Week 5 (2026-08-03)
+
+| 日期 | 论文 | 核心标签 |
+|------|------|----------|
+| 2026-08-03 | ThinkReset: Bounded-Context Long-Horizon Reasoning | Reasoning, Chain-of-Thought, Context Window |
+| 2026-08-03 | TAPR: Task-Aware Prompt Rewriter | Prompt Engineering, GRPO, RL |
+| 2026-08-03 | TokenSwap: Modality Gap in Multimodal LLMs | Multimodal, Modality Gap, MLLM Benchmark |
+| 2026-08-03 | KD Asymmetric Effects on Bias in SLMs | Knowledge Distillation, Bias, SLM, Calibration |
+| 2026-08-03 | LARA: Lightweight Adapters in Residual Stream | Efficient Fine-tuning, LoRA, Adapter |
+| 2026-08-03 | DS Distinguishability for LLM Token Generation | Dynamical Systems, LLM Detection, Theory |
+| 2026-08-03 | OpenClaw+Ollama Agentic AI Architecture | Agentic AI, Architecture, OpenClaw, Ollama |
+| 2026-08-03 | AI Scientist Benchmark with Multi-Model Review | AI Scientist, Benchmark, LLM Evaluation |
+| 2026-08-03 | LLM Item Difficulty Prediction | LLM Evaluation, Assessment, Item Difficulty |
+| 2026-08-03 | Chain-of-Models: Cross-Model Auditing for LLM Judges | LLM Judge, Bias, Auditing, Debiasing |
 
 ### Week 4 (2026-07-03)
 
