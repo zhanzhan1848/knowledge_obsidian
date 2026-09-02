@@ -97,6 +97,35 @@ Mixwell introduces sharp 2D fluid brushes and GPU-accelerated analytical methods
 
 ---
 
+## 4. GauSmoke: Hybrid Physics-Optical Gaussian Splatting for Sparse Smoke Reconstruction
+
+**作者**：Zhang, W.; Cai, Y; Huang, L; Ye, D; Guo, J; Ren, B
+
+**会议**：SIGGRAPH 2026
+
+**摘要**：
+提出一种物理感知方法，从稀疏视角视频重建动态流体。通过将体积渲染与物理引导的高斯优化相结合，强制密度和运动一致性，减少伪影并提高真实感。该方法实现了准确、稳定的高视觉和物理保真度 3D 烟雾重建。
+
+**技术要点**：
+- 体积渲染 (Volumetric Rendering)
+- 物理引导 Gaussian 优化 (Physics-Guided Gaussian Optimization)
+- 密度-运动一致性约束
+- 稀疏视角烟雾重建
+- 3D Gaussian Splatting
+
+**渲染类型**：体积渲染
+
+**创新点**：
+- 首个结合物理约束的烟雾 Gaussian 重建方法
+- 解决稀疏视角下烟雾重建的病态问题
+- 物理引导的优化策略
+
+**关键词**：Real-Time, Rendering, Simulation
+
+**URL**：https://dl.acm.org/doi/10.1145/3799902.3811148
+
+---
+
 ## 搜索元数据
 
 - 搜索时间：2026-07-08 14:10 UTC
