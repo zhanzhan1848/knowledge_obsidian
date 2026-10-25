@@ -1,7 +1,7 @@
 ---
 type: moc
 created: 2026-10-21
-updated: 2026-10-21
+updated: 2026-10-25
 agent: doumiao
 domain: fluid-rendering
 ---
@@ -9,7 +9,7 @@ domain: fluid-rendering
 # 🌊 豆苗 MOC — 计算机图形学流体渲染
 
 > 领域：**体积渲染 / 粒子渲染 / 表面渲染 / 烟雾火焰**
-> 更新：2026-10-21
+> 更新：2026-10-25
 
 ## 🎯 三条技术路线总览
 
@@ -30,7 +30,12 @@ domain: fluid-rendering
 - [[2026-10-21-FluidGen-Physics-Aware-Fluid-Video]] — 速度场监督 + 物理奖励 DPO（2026-10-19）
 - [[2026-10-21-WildFireGS-3DGS-Forest-Wildfire-Simulation]] — 3DGS 原生粒子燃烧（2026-08-11）
 - [[2026-10-21-FieryGS-In-the-Wild-Fire-Synthesis]] — MLLM 材质推理 + 体积燃烧（2026-04-30）
+- [[2026-10-25-Flamescapes-Wildlandfire-Urban-Interface]] — SA2026 语义化燃料图 + 化学燃烧 + 体积渲染（**几何-视觉解耦**）
 - [[NVIDIA-GPUGems3-Fluids]] — 经典实现参考
+
+### 🌊 表面流体 / 涡方法
+
+- [[2026-10-25-Divisor-Dynamics-Surface-Fluid]] — SA2026 任意拓扑曲面点涡 + 因子类不变量（拓扑正确性）
 
 ### 💧 水 / 液体
 
@@ -38,6 +43,13 @@ domain: fluid-rendering
 - [[2026-10-19-Make-It-Flow-Water-Animation-3DGS]] — 光流 → 3D Eulerian 运动场
 - [[2026-10-19-SplashSplat-Multi-View-Liquid-Reconstruction]] — 飞溅液体多视图重建
 - `2603.21695` RefracGS — 折射水面 + 3DGS 光线追踪（待收录）
+
+### ⚙️ 求解器 / 数值格式（渲染上游）
+
+- [[2026-10-25-KPM-FR-High-Order-Flux-Reconstruction]] — SIGGRAPH 2026 矩空间 GKS + 通量重构（8G 解点/s，显存降 5×）
+- [[2026-10-25-ML-Operator-Lexicon-PDE-Solvers]] — SA2026 ML 算子化 PDE 求解器（**可微管线**、矩阵自由、多重网格）
+- [[2026-10-24-Fast-Subspace-Fluid-Simulation-DMD]] — 降阶谱方法
+- [[2026-10-24-FluidFormer-Transformer-Continuous-Convolution-SPH]] — 局部-全局 Transformer SPH
 
 ### 🌊 体积渲染 / 神经表示
 
@@ -54,7 +66,9 @@ domain: fluid-rendering
 
 ## 📊 每日报告
 
-- [[2026-10-21_Daily-Paper-Search]] — 三条技术路线对照（本次核心产出）
+- [[2026-10-25_Daily-Paper-Search]] — SA2026 流体论文缺口审计 + 补齐 4 篇（**可微 + 高阶 + 结构化**）
+- [[2026-10-24_Daily-Paper-Search]] — 连续空窗日，转向历史缺口
+- [[2026-10-21_Daily-Paper-Search]] — 三条技术路线对照
 - [[2026-10-19_Daily-Paper-Search]] — 3DGS + 流体外观成热点
 - [[2026-10-16_Daily-Paper-Search]]
 
@@ -64,7 +78,11 @@ domain: fluid-rendering
 2. **3DGS 成为模拟载体新宠** — 让渲染图元直接承载模拟状态，省去转换层（WildFireGS）
 3. **物理参数自动推断** — MLLM/学习方法替代专家调参（FieryGS）
 4. **实时流体视频生成仍是空白** — FluidGen 尚无实时版本
-5. **SIGGRAPH Asia 2026**（12/01–04 吉隆坡）论文清单尚未公布，需持续监控
+5. **SIGGRAPH Asia 2026**（12/01–04 吉隆坡）论文清单**已公布**，本库已启动覆盖审计（详见 10-25 日报表格）
+6. **可微求解器是下一个主战场** — ML Operator Lexicon + RealSimLoop + FluidGen 共同指向「求解器不再是黑盒，而是可优化模块」
+7. **几何-视觉解耦被普遍忽略** — Flamescapes 的「物体先烧掉、火焰滞后出现」是低成本高收益的真实感来源
+8. **拓扑正确的表面流体被低估** — 雕塑/网格的拓扑（洞）会改变流体动力学，传统求解器在此出错（Divisor Dynamics）
+9. **高阶求解器省的是美术而非算力** — 同等网格下拿到更多细尺度细节，不再需要贴图补偿
 
 ## 🔗 相关 Agent
 
