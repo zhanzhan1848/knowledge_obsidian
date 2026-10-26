@@ -1,7 +1,7 @@
 ---
 type: moc
 created: 2026-10-21
-updated: 2026-10-25
+updated: 2026-10-26
 agent: doumiao
 domain: fluid-rendering
 ---
@@ -9,7 +9,7 @@ domain: fluid-rendering
 # 🌊 豆苗 MOC — 计算机图形学流体渲染
 
 > 领域：**体积渲染 / 粒子渲染 / 表面渲染 / 烟雾火焰**
-> 更新：2026-10-25
+> 更新：2026-10-26
 
 ## 🎯 三条技术路线总览
 
@@ -46,10 +46,23 @@ domain: fluid-rendering
 
 ### ⚙️ 求解器 / 数值格式（渲染上游）
 
+- [[2026-10-26-Lanczos-Advection-Near-Orthogonal-SL-Reconstruction]] — SA2026 Lanczos 核近正交半拉格朗日重构（**能量保持 4.3×**，开销仅 1.3×，⭐ 本库工程性价比最高）
 - [[2026-10-25-KPM-FR-High-Order-Flux-Reconstruction]] — SIGGRAPH 2026 矩空间 GKS + 通量重构（8G 解点/s，显存降 5×）
 - [[2026-10-25-ML-Operator-Lexicon-PDE-Solvers]] — SA2026 ML 算子化 PDE 求解器（**可微管线**、矩阵自由、多重网格）
+- [[2026-10-26-DiffPhD-Unified-Differentiable-Solver-Heterogeneous-Elastodynamics]] — SA2026 可微异质投影动力学（**100× 刚度对比仍收敛**、10× 加速、代码开源）
 - [[2026-10-24-Fast-Subspace-Fluid-Simulation-DMD]] — 降阶谱方法
 - [[2026-10-24-FluidFormer-Transformer-Continuous-Convolution-SPH]] — 局部-全局 Transformer SPH
+
+### 🔧 可微物理 / 实时交互（渲染管线工程）
+
+- [[2026-10-26-RealSimLoop-Online-RealToSim-Differentiable-ReducedOrder]] — SA2026 神经降阶 + 可微 3DGS + 滑动窗口在线适配（**2.5×~7.7× 加速**，sim-to-real 误差 7.1→4.6 mm）
+- [[2026-10-26-Beyond-Kirchhoff-Love-Volumetric-ThinShell]] — SA2026 从体积力学推导的薄壳（**KL 壳缺泊松收缩**，比体积仿真快 2.6×~4.6×）
+- [[2026-10-26-Fast-Cutting-Cage-Deformation-Walk-on-Spheres]] — SIGGRAPH 2026 WoS 增量复用（局部修改仅失效 5-10% → **10×~40× 加速**，代码开源）
+- [[2026-10-26-REST3D-Single-Image-Physically-Stable-Scene]] — SA2026 单图重建**物理稳定性**（场景树 + 物理约束优化，代码开源）
+
+### 🏭 分布式 / 大规模生产
+
+- [[2026-10-26-Power-Partitioner-Optimal-Transport-Distributed-Sim]] — Wētā FX 最优传输分区（**时间一致性比 METIS 好 505×**，端到端 3.35× 加速；133 个生产缓存评估）
 
 ### 🌊 体积渲染 / 神经表示
 
@@ -66,6 +79,7 @@ domain: fluid-rendering
 
 ## 📊 每日报告
 
+- [[2026-10-26_Daily-Paper-Search]] — SA2026 缺口审计 + 补齐 7 篇（**平流算子 / 可微物理 / 分布式生产**，本期含金量最高）
 - [[2026-10-25_Daily-Paper-Search]] — SA2026 流体论文缺口审计 + 补齐 4 篇（**可微 + 高阶 + 结构化**）
 - [[2026-10-24_Daily-Paper-Search]] — 连续空窗日，转向历史缺口
 - [[2026-10-21_Daily-Paper-Search]] — 三条技术路线对照
@@ -83,6 +97,10 @@ domain: fluid-rendering
 7. **几何-视觉解耦被普遍忽略** — Flamescapes 的「物体先烧掉、火焰滞后出现」是低成本高收益的真实感来源
 8. **拓扑正确的表面流体被低估** — 雕塑/网格的拓扑（洞）会改变流体动力学，传统求解器在此出错（Divisor Dynamics）
 9. **高阶求解器省的是美术而非算力** — 同等网格下拿到更多细尺度细节，不再需要贴图补偿
+10. **物理正确性回潮** — 10-26 期 3 篇（VC-Shell / DiffPhD / RealSimLoop）都在修**既有方法的物理简化错误**而非追速度：KL 壳缺泊松、DiffPD 刚度对比崩溃、离线 Real2Sim 开环漂移
+11. **可微 + 降阶 + 渲染三件套已成型** — RealSimLoop 打通「降阶仿真 → 可微渲染 → 视觉损失 → 伴随法反向 → 滑动窗口在线更新」，且 2/3 相关工作**代码已开源**
+12. **瓶颈已从渲染转向仿真与调度** — 本期 7 篇**无一是新渲染算法**，全是求解器/物理/基础设施；Wētā FX 用 133 个生产缓存评估分区方案即是明证
+13. **局部增量复用是通用范式** — 「局部修改实际失效了多少？」这个问题值得对每个「全局重算」场景问一遍（WoS 案例：仅 5-10% 失效 → 10-20× 潜在加速）
 
 ## 🔗 相关 Agent
 
