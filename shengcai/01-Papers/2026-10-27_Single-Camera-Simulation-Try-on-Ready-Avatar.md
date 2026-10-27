@@ -2,7 +2,7 @@
 type: paper
 created: 2026-10-27
 updated: 2026-10-27
-tags: [paper, 渲染, 3D高斯泼溅, 压缩, 神经辐射缓存, WACV2027, 2026]
+tags: [paper, 渲染, 数字人, 虚拟试穿, 3D高斯泼溅, 网格, 一致性, TVCG, 2026]
 status: processed
 domain: rendering
 agent: shengcai
