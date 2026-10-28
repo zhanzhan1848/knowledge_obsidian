@@ -1,5 +1,33 @@
 # 论文索引 (Papers MOC)
 
+## 2026-10
+
+### 2026-10-28
+**ReSTIR / 实时路径追踪**
+- [[2026-10-28_ReSTIR-PT-Enhanced]] - ReSTIR PT 工程强化：37.1→12.6 ms，FLIP 0.321→0.263 ⭐⭐⭐⭐⭐ I3D Best Paper
+- [[2026-10-28_ReSTIR-Compatibility-Neighbor-Selection]] - 兼容性引导邻居选择：SMAPE −6~29%，协方差 −22~49% ⭐⭐⭐⭐⭐ HPG Best Paper
+- [[2026-10-28_ReSTIR-Multi-Layer-Reservoir-Splatting]] - 多层 reservoir 解决 disocclusion 噪声 ⭐⭐⭐⭐
+- [[2026-10-28_ReSTIR-Level-of-Detail]] - 表面点映射实现跨 LOD 拓扑的 ReSTIR 复用 ⭐⭐⭐⭐
+- [[2026-10-28_ReSTIR-Gradient-Domain]] - 首个实时梯度域渲染方法 ⭐⭐⭐⭐ EG 2026
+- [[2026-10-28_ReSTIR-Stochastic-Pairwise-MIS]] - 随机 pairwise MIS，大核无偏空间复用 ⭐⭐⭐⭐
+
+**全局光照 / 物理渲染**
+- [[2609.11430-gaussian-light-transport]] - 13D 高斯混合表示 GI，训练快 10~23×，模型 1~6 MB ⭐⭐⭐⭐⭐ SA 2026
+- [[2026-10-28_GraftRay-Path-Tracing-Mesh-Insertion]] - 高斯感知混合路径追踪 + 显式近场面光源 ⭐⭐⭐⭐
+- [[2026-10-28_Wave-Tracing-Path-Integral-Wave-Optics]] - 双线性路径积分 + 椭圆锥，波动光学 ⭐⭐⭐ EG Best Paper HM
+
+**图元设计 / 场景合成**
+- [[2026-10-28_Honeycomb-Surfels-Hexels]] - 六边形支撑 + 一阶颜色场，同内存 PSNR +4.5~7.4 dB、2.31× FPS ⭐⭐⭐⭐⭐
+- [[2026-10-28_CTBakeGS]] - 免训练烘焙 + 1/255 地板随机保留通用技巧 ⭐⭐⭐
+- [[2026-10-28_DomeGS]] - 高斯 skydome 补全，N=36 用户研究 p<0.001 ⭐⭐⭐
+- [[2026-10-28_Texture-Consolidation]] - 曲面域光流 + 梯度域融合生成纹理 ⭐⭐⭐
+- [[2026-10-28_VISTA-Differentiable-Viewpoint-Planning]] - 可微视角规划，闭环 SR 提升 2.1× ⭐⭐⭐
+- [[2026-10-28-daily-search-report]] - 📋 每日论文搜索报告 2026-10-28
+
+### 2026-10-27
+- [[2026-10-27_CVTSplat-Adaptive-Centroidal-Voronoi-Tessellation]] - 自适应 CVT 模板的 3DGS 重建
+- [[2026-10-27_GaussianSpline-Adaptive-Bezier-4D-Gaussian-Splatting]] - 自适应 Bézier 样条 4DGS
+
 ## 2026-08
 
 ### 2026-08-01
