@@ -52,7 +52,7 @@
 | 2026-10-23 | [Route-and-Generate (Rouge)](https://arxiv.org/abs/2610.30351) | Reasoning Routing, GRPO, Inference Efficiency |
 | 2026-10-23 | [SGUR](https://arxiv.org/abs/2610.30611) | GraphRAG, Uncertainty Reduction, Medical Diagnosis, Training-Free |
 
-*最后更新: 2026-10-23*
+*最后更新: 2026-10-28*
 
 ## 本月主题
 
@@ -68,3 +68,43 @@
 - **结构接地替代模型规模**：SGUR 用 5× 更少 token + 小模型超越大 10× 模型（PrimeKG 医疗诊断 92.5% Hit@3）
 - **推理过程本身成为一等公民**：CausalCoT（因果忠实）、ReflectPO（错误恢复）、Rouge（推理预算）、MCPD（参考敏感度）、GIFT（蒸馏-RL 冲突）从五个角度处理推理质量与成本
 - **表示层重构**：Cola2（连续 semantic latent + block-causal diffusion）、ULME（embedding 与生成互相塑形）
+
+### Week 4 补充主题（2026-10-28）
+
+| 日期 | 论文 | 核心标签 |
+|------|------|----------|
+| 2026-10-28 | [Heads of Security](https://arxiv.org/abs/2610.37657) | Prompt Injection, Attention Gates, ASR 97%→10% |
+| 2026-10-28 | [Concordat](https://arxiv.org/abs/2610.37461) | Typestate, Session Types, Protocol Enforcement, tau-bench |
+| 2026-10-28 | [Follow the Gradient](https://arxiv.org/abs/2610.37481) | Gradient Attribution, SimpleLoRIF, SafeTulu, Emergent Misalignment |
+| 2026-10-28 | [Teach reality, not ethics](https://arxiv.org/abs/2610.37484) | Continued Pretraining, QLoRA, Ecological Alignment, Construct-Neutral Control |
+| 2026-10-28 | [Attention as Lattice Gauge Theory](https://arxiv.org/abs/2610.37656) | Wilson Loop, Holonomy, Gauge Theory, $S_4$ 0.88 vs 0.083 |
+| 2026-10-28 | [MERLIN (Multi-State Linear Attention)](https://arxiv.org/abs/2610.37645) | Second-Order Moments, Long Context, Gated DeltaNet, Mamba-2 |
+| 2026-10-28 | [GTFormer](https://arxiv.org/abs/2610.37524) | Hierarchical GNN, 8192× Extrapolation, O(N), Convex Highway Gating |
+| 2026-10-28 | [CoS-VQ](https://arxiv.org/abs/2610.37336) | VQ Quantization, Joint Index-Scale, QTIP, LLVQ |
+| 2026-10-28 | [Orthogonal & Parametrized Steering](https://arxiv.org/abs/2610.37517) | Activation Steering, Parameterized Strength, Orthogonalization |
+| 2026-10-28 | [MuonGS](https://arxiv.org/abs/2610.37647) | Accumulated Effective LR, Relaxed Weight-Norm, Muon, +15% |
+| 2026-10-28 | [LinMix](https://arxiv.org/abs/2610.37390) | Domain Attribution, Vertex Sampling, Optimal Design, MBPP +46% |
+| 2026-10-28 | [Scaling Laws for Tool-Use Agents](https://arxiv.org/abs/2610.37648) | SynthAPI, Environment Synthesis, Diversity > Quantity, 458k Tasks |
+| 2026-10-28 | [What Improves During Pretraining?](https://arxiv.org/abs/2610.37631) | TVS, Point-in-Time Models, Knowledge Acquisition |
+| 2026-10-28 | [What Carries Forward?](https://arxiv.org/abs/2610.37465) | FMTI 2025, Pretraining Disclosure, Score Masking, Audit |
+| 2026-10-28 | [ETAMem](https://arxiv.org/abs/2610.37443) | Event/Affect/Time Views, Entropy Budget, Long-Term Memory |
+| 2026-10-28 | [Rare, Relevant, and Still Wrong](https://arxiv.org/abs/2610.37624) | CrossProfile, Social Proof, Hidden Profile, Evidence Balance |
+| 2026-10-28 | [GEPA-Curator](https://arxiv.org/abs/2610.37651) | Task Curation, Prior Success Retrieval, GEPA, ACE |
+| 2026-10-28 | [Where Should the Evaluation Budget Go?](https://arxiv.org/abs/2610.37276) | Scaffold Evolution, Sparse Feedback, Paired Successive Halving, IRT |
+| 2026-10-28 | [Agent-Conditioned Routing](https://arxiv.org/abs/2610.37375) | MoE, Expert Mask, Reasoning Diversity, Frozen Model |
+| 2026-10-28 | [Uncovering Why LLMs Fail](https://arxiv.org/abs/2610.37369) | CauTrace, Attention-MLP Agreement, Failure Dynamics |
+| 2026-10-28 | [Metacognitive Decoding](https://arxiv.org/abs/2610.37642) | Diffusion LM, FLOPs −20.6%, Adaptive Stopping |
+| 2026-10-28 | [The Structure Gap](https://arxiv.org/abs/2610.37523) | Identifiability, Wiener Solver, Persistent Excess Risk, Cell Coverage |
+| 2026-10-28 | [RPSD](https://arxiv.org/abs/2610.37281) | On-Policy Self-Distillation, Optimal Transport, Token-Level Credit |
+| 2026-10-28 | [EmbeddingGemma 2](https://arxiv.org/abs/2610.37364) | Multimodal Embedding, Unified Space, Pareto Frontier, Open Weights |
+| 2026-10-28 | [Lightweight Attention CNN](https://arxiv.org/abs/2610.37314) ⚠️ | cs.CV 医学影像 · 非本域 · 仅因关键词入选 |
+
+#### 2026-10-28 主题
+
+- **不要问模型，用机制约束它**（今日主线）：5 个子领域独立收敛 —— 协议化 agent [[Concordat]]、架构层注入防御 [[Heads of Security]]、梯度级数据清洗 [[Follow the Gradient]]、解耦归属与内容 [[Rare, Relevant, and Still Wrong]]、教事实而非教话术 [[Teach reality, not ethics]]
+- **注意力机制三路进攻**：安全 [[Heads of Security]] · 效率 [[MERLIN]] · 理论 [[Attention as Lattice Gauge Theory]] —— 同一天三篇从三个角度动注意力结构
+- **数据配方两篇 scaling law 互证**：[[LinMix]]（域权重 × 顶点采样 × 域归因）+ [[Scaling Laws for Tool-Use Agents]]（环境多样性 > 样本数量）
+- **Agent 自改进的瓶颈在评测**：学什么 [[GEPA-Curator]] + 花多少 [[Where Should the Evaluation Budget Go?]] —— 而非优化器强度
+- **合规 ≠ 高分**：tau-bench reward 检测不出大多数违规（[[Concordat]]），现存 agent 评测分数需重新审视
+- **诊断量可立即复用**：累积有效学习率 $C_T$（[[MuonGS]]）、TVS 时间变异性（[[What Improves During Pretraining?]]）、证据平衡（[[Rare, Relevant, and Still Wrong]]）
+
