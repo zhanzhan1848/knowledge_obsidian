@@ -1,7 +1,7 @@
 ---
 type: moc
 created: 2026-10-21
-updated: 2026-10-26
+updated: 2026-10-29
 agent: doumiao
 domain: fluid-rendering
 ---
@@ -40,7 +40,7 @@ domain: fluid-rendering
 ### 💧 水 / 液体
 
 - [[2026-10-16-Tessellation-Free-Displaced-Surfaces-Water-Caustics]] — 无细分位移面焦散
-- [[2026-10-19-Make-It-Flow-Water-Animation-3DGS]] — 光流 → 3D Eulerian 运动场
+- [[2026-10-19-Make-It-Flow-Water-Animation-3DGS]] — 光流 → 3D Eulerian 运动场（静态 3DGS 水体动画，**免物理模拟**）
 - [[2026-10-19-SplashSplat-Multi-View-Liquid-Reconstruction]] — 飞溅液体多视图重建
 - `2603.21695` RefracGS — 折射水面 + 3DGS 光线追踪（待收录）
 
@@ -70,15 +70,42 @@ domain: fluid-rendering
 - [[2026-10-15-CAGS-Volumetric-Video-Streaming-3DGS]] — 压缩感知高斯流式传输
 - `2604.12217` [[2026-04-21-VVGT-Volumetric-Visual-Grounded-Transformer]] — 视觉体积接地 Transformer
 
-### 🎥 视频生成 / Cinemagraph
+### 🎬 视频生成 / Cinemagraph
 
-- [[2026-10-19_FluidGen-Physics-Aware-Fluid-Video]] — 见上
+- [[2026-10-21-FluidGen-Physics-Aware-Fluid-Video]] — 双流架构 RGB + **逐帧速度场**，速度场兼作监督与 velocity-aware DPO 奖励
+- [[2026-10-29-PhysRepair-Agentic-Physics-Video]] — **generate-diagnose-repair** 范式；时空因果约束定位首个失效态 + 局部化再生成
+- [[2026-10-29-WMEval-Interactive-World-Models-Physical-Simulations]] — Unity 作物理 oracle，把**物理-因果一致性**提升为一级评测维度
+- [[2026-10-21-FluidGen-Physics-Aware-Fluid-Video]] — 双流架构 RGB + **逐帧速度场**，速度场兼作监督与 velocity-aware DPO 奖励（见上）
 - [[2026-10-10-OuroWorld-Looping-Cinemagraphs]] — 3D 循环立体动画
+
+### 🔬 体积渲染 / 密度可辨识性
+
+- [[2026-10-29-Appearance-Compensation-in-Volume-Rendering]] — ⚠️ **SH2 精确模糊**：中心密度翻倍、L² 误差 >14.52%，但**每条 RGB 射线完全不变**；渲染精度无法证明密度正确（**密度重建必读**）
+- [[2026-10-29-PhaseSurf-Metric-Phase-Fields-Thin-Structures]] — Metric-Phase Fields 分解几何为无符号度量场 + 软符号相位场，专治**薄飞溅片/泡沫层/水膜**
+- [[2026-10-29-NFSR-NeRF-Inspired-Super-resolution-Reacting-Flows]] — NeRF 范式迁移到**湍流反应流 3D 超分辨率**，恢复火焰表面褶皱
+
+### 🎯 实时流体 / 网格结构降本
+
+- [[2026-10-29-Beyond-Horizontal-Refinement-Quadtree-Tall-Cells-Optical-Layers]] — ⭐ **Pacific Graphics 2026** (CGF 45(7) e70629)，**Game Freak × 东大 Kanai Lab**；四叉树 Tall Cells + **垂直自适应光学层**，压力计算最高 **3× 加速**（**最贴近商业实时液体落地**）
+- [[2026-10-29-Curvilinear-D3Q27-Cumulant-LBM]] — 曲线网格 LBM **精确 1:1 流式传输（无插值）**；质量/动量守恒至舍入精度；支持 ALE + 双向 FSI
+- [[2026-10-29-Surfzone-Sea-Surface-SIREN-Lidar]] — LiDAR 点云 → **连续可微无网格**海面；可求任意时空偏导做方向性波分析（⚠️ 过滤最高波数=飞溅浪花）
+- [[2026-10-19-Make-It-Flow-Water-Animation-3DGS]] — 静态 3DGS 中动画化水体：光流 → 3D Eulerian 运动场 → cinemagraph 式形变（**免物理模拟**）
+- [[2026-10-29-Self-Supervised-Optimal-Mixing-Incompressible-Flows]] — **首个自监督算子学习**最优混合；无散度谱基硬约束不可压缩；控制可迁移到独立 Eulerian FV 验证
+
+### 🧮 代理模型 / 降阶（物理结构硬约束化）
+
+- [[2026-10-29-Neural-Eigenfluid-Bases-NEB]] — 微分提升**硬约束**不可压缩；**谱方差关系**解释势/速空间加权差异；状态 ~1/1000，复用时毫秒级
+- [[2026-10-29-Neural-Operator-Splitting-Fluid-Complex-Geometry]] — 保留**分步格式**物理结构的 CL-FNO；2D 误差 −68% / 3D −40%；推理快 **10³×**
+- [[2026-10-29-Neural-Basis-Method-Navier-Stokes]] — **表示-投影**原则；残差给出**后验速度误差估计**（认证的无数据训练目标）
+- [[2026-10-29-FlowMesh-Velocity-Regularized-Flow-Matching]] — 非结构化网格 + **确定性**流匹配（无随机去噪链）；加速 **585–1902×**
+- [[2026-10-29-FAMIR-Future-Aligned-Latent-Dynamics]] — 用**已实现的未来**塑形更新信号；教师-学生 + PPMA 对齐，仅部署学生
+- [[2026-10-29-Generative-AI-in-Turbulence-Validation-Frameworks]] — 🔬 **方法论必读**：湍流**不是**常规图像生成问题；物理感知验证清单 + 呼吁建立基准生态
 
 ---
 
 ## 📊 每日报告
 
+- [[2026-10-29-Daily-Paper-Search]] — 生成式流体时代 + 实时流体"结构性降本" + **体积渲染可辨识性危机**（3 主题 17 篇）
 - [[2026-10-26_Daily-Paper-Search]] — SA2026 缺口审计 + 补齐 7 篇（**平流算子 / 可微物理 / 分布式生产**，本期含金量最高）
 - [[2026-10-25_Daily-Paper-Search]] — SA2026 流体论文缺口审计 + 补齐 4 篇（**可微 + 高阶 + 结构化**）
 - [[2026-10-24_Daily-Paper-Search]] — 连续空窗日，转向历史缺口
@@ -101,6 +128,10 @@ domain: fluid-rendering
 11. **可微 + 降阶 + 渲染三件套已成型** — RealSimLoop 打通「降阶仿真 → 可微渲染 → 视觉损失 → 伴随法反向 → 滑动窗口在线更新」，且 2/3 相关工作**代码已开源**
 12. **瓶颈已从渲染转向仿真与调度** — 本期 7 篇**无一是新渲染算法**，全是求解器/物理/基础设施；Wētā FX 用 133 个生产缓存评估分区方案即是明证
 13. **局部增量复用是通用范式** — 「局部修改实际失效了多少？」这个问题值得对每个「全局重算」场景问一遍（WoS 案例：仅 5-10% 失效 → 10-20× 潜在加速）
+14. **物理结构硬约束化是统一答案**（10-29 期）— CL-FNO 用分步结构、NEB 用微分提升、NBM 用投影结构、Optimal Mixing 用无散度谱基：**软惩罚的时代正在结束**
+15. **体积渲染存在根本性可辨识性危机**（10-29 期）— 密度翻倍而 RGB 观测完全不变（>14.52% L² 误差）；**渲染精度 ≠ 密度正确**，密度重建必须引入透射率/密度敏感采集
+16. **网格结构降本是工业级性价比最高的路线**（10-29 期）— Pacific Graphics 2026 Quadtree Tall Cells 自适应光学层（Game Freak 产学合作，压力计算 3×）比代理模型更易落地
+17. **生成式流体进入"可诊断"阶段**（10-29 期）— FluidGen（速度场显式化）→ PhysRepair（诊断-修复）→ WMEval（物理因果评测），方法论闭环形成
 
 ## 🔗 相关 Agent
 
