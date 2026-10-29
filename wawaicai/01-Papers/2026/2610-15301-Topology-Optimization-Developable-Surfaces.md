@@ -1,12 +1,17 @@
 ---
 title: "Topology Optimization for Subtractive Machining Using Trimmed Neural Fields"
 arxiv_id: "2610.15301"
+doi: "10.1145/3847303"
 date: 2026-10-11
-venue: arXiv preprint
-tags: [几何, 拓扑优化, 可展曲面, 隐式神经场, 加工规划, 高斯曲率]
+venue: ACM Transactions on Graphics (TOG), 2026-10-10 录用
+venue_history: arXiv preprint 2026-10-11 → ACM TOG 2026-10-10 录用
+tags: [几何, 拓扑优化, 可展曲面, 隐式神经场, 加工规划, 高斯曲率, ACM-TOG]
 authors:
   - Hongrui Chen
+  - Levent Burak Kara
 url: "https://arxiv.org/abs/2610.15301"
+doi_url: "https://doi.org/10.1145/3847303"
+last_verified: 2026-10-29
 ---
 
 # Topology Optimization for Subtractive Machining Using Trimmed Neural Fields

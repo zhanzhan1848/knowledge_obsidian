@@ -2,7 +2,27 @@
 
 ## 2026-10
 
+### 2026-10-29
+**路径追踪 / 光传输**
+- [[2026-10-29_GraftRay-Physically-Based-Mesh-Insertion-GS-Scenes]] - 随机透明性让高斯场景真正可做路径追踪；单位辐射基图 + 截断 NNLS 反解面光源 ⭐⭐⭐⭐⭐
+- [[2026-10-29_Reusable-Transport-Skeletons-WoS-Interactive-PDE]] - WoS 可复用传输 DAG；Poisson 核有界挂接 + Doob h-变换几何修复 ⭐⭐⭐⭐
+
+**图元设计 / 效率**
+- [[2026-10-29_Honeycomb-Surfels-Hexagonal-Primitive]] - 六边形支撑 + 一阶颜色场，20 参数 vs 2DGS 58，PSNR +4.5~7.4 dB、VRAM 少至多 7× ⭐⭐⭐⭐⭐
+- [[2026-10-29_CTBakeGS-Training-Free-Baking-CT-Volume-Rendering-3DGS]] - 免训练烘焙；不透明度解析映射 + 1/255 地板随机保留通用技巧 ⭐⭐⭐⭐
+
+**场景合成 / 纹理**
+- [[2026-10-29_DomeGS-Background-Completion-VR-3DGS]] - 高斯 skydome 补全进 3DGS 表示内，N=36 用户研究 p=0.042 ⭐⭐⭐⭐
+- [[2026-10-29_Texture-Consolidation-Generated-MultiView-Renderings]] - CGF；置信度感知曲面域光流 + 梯度域融合生成纹理 ⭐⭐⭐⭐
+
+**物理仿真（邻接域）**
+- [[2026-10-29_Total-Deformation-MPM-Perfectly-Elastic-Solids]] - RWTH；总形变反算消数值断裂，兼容网格碰撞 ⭐⭐⭐
+
+- [[2026-10-29-daily-search-report]] - 📋 每日论文搜索报告 2026-10-29
+
 ### 2026-10-28
+> ⚠️ 本节条目的笔记文件**尚未创建**（MOC 索引已写但笔记缺失）。其中与 arXiv 收录重叠的 GraftRay / Honeycomb-Surfels / CTBakeGS / DomeGS / Texture-Consolidation 已于 **2026-10-29** 补建（见上一节）；下列 ReSTIR 系列与 Wave-Tracing 仍待补。
+
 **ReSTIR / 实时路径追踪**
 - [[2026-10-28_ReSTIR-PT-Enhanced]] - ReSTIR PT 工程强化：37.1→12.6 ms，FLIP 0.321→0.263 ⭐⭐⭐⭐⭐ I3D Best Paper
 - [[2026-10-28_ReSTIR-Compatibility-Neighbor-Selection]] - 兼容性引导邻居选择：SMAPE −6~29%，协方差 −22~49% ⭐⭐⭐⭐⭐ HPG Best Paper
@@ -13,16 +33,16 @@
 
 **全局光照 / 物理渲染**
 - [[2609.11430-gaussian-light-transport]] - 13D 高斯混合表示 GI，训练快 10~23×，模型 1~6 MB ⭐⭐⭐⭐⭐ SA 2026
-- [[2026-10-28_GraftRay-Path-Tracing-Mesh-Insertion]] - 高斯感知混合路径追踪 + 显式近场面光源 ⭐⭐⭐⭐
-- [[2026-10-28_Wave-Tracing-Path-Integral-Wave-Optics]] - 双线性路径积分 + 椭圆锥，波动光学 ⭐⭐⭐ EG Best Paper HM
+- ~~[[2026-10-28_GraftRay-Path-Tracing-Mesh-Insertion]]~~ → 已补建为 [[2026-10-29_GraftRay-Physically-Based-Mesh-Insertion-GS-Scenes]]
+- [[2026-10-28_Wave-Tracing-Path-Integral-Wave-Optics]] - 双线性路径积分 + 椭圆锥，波动光学 ⭐⭐⭐ EG Best Paper HM *(笔记待补)*
 
 **图元设计 / 场景合成**
-- [[2026-10-28_Honeycomb-Surfels-Hexels]] - 六边形支撑 + 一阶颜色场，同内存 PSNR +4.5~7.4 dB、2.31× FPS ⭐⭐⭐⭐⭐
-- [[2026-10-28_CTBakeGS]] - 免训练烘焙 + 1/255 地板随机保留通用技巧 ⭐⭐⭐
-- [[2026-10-28_DomeGS]] - 高斯 skydome 补全，N=36 用户研究 p<0.001 ⭐⭐⭐
-- [[2026-10-28_Texture-Consolidation]] - 曲面域光流 + 梯度域融合生成纹理 ⭐⭐⭐
-- [[2026-10-28_VISTA-Differentiable-Viewpoint-Planning]] - 可微视角规划，闭环 SR 提升 2.1× ⭐⭐⭐
-- [[2026-10-28-daily-search-report]] - 📋 每日论文搜索报告 2026-10-28
+- ~~[[2026-10-28_Honeycomb-Surfels-Hexels]]~~ → 已补建为 [[2026-10-29_Honeycomb-Surfels-Hexagonal-Primitive]]
+- ~~[[2026-10-28_CTBakeGS]]~~ → 已补建为 [[2026-10-29_CTBakeGS-Training-Free-Baking-CT-Volume-Rendering-3DGS]]
+- ~~[[2026-10-28_DomeGS]]~~ → 已补建为 [[2026-10-29_DomeGS-Background-Completion-VR-3DGS]]
+- ~~[[2026-10-28_Texture-Consolidation]]~~ → 已补建为 [[2026-10-29_Texture-Consolidation-Generated-MultiView-Renderings]]
+- [[2026-10-28_VISTA-Differentiable-Viewpoint-Planning]] - 可微视角规划，闭环 SR 提升 2.1× ⭐⭐⭐ *(笔记待补；arXiv:2610.36111)*
+- ~~[[2026-10-28-daily-search-report]]~~ → 笔记待补
 
 ### 2026-10-27
 - [[2026-10-27_CVTSplat-Adaptive-Centroidal-Voronoi-Tessellation]] - 自适应 CVT 模板的 3DGS 重建
