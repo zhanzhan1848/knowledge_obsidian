@@ -2,6 +2,39 @@
 
 ## 2026-10
 
+### 2026-10-31
+> 📌 严格 24h 窗口内 cs.GR 新投稿 0 篇（周末空窗）；本节 12 篇为补漏 10-18 ~ 10-29 的 SIGGRAPH Asia 2026 集中上载 + 遗漏论文。
+
+**神经表示 × 光线追踪**
+- [[2026-10-31_NeuOctree-Neural-Explicit-Shape-Representation]] - 八叉树角点特征直接预测光线命中/位置/法线/反照率，免网格提取与纹理烘焙；28 组对比 24 组位置误差最优，支持非水密几何 ⭐⭐⭐⭐⭐
+- [[2026-10-31_Gaussian-Grid-Frequency-Adaptive-Neural-Representation]] - 频率自适应划分 2D Gaussian 与特征网格计算量；解码 1.24~2.14×、PCIe 流量降 23~176× ⭐⭐⭐
+
+**光栅化 / 网格提取**
+- [[2026-10-31_GOFish-Fisheye-Gaussian-Splatting-Mesh-Extraction]] - 首个鱼眼直接训练的 3DGS 表面重建，>180° FoV 光栅化 + 同场景对齐网格；FIORD +2.28 dB、FullCircle +1.97 dB ⭐⭐⭐⭐⭐
+
+**多视角重建 / 压缩**
+- [[2026-10-31_CompMVR-Compression-Aware-MultiView-Restoration]] - 压缩引起跨视角几何不一致这一新失效模式；多视角联合扩散修复，SA 2026 技术论文 ⭐⭐⭐⭐
+
+**4D / 体积视频**
+- [[2026-10-31_RealMe-Immersive-Volumetric-Video-Minimal-Captures]] - 视频扩散模型 + 因子化时空注意力 + 潜空间频域损失；2K 4D 一致体积视频，SA 2026 ⭐⭐⭐⭐
+
+**SLAM / 跟踪**
+- [[2026-10-31_LingGS-Gaussian-SLAM-Explicit-Geometric-Tracking]] - 冻结 3D 基础模型当虚拟 RGB-D + 显式几何求解器解耦跟踪与几何；7 FPS @ 4090、吞吐 2~3× ⭐⭐⭐⭐
+
+**参数化几何 / 生成式布局**
+- [[2026-10-31_CRAB-Cuboid-Representation-AsBuilt-BIM]] - BIM 就绪长方体表示 + Flow Matching 精化；墙厚 MAE 2.80 cm，79.5% 在 3 cm 内，SA 2026 ⭐⭐⭐
+- [[2026-10-31_HairDeck-Set-Diffusion-Hair-Cards]] - 发卡作为无序集合用 set diffusion 生成；Chamfer −44%、33× 加速 ⭐⭐⭐
+- [[2026-10-31_Greenscapes-Vegetation-City-Placement-Optimization]] - VLM 给布局 + CMA-ES 调参数，遮阴/声学代理 + 感知描述子双目标 ⭐⭐⭐
+
+**交互 / 动画 / 评测**
+- [[2026-10-31_UniffordInteractor-Unified-Affordance-HOI]] - UAR + 层次化交互生成，统一可供性建模含物-物接触；ACM TOG / SA 2026 ⭐⭐⭐
+- [[2026-10-31_DragonMoCap-Monocular-MoCap-Diverse-Topologies]] - rig 作动态输入 + 语言接地关节查询 token；未见骨架零样本适配，SA 2026 ⭐⭐
+- [[2026-10-31_Joints-Camera-Action-CoGenerating-Motion-Video]] - 独立运动模型 + 少量 cross-attention 桥接预训练视频模型；NVIDIA，~200K 训练对 ⭐⭐⭐
+- [[2026-10-31_Trajeform-Crowd-Data-Embedding]] - 重建 VAE 学习行为级嵌入，作为模拟器可信度指标 ⭐⭐
+- [[2026-10-31_PhysSkinPlusPlus-Self-Supervised-Neural-Skinning]] - 物理信息自监督神经蒙皮；冲突感知梯度修正 + 降阶动力学实时模拟 ⭐⭐⭐
+
+- [[2026-10-31-daily-search-report]] - 📋 每日论文搜索报告 2026-10-31
+
 ### 2026-10-29
 **路径追踪 / 光传输**
 - [[2026-10-29_GraftRay-Physically-Based-Mesh-Insertion-GS-Scenes]] - 随机透明性让高斯场景真正可做路径追踪；单位辐射基图 + 截断 NNLS 反解面光源 ⭐⭐⭐⭐⭐
