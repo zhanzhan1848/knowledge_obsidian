@@ -1,8 +1,8 @@
 ---
 type: paper
-created: 2026-10-30
-updated: 2026-10-30
-tags: [paper, fluid, CFD, domain-decomposition, Schwarz, differentiable-solver, inverse-problem, LLM-agent]
+created: 2026-10-31
+updated: 2026-10-31
+tags: [paper, fluid, Schwarz-domain-decomposition, differentiable-solver, inverse-modeling, discrete-adjoint, thin-boundary-layer, agentic-AI, LLM-optimizer, FEniCS]
 status: processed
 domain: fluid
 agent: caixin
@@ -16,26 +16,28 @@ source: https://arxiv.org/abs/2610.38672
 | 字段 | 内容 |
 |------|------|
 | **标题** | Differentiable Schwarz-Coupled Solvers for Thin Boundary Layer Transport: Inverse Modeling via Agentic AI Optimization |
-| **作者** | Siva Viknesh, Amirhossein Arzani (UT Austin) |
-| **发表** | arXiv:2610.38672 [physics.flu-dyn, physics.comp-ph], 2026-10-28 |
+| **作者** | Siva Viknesh、Amirhossein Arzani（University of Utah, 机械工程系 + SCII + 生物医学工程系） |
+| **发表** | arXiv:2610.38672 [physics.flu-dyn; physics.comp-ph], 2026-10-28 |
 | **链接** | [原文](https://arxiv.org/abs/2610.38672) |
-| **DOI** | - |
-| **代码** | - |
-| **篇幅** | - |
+| **DOI** | 10.48550/arXiv.2610.38672 |
+| **代码** | 将公开：https://github.com/siva-viknesh/Differentiable-FEM-Solver（同行评审后） |
+| **资助** | NSF Award No. 2247173 |
 
 ---
 
 ## 核心贡献
 
-> 构建**重叠 Schwarz 域分解**框架处理高 Peclet 数薄边界层输运的逆问题，并让求解器**完全可微**，再由 **agentic AI (LLM)** 驱动优化。
+> 把**奇异摄动理论的尺度分离**（内层用拉伸坐标 $\eta=y/\delta$）与 **Schwarz 域分解的双向信息交换**结合，构造**完全可微分**的多域输运求解器（FEniCS + dolfin-adjoint，离散伴随法），并把 **LLM/agentic AI 作为优化器**接入反演流程：在**函数基表示**下 agent 能**按预设准入策略在优化过程中动态扩充基函数库**，从而在**更少的迭代次数**下恢复空间变化的壁面通量。
 
-1. 提出基于**微扰理论**的重叠 Schwarz 域分解：**内方程** governs 近壁动力学，**外方程** governs 体相输运，两者均用**有限元 (FEM)** 离散，组装为**完全可微的多域物理求解器**。
-2. 允许**更粗的网格分辨率** → 相对单域格式**降低计算成本**（薄边界层不再需要全域加密）。
-3. 利用求解器可微性，把控制方程与边界条件作为**硬约束**，Schwarz 耦合保证界面连续性 → 直接做**基于伴随的逆问题**。
-4. 将 **LLM 集成进逆工作流**，两种配置：
-   - **standalone optimizer**：从伴随计算的敏感度提出连续参数更新；
-   - **agentic AI**：可访问完整求解器工作流，执行**多阶段优化**。
-5. **关键发现**：当空间变化的未知量用**函数基 (functional basis)** 而非高维**节点场 (nodal field)** 表示时，agentic AI 配置最有优势——AI agent 在优化过程中**按预定准入策略分阶段扩充候选基函数库**，并初始化其参数。
+1. **多域 Schwarz 求解器（针对含分离/再附着的薄边界层）**：此前 Schwarz + 摄动理论的工作几乎全部针对**无分离流动**（近壁切向速度有界 away from zero），或把含壁面层的子域放在物理坐标中。本文首次把**内子域放在拉伸的壁法坐标中**（$\xi=x/L$，$\eta=y/\delta$），同时**在两个子域都保留完整的对流–扩散方程**（不做任何一方主导的简化），并通过**有限重叠区的 Dirichlet 数据双向交换**耦合。
+2. **完全可微分 + 硬约束反演**：用**离散伴随法**（dolfin-adjoint）计算梯度；控制方程与边界条件作为**硬约束**施加 → **反演精度只受数据量与前向离散误差限制，而不是若干竞争损失项的平衡**（这是与 PINN 类软约束方法的本质区别）。
+3. **跨子域的伴随灵敏度传播**：测量位于一个子域、未知参数位于另一个子域的**本征多域设置**下，灵敏度能穿过 Schwarz 耦合传播 → 支持"用远场数据反演近壁参数"。
+4. **三种网格分辨率下的成本优势**：Schwarz 求解器在同等 $m$ 下总 DOF 比单域多 6.3%–7.0%，但**内子域的层内网格数与 $D$ 无关**（层在 $\eta$ 中是 $O(1)$），因此**薄层的解析不随 $Pe$ 变难**，只需更粗的物理网格即可。
+5. **LLM 作为优化器的两种模式**：
+   - **被动 LLM 优化**：Qwen3-8B（本地 Ollama API），输入 = 提示词 + 优化策略 + 最近 10 个 epoch 的历史（参数、失配、伴随梯度），输出 = 从策略中选择一种方法及其阻尼/步长控制。
+   - **主动 agentic 优化**：GPT 5.6 Terra（Codex），额外**可访问反演代码本身**，用全部历史，并可**修改基函数库的构成**。
+6. **核心结论——agentic AI 的优势出现在函数基表示**：当未知量是**高维节点场**（离散轮廓重建）时，agentic 并不占优；**当未知量用函数基参数化时**，agent 能**在优化过程中扩充基函数库**（按预设准入策略分阶段加入预定义族并初始化其参数），**用远少的迭代次数（75 vs 500 vs 1200 epochs）达到更好精度**。
+7. **严格的成功判据**：恢复成功定义为**最终稳定平台期**内的相对误差 $e^N\le1\%$（而非"首次进入 1% 带"），因为轨迹可能在瞬态中穿过真值后稳定到别处；这使不同方法可按"**达到目标所需的最粗网格**"（等精度比较）来对比。
 
 ---
 
@@ -43,59 +45,152 @@ source: https://arxiv.org/abs/2610.38672
 
 ### 核心思想
 
-三重技术栈的组合：
+**问题**：高 Péclet 数输运在壁面形成薄边界层（厚度 $\delta$），虽只占渐近小体积却控制壁面浓度与壁面通量。经典做法是**层自适应网格**，但**层厚随扩散系数变化时网格必须重新设计**（如大动脉中 $Pe\sim10^7$–$10^8$，浓度层为微米级）。
 
-**a) Schwarz 耦合解决"薄边界层"**：高 Pe 输运的困难在于近壁陡梯度 → 单域需全域高分辨率。把问题分为近壁（内域）与体相（外域），用重叠 Schwarz 在重叠区交换 Dirichlet/Neumann 信息，各自独立求解。这正是"边界层"这一物理分层与计算域分解的天然对齐。
+**为何引入 Schwarz**：匹配渐近展开是**单向耦合**（外层给内层），在**分离/再附着点**处（近壁切向速度变号、层尺度失效）失效；而 Schwarz 提供**双向交换**（每次迭代内外互传 Dirichlet 数据），且各子域可独立离散、可用非匹配网格。
 
-**b) 可微求解器**：FEM 求解器完全可微 → 伴随法可解析给出梯度（无需 SDE 反向传播），逆问题成本从"每个参数一个前向求解"降到"一次前向 + 一次伴随"。
+**本文的组合**：
+- **内子域** $\Omega_{\rm in}$：贴壁，用**拉伸坐标** $(\xi,\eta)$，物理高度 $7\delta$；网格在 $\eta$ 上的划分数**与 $D$ 无关**；
+- **外子域** $\Omega_{\rm out}$：体相，用**物理坐标** $y$；用 **SUPG** 稳定化；
+- **重叠区** $\Omega_{\rm overlap}$：厚度 $5\delta$（从 $y=2\delta$ 到 $y=7\delta$），每次 Schwarz 迭代交换 Dirichlet 数据并**欠松弛**。
 
-**c) LLM/Agent 作为优化器**：梯度给出方向，但选择"哪个参数、什么基函数、何时换基"是**结构化决策**问题，适合 agent 策略。
+**可微分性与反演**：
+- **前向**：FEniCS（dolfin-adjoint）实现，分片线性离散；
+- **梯度**：**离散伴随法**；
+- **反演**：控制方程与边界条件为**硬约束**，参数用伴随梯度更新（Adam，lr $10^{-1}$，每 50 epoch 衰减 0.75）；
+- **未知量参数化**：三种——(a) 常数标量；(b) 离散节点场（需 Tikhonov 正则化，$\alpha^*$ 未知）；(c) **函数基** $g(x)=\sum_j c_j\phi_j(x;\bm\beta_j)$（线性系数 + 非线性参数 $\bm\beta_j$ 联合优化，结构类似 ADAM-SINDy）。
+
+**LLM/agent 优化策略库**：归一化梯度 (G)、Adam (A)、动量 (M)、阻尼 Newton (N)、割线法 (S)、梯度线性回归 (Rg)、目标二次拟合 (Rj)、梯度括号求根 (Bg)、目标括号精化 (Bj)。agentic 库另含 Barzilai–Borwein、共轭梯度、Levenberg–Marquardt、投影梯度。
 
 ### 关键技术
 
 | 技术 | 说明 |
 |------|------|
-| **重叠 Schwarz（微扰理论基础）** | 内域/外域重叠区交换边界信息；基于微扰理论保证收敛性 |
-| **FEM 可微组装** | 求解器对输入（未知参数、源项、边界）解析可微 |
-| **硬约束逆问题** | 控制方程与 BC 直接嵌入损失，Schwarz 耦合保证界面连续 |
-| **伴随梯度** | 一次反向求解得全部敏感度 |
-| **Standalone LLM optimizer** | LLM 消费伴随敏感度，逐次提出参数更新 |
-| **Agentic AI 优化** | agent 可调用完整求解器，多阶段推进 |
-| **函数基表示** | 未知场用基函数展开（如 Fourier/POD/自定义）→ 参数维度低、可解释 |
-| **基函数库分阶段扩充** | 预设基族按阶段准入并初始化参数 |
+| **拉伸坐标变换** | $\xi=x/L$，$\eta=y/\delta$；滑移壁 $\delta\sim Pe^{-1/2}$（$\delta=\sqrt D$，$L=U=1$）；无滑移壁 Lévêque 标度 $\delta\sim Pe^{-1/3}$（$\delta=D^{1/3}$） |
+| **内层方程（滑移壁）** | $v_\xi\partial_\xi C + \frac{v_\eta}{\sqrt D}\partial_\eta C = D\partial_{\xi\xi}C + \partial_{\eta\eta}C$ |
+| **内层方程（Lévêque 标度）** | $\frac{v_\xi}{D^{1/3}}\partial_\xi C + \frac{v_\eta}{D^{2/3}}\partial_\eta C = D^{2/3}\partial_{\xi\xi}C + \partial_{\eta\eta}C$ |
+| **保留壁向扩散项** | 渐近小但保留，**对离散问题提供温和稳定化** |
+| **SUPG** | 外子域稳定化 |
+| **重叠欠松弛** | $C^{(k)}_{\rm overlap}=\omega\widehat C^{(k)}_{\rm overlap}+(1-\omega)C^{(k-1)}_{\rm overlap}$，$\omega=0.5$ |
+| **Schwarz 收敛判据** | 交换迹与重叠区场收敛，容差 $\varepsilon=10^{-10}$，最多 200 次迭代 |
+| **离散伴随 (dolfin-adjoint)** | 梯度精确；伴随恒等式使灵敏度可跨子域界面传播 |
+| **硬约束反演** | 方程与边界条件不做软罚项 |
+| **双策略 LLM 优化** | 被动（Qwen3-8B / Ollama，temperature 0.5，30 次独立种子运行，报中位数与 IQR）；主动（GPT 5.6 Terra / Codex，5 次运行，每次全新项目） |
+| **agent 扩充基函数库（实验 4）** | 从 $\mathcal{D}^{(0)}=\{1,x,x^2\}$ 起步；每 $\Delta n$ epoch 最多修订一次；仅在**当前库失配达到平台期**时准入下一族；族顺序固定：三~五次多项式 → Fourier → 多项式×Fourier 乘积；上限 6 多项式 + 2 Fourier + 12 乘积；**agent 自行决定新基函数的初值** |
+| **基准问题** | 2D 定常双涡流 $\psi=0.1\sin(2\pi x)\sin(\pi y)$（**底壁处发生流动分离**）；$D\in\{10^{-4},10^{-5},10^{-6}\}$，$Pe\approx6.3\times10^3/6.3\times10^4/6.3\times10^5$ |
+| **四类壁面通量剖面** | 常数 / 多项式包络 $4x(1-x)$ / Fourier 包络 $0.5[1-\cos(6\pi x)]$ / 混合 $2x(1-x)[1-\cos(6\pi x)]$，$A=10$ |
+| **网格阶梯 M0–M5** | $m=128\to4096$；Schwarz 内网格 $m\times(m/8)$，外网格 $m\times(15m/16)$ |
+| **三种数据区策略** | inner（$0.1\delta\le y\le1.95\delta$）、outer（$2\delta\le y\le1$）、overlap（$2\delta\le y\le7\delta$） |
 
 ---
 
 ## 公式
 
 ```math
-\text{重叠 Schwarz 耦合（弱形式）:}\quad
+\text{拉伸坐标下的内层方程（滑移壁，}\delta=\sqrt D\text{）}:\quad
+v_\xi\frac{\partial C}{\partial \xi}+\frac{v_\eta}{\sqrt D}\frac{\partial C}{\partial \eta}
+= D\frac{\partial^{2}C}{\partial \xi^{2}}+\frac{\partial^{2}C}{\partial \eta^{2}}
+```
+
+```math
+\text{内层方程（Lévêque 标度，}\delta=D^{1/3}\text{）}:\quad
+\frac{v_\xi}{D^{1/3}}\frac{\partial C}{\partial \xi}+\frac{v_\eta}{D^{2/3}}\frac{\partial C}{\partial \eta}
+= D^{2/3}\frac{\partial^{2}C}{\partial \xi^{2}}+\frac{\partial^{2}C}{\partial \eta^{2}}
+\qquad
+(\text{壁向扩散项虽渐近小，但保留以稳定离散问题})
+```
+
+```math
+\text{一般形式（变换前的尺度关系）}:\quad
+\frac{\delta}{L}v_\xi\frac{\partial C}{\partial\xi}
++ v_\eta\frac{\partial C}{\partial\eta}
+= \frac{D\delta}{L^{2}}\frac{\partial^{2}C}{\partial\xi^{2}}
++ \frac{D}{\delta}\frac{\partial^{2}C}{\partial\eta^{2}}
+```
+
+```math
+\text{重叠区欠松弛}:\quad
+C^{(k)}_{\rm overlap}=\omega\,\widehat C^{(k)}_{\rm overlap}+(1-\omega)C^{(k-1)}_{\rm overlap},
+\qquad \omega\in(0,1]
+```
+
+```math
+\text{拉伸坐标下的壁面通量条件}:\quad
+\left.\frac{\partial C}{\partial \eta}\right|_{\eta=0} = \delta\,g(L\xi)
+\qquad(\text{内侧上边界取外解的迹 } C^{\rm top}_{\rm overlap}\ \text{为 Dirichlet})
+```
+
+```math
+\text{双涡流基准的速度场}:\quad
+\bm v(x,y)=\bigl[0.1\pi\sin(2\pi x)\cos(\pi y),\ -0.2\pi\cos(2\pi x)\sin(\pi y)\bigr],
+\qquad \nabla\cdot\bm v=0
+```
+
+```math
+\text{四类壁面通量剖面（峰值归一化，}A=10\text{）}:\quad
 \begin{aligned}
-\text{内域 } \Omega_1:&\quad A_1 u_1 = b_1 + B_1 u_2|_{\partial\Omega_1} \\
-\text{外域 } \Omega_2:&\quad A_2 u_2 = b_2 + B_2 u_1|_{\partial\Omega_2}
+g_{\rm const}   &= -10\\
+g_{\rm poly}    &= -40\,x(1-x)\\
+g_{\rm Fourier} &= -5\bigl[1-\cos(6\pi x)\bigr]\\
+g_{\rm hybrid}  &= -20\,x(1-x)\bigl[1-\cos(6\pi x)\bigr]
 \end{aligned}
-\quad\Rightarrow\quad
-\begin{pmatrix} A_1 & -B_1 \\ -B_2 & A_2 \end{pmatrix}
-\begin{pmatrix} u_1 \\ u_2 \end{pmatrix}
-= \begin{pmatrix} b_1 \\ b_2 \end{pmatrix}
+\qquad
+K(x)\in\{1,\ 4x(1-x),\ 0.5[1-\cos(6\pi x)],\ 2x(1-x)[1-\cos(6\pi x)]\}
 ```
 
 ```math
-\text{薄边界层（高 Peclet）标度:}\quad
-\delta_{\mathrm{BL}} \sim \sqrt{\frac{\nu}{U\,\delta}} \cdot L,
-\qquad Pe = \frac{UL}{D} \gg 1
+\text{Péclet 数与层厚}:\quad
+\mathrm{Pe}=\frac{UL}{D}\approx 6.3\times10^{3,4,5},
+\qquad
+\delta\sim\mathrm{Pe}^{-1/2}\ \Longrightarrow\ \delta\in[10^{-2},10^{-3}]
+\quad(\text{因 } v_x(x,0)=0.1\pi\sin(2\pi x)=O(U))
 ```
 
 ```math
-\text{逆问题（硬约束）:}\quad
-\mathcal{J}(\theta) = \tfrac{1}{2}\lVert \mathcal{R}(\theta;\,u)\rVert^2,
-\quad \nabla_\theta \mathcal{J} = \text{伴随求解}
-\]
+\text{Schwarz 几何（重叠区厚度 }5\delta\text{）}:\quad
+\eta_{\rm top}=7,\quad \eta_{\rm interface}=2,
+\qquad
+y=2\delta\ \text{与}\ y=7\delta
+\quad\Longrightarrow\quad
+2\delta\le y\le 7\delta
+```
 
 ```math
-\text{函数基表示:}\quad
-u(x;\theta) = \sum_{k=1}^{K} \theta_k\,\phi_k(x),
-\qquad \theta \in \mathbb{R}^{K},\; K \ll N_{\text{nodes}}
+\text{严格的成功判据（平台期而非首次进入）}:\quad
+e^{n}=\frac{|\theta^{n}-\theta|}{|\theta|},
+\qquad
+\text{成功}\iff e^{N}\le1\%,
+\qquad
+n_{\rm t}=\text{从 }N\text{ 向前回溯直到 }e^n>1\%\text{ 的后一 epoch}
+```
+
+```math
+\text{函数基参数化}:\quad
+g(x)=\sum_j c_j\,\phi_j(x;\bm\beta_j),
+\qquad
+\theta=\{c_j,\bm\beta_j\}_{j=1}^{K}
+\quad\Longrightarrow\quad
+\text{未知量个数由库决定而非由网格决定}
+```
+
+```math
+\text{agent 扩充库的准入规则}:\quad
+\mathcal{D}^{(0)}=\{1,x,x^{2}\}
+\ \longrightarrow\
+\text{三~五次多项式}\ \longrightarrow\ \text{Fourier}\ \longrightarrow\ \text{多项式}\times\text{Fourier}
+\qquad
+(\text{仅在失配达到平台期时准入，每 }\Delta n\text{ epoch 最多修订一次})
+```
+
+```math
+\text{Schwarz 网格分解（与单域对比）}:\quad
+\begin{cases}
+\text{单域}: & m\times m\ \text{网格},\ (m+1)^2\ \text{DOF}\\
+\text{Schwarz}: & \text{内 } m\times(m/8)\ +\ \text{外 } m\times(15m/16)\\
+& \text{总 DOF 比单域多 } 6.3\%\ (\text{M5})\sim7.0\%\ (\text{M0})
+\end{cases}
+\quad
+\text{但内层网格划分数与 } D\ \text{无关}
 ```
 
 ---
@@ -103,85 +198,194 @@ u(x;\theta) = \sum_{k=1}^{K} \theta_k\,\phi_k(x),
 ## 代码片段
 
 ```python
-# 可微 Schwarz 求解器 + agentic 优化的概念结构
-class SchwarzCoupledSolver:
-    def __init__(self, mesh, basis=None):
-        self.inner = FEMDomain(mesh.inner, BC="wall")
-        self.outer = FEMDomain(mesh.outer, BC="farfield")
-        self.overlap = mesh.overlap
+# 可微分 Schwarz 耦合求解器 + LLM/agentic 反演（概念性伪代码）
+import numpy as np
 
-    def forward(self, theta):
-        # 重叠区交换，迭代至界面连续
-        for it in range(self.max_iters):
-            u1 = self.inner.solve(bc_from=self.outer.u2)
-            u2 = self.outer.solve(bc_from=self.inner.u1)
-            if interface_residual(u1, u2) < self.tol: break
-        return assemble(u1, u2)
+class SchwarzCoupledTransport:
+    """FEniCS + dolfin-adjoint：内子域（拉伸坐标）+ 外子域（物理坐标）"""
 
-    def value_and_grad(self, theta, obs):
-        u = self.forward(theta)
-        J = loss(u, obs)
-        g = adjoint_gradient(self, theta, obs)   # 一次伴随 -> 全部敏感度
-        return J, g
+    def __init__(self, D, Pe, m=256, eta_top=7.0, eta_interface=2.0,
+                 omega=0.5, tol=1e-10, max_iter=200):
+        self.D, self.Pe = D, Pe
+        self.delta = np.sqrt(D)                      # 滑移壁标度 δ ~ Pe^{-1/2}
+        self.eta_top, self.eta_if = eta_top, eta_interface
+        self.omega, self.tol, self.max_iter = omega, tol, max_iter
+        # 内网格：m 沿壁 × m/8 沿 η（与 D 无关！）
+        self.inner = Mesh_1D_stretched(m, m//8, eta_top)
+        # 外网格：m 沿壁 × 15m/16 沿物理 y
+        self.outer = Mesh_1D_physical(m, 15*m//16, y0=self.delta*eta_if, y1=1.0)
 
-# Agent 侧：分阶段扩充基函数库
-class AgenticOptimizer:
-    def __init__(self, admission_policy):
-        self.library = []            # 基函数族
-        self.stage = 0
+    # ---- 内子域：拉伸坐标下的完整对流-扩散方程 ----
+    def inner_solve(self, C_trace_top, g_wall):
+        # (δ/L) v_ξ ∂C/∂ξ + v_η ∂C/∂η = Dδ/L² ∂²C/∂ξ² + D/δ ∂²C/∂η²
+        # 滑移壁：L=U=1, δ=√D → 除以 √D
+        # 边界：η=0 处 ∂C/∂η = δ g(Lξ)；η=η_top 处 Dirichlet = C_trace_top
+        # 侧边：齐次 Dirichlet
+        return fem_solve_stretched(self.inner, self.D, self.delta,
+                                    wall_flux=g_wall, top_trace=C_trace_top)
 
-    def step(self, J, g, solver):
-        if self.stage_budget_exhausted() and self.candidate_basis_available():
-            self.library += self.admission_policy.admit_next_family(self.stage)
-            self.stage += 1
-        return self.llm_propose_update(J, g, self.library, solver)  # 可调用完整求解器
+    # ---- 外子域：物理坐标 + SUPG ----
+    def outer_solve(self, C_trace_bottom):
+        # 原方程 + SUPG 稳定化
+        # 边界：下人工边界 Dirichlet = C_trace_bottom；上/侧：齐次 Dirichlet
+        return fem_solve_supg(self.outer, self.D, bottom_trace=C_trace_bottom)
+
+    # ---- 一次交替 Schwarz 扫描 ----
+    def schwarz_sweep(self, C_overlap, g_wall):
+        # 1) 内解 -> 在 η_interface 处探测 -> 驱动外解
+        C_in = self.inner_solve(C_overlap["top"], g_wall)
+        C_bottom = probe(C_in, self.eta_if)
+        # 2) 外解 -> 在 η_top 处探测 -> 驱动内解
+        C_out = self.outer_solve(C_bottom)
+        C_top = probe(C_out, self.delta * self.eta_top)
+        # 3) 重叠场欠松弛
+        C_overlap = (self.omega * C_out_in_overlap
+                     + (1 - self.omega) * C_overlap)
+        return C_overlap
+
+    def forward(self, g_wall, n_iter=None):
+        C_overlap = {"top": 0.0, "mid": 0.0}     # 初值：远场浓度
+        for k in range(n_iter or self.max_iter):
+            C_overlap = self.schwarz_sweep(C_overlap, g_wall)
+            if self.converged(C_overlap):
+                break
+        return C_overlap, k
+
+    # ---- 可微分：离散伴随梯度（dolfin-adjoint）----
+    def misfit_and_gradient(self, theta, obs_zone, observations):
+        """
+        控制方程与边界条件为硬约束
+        obs_zone: 'inner' | 'outer' | 'overlap'
+        """
+        C = self.forward(g_wall=theta)
+        J = misfit(C, observations, obs_zone)
+        # 伴随灵敏度跨 Schwarz 界面传播
+        dJ = compute_adjoint_gradient(C, observations, obs_zone)
+        return J, dJ
+
+
+# ================= LLM / agentic 优化器 =================
+OPT_POLICY = ["G", "A", "M", "N", "S", "Rg", "Rj", "Bg", "Bj"]   # 被动 LLM 策略库
+AGENT_POLICY = ["A", "G", "M", "BB", "CG", "LM", "PG"]            # agentic 策略库
+
+
+def passive_llm_optimize(solver, theta0, obs, n_epochs=150, model="qwen3:8b"):
+    """
+    被动 LLM 优化：每 epoch 输入
+      1) 提示词（作为最小化引擎）
+      2) 优化策略（可用方法清单）
+      3) 最近 10 个 epoch 的历史（参数、失配、伴随梯度）
+    输出：选择一种方法 + 阻尼/步长控制 + 推理记录
+    控制器执行所选方法，把更新后的参数送回求解器
+    """
+    hist = []
+    theta = theta0
+    for e in range(n_epochs):
+        J, g = solver.misfit_and_gradient(theta, obs)
+        hist.append((theta, J, g))
+        prompt = build_prompt(hist[-10:], OPT_POLICY)
+        resp = ollama_chat(model, prompt, temperature=0.5)
+        method, controls = parse_selection(resp)     # 例如 ("N", {"damping": 0.1})
+        theta = apply_method(method, theta, J, g, hist, **controls)
+    return theta, hist
+
+
+def agentic_staged_library_optimize(solver, theta0, obs, n_epochs=75, delta_n=10):
+    """
+    主动 agentic + 分阶段基函数库扩充（实验 4）：
+      - 起始库 D^(0) = {1, x, x^2}，agent 决定初值
+      - 每 delta_n epoch 最多修订一次库
+      - 仅当失配达到平台期时，准入下一族（顺序固定）
+      - agent 决定新基函数的初值，并写入 theta 定义
+      - 上限：6 多项式 + 2 Fourier + 12 乘积
+    """
+    library = {"families": ["poly2"], "controls": {"c": [...], "beta": [...]}}
+    theta = theta0
+    for e in range(n_epochs):
+        J, g = solver.misfit_and_gradient(theta, obs)
+        # 平台期检测：由 agent 从失配历史判断（无预设数值阈值）
+        if e % delta_n == 0 and agent_detects_plateau(loss_history):
+            admit_next_family(library, agent_proposed_initial_values())
+            theta = rebuild_theta(library)     # 仅改写 θ 定义，前向/伴随不变
+        method, controls = agent_select_method(AGENT_POLICY, theta, J, g, full_history)
+        theta = apply_method(method, theta, J, g, history, **controls)
+    return theta, library
 ```
 
 ---
 
 ## 实验结论
 
-- **数据集/算例**：高 Peclet 数薄边界层输运问题；逆问题中空间变化未知量分别用**函数基**与**节点场**表示做对比。
-- **基线**：单域 FEM 格式（需高分辨率）；standalone LLM optimizer vs agentic AI。
-- **结果**：
-  - Schwarz 耦合允许**更粗网格** → 相对单域**降低计算成本**。
-  - 硬约束 + Schwarz 界面连续性使逆问题可解且稳定。
-  - **agentic AI 在函数基表示下最有优势**；在节点场表示下优势不明显（维度高，agent 无法有效做结构决策）。
-  - 伴随敏感度 + LLM 连续参数更新（standalone）也可工作，但缺乏多阶段结构规划能力。
+- **前向网格收敛（$D=10^{-6}$，最难的算例）**：相对 M4 参考解的壁面剖面误差从 M1 的 **29.81%** 降到 M2 的 **10.16%**、M3 的 **2.17%**；M3 与 M4 几乎完全一致 → 采用 **M4 作为高保真参考解**（对所有扩散系数）。
+- **前向求解器对比**：加入了一个**无反馈的"单向"方法**（只传接口信息、不做内外交替更新）作为对照，用于**隔离"双向" Schwarz 耦合的贡献**。Schwarz 求解器在粗网格（M1）上即可给出接近 M4 的壁面剖面。
+- **成本结构**：Schwarz 求解器在同等 $m$ 下总 DOF 比单域多 **6.3%–7.0%**（M0: 17,802 vs 16,641；M1: 70,418 vs 66,049；M2: 280,098 vs 263,169；M3: 1,117,250 vs 1,050,625；M4: 4,462,722 vs 4,198,401；M5: 17,838,338 vs 16,785,409），**但内子域的层内网格划分数与 $D$ 无关**。
+- **反演：常值壁面通量（$g=-10$，初值 $-5$）**
+  - **$D=10^{-4}$，inner 数据**：单域在 M1 上成功（91 epoch，236.72 s，收敛值 $-10.0174$）；**Schwarz 在 M1 上成功（65 epoch，113.37 s，$-9.9907$）**；**单向方法未达到目标**（收敛到 $-11.1426$，误差 11.4%）。
+  - **$D=10^{-5}$，inner 数据**：**Schwarz 在 M0（最粗网格）上就成功（93 epoch，29.70 s，$-10.0771$）**，而单域需要 M2（788.93 s）；单向仍未达标（$-11.1304$）。
+  - **$D=10^{-5}$，outer 数据**：单域 M1（167.95 s）、Schwarz M3（5914.58 s）——**Schwarz 在外区数据下反而更贵**（说明双向耦合在某些配置下增加了成本）。
+  - **单向方法在所有配置下均未达到 1% 目标**（收敛到约 $-11.1$，即约 11% 偏差）→ **双向 Schwarz 耦合对反演是必要的**。
+- **优化器对比（一维标量反演，150 epoch 预算）**
+  - **经典方法**：Newton、secant、Brent 收敛最快（到目标 3–7 epoch）；Brent 墙钟时间在几乎所有情况下最快（13.1–23.2 s）。
+  - **被动 LLM（Qwen3-8B，30 次运行）**：inner 数据下 **88/90 次成功**（$D=10^{-4}$ 为 29/30），中位收敛值与 Newton/secant 相差至多 0.001% / 0.11%；选法分布以 **Newton 65.4%–90.0%** 与**归一化梯度 9.7%–34.0%** 为主。
+  - **主动 agent（GPT 5.6 Terra，5 次运行）**：inner 数据下 **15/15 全部成功**；overlap 数据下 14/15 成功但**中位收敛值偏差达 0.6%**（$D=10^{-5}$），且试验间散布明显大于 inner 数据。
+  - **墙钟时间**：LLM 类优化器**普遍慢于经典方法**（被动 LLM 113–178 s vs Brent 13–23 s；agent 23–61 s vs damped Newton 12–17 s）。唯一例外是 $D=10^{-6}$ 的 agent + inner 数据（50.8 s，优于 damped Newton 与 secant）。
+  - **方法选择混合的差异**：被动 LLM 主要选 Newton + 归一化梯度（与图 5 中观察到的振荡一致）；**agent 主要依赖 secant 与回归/二次拟合/括号类方法**（Rg/Rj/Bg/Bj，合计 58%–70%），利用更多历史条目，与其更小的振荡一致。
+- **函数基识别（四个实验）**
+  - **实验 1（理想库 + Adam，1200 epoch）**：多项式包络相对 $L_\infty$ 误差 **0.714%**，Fourier 包络 **7.139%**，墙钟 7.5–7.9 min。
+  - **实验 2（公共库 + Adam，1200 epoch）**：误差大幅劣化——多项式 **13.020%**，Fourier **12.221%**，墙钟 11–13 min。
+  - **实验 3（公共库 + agentic，500 epoch）**：多项式 **7.093% [IQR 2.118]**，墙钟 **358.7 min [28.08]**——精度介于 1 与 2 之间，但**墙钟成本远高**（因为 agent 每次调用的开销）。
+  - **实验 4（分阶段扩充库 + agentic，75 epoch，$\Delta n=10$）**：多项式 **0.152% [IQR 0.080]**，只用 **2 个基函数项**，墙钟 **19.8 min [1.72]**——**在 75 个 epoch 内达到了比 1200-epoch Adam 更低的误差**。
+  - agentic 实验 4 的库上限为 6 多项式 + 2 Fourier + 12 乘积；族按固定顺序准入；新基函数初值由 agent 决定。
 
 ---
 
 ## 局限性
 
-- FEM + Schwarz + 可微 + 伴随 + LLM agent 五层叠加，**工程复杂度高**，可复现性门槛不低。
-- 依赖强 LLM 能力与稳定的 agent 工具调用协议；模型行为不可完全确定，复现性存疑。
-- 结论"函数基更好"可能与具体基族选择、参数化方式强相关。
-- 报告未给出与梯度优化器（Adam/L-BFGS）在同等预算下的严格对照样本量说明。
-- Schwarz 收敛性依赖重叠宽度与交换类型，本文未系统给出参数敏感性。
+- **LLM/agent 在低维问题上并无速度优势**：一维标量反演中，**Brent/Newton/secant 更快更稳**；LLM 类优化器墙钟时间普遍高一个数量级。作者明确"不主张 LLM 与 agentic AI 能取代经典方法"，只指出在特定场景可能是可行策略。
+- **agentic 路线的高时间成本**：实验 3 中 agentic 用了 358.7 min（IQR 28.08 min），而 Adam 只要 12.9 min；即使实验 4 降到 19.8 min，**仍比 Adam 的 12.9 min 贵**（尽管迭代数从 1200 降到 75，误差从 13.0% 降到 0.152%）。**"迭代更少"不等于"墙钟更快"**。
+- **agent 的运行成本与可复现性**：被动 LLM 用开源 Qwen3-8B 跑 30 次；主动 agent 用闭源 GPT 5.6 Terra，只跑 5 次且**无种子**（靠自身非确定性），试验数远少于被动方案；不同算例与不同数据区（inner vs overlap）下 agent 的**一致性差异明显**（15/15 vs 14/15，且中位值偏差 0.6%、散布更大）。
+- **基准是二维、低复杂度、单一流动**：定常双涡流，仅 3 个扩散系数、4 类通量剖面（常量/单瓣/振荡/组合）；**未在真实几何或实验数据上验证**。
+- **agent 扩充的基函数族是预设的**：准入顺序固定（三~五次多项式 → Fourier → 多项式×Fourier），**结构搜索空间被人工限制**；作者自己也类比为"结构受限的符号回归"。且**目标是恢复剖面而非恢复精确解析表达式**——与方程发现的目标不同（后者关心物理可解释的项）。
+- **离散轮廓重建路径的困难**：节点场表示使逆问题维度随网格增长，需 Tikhonov 正则化而 $\alpha^*$ 未知 → 昂贵且有时失败。作者未给出系统解决方案，只由函数基路径绕过。
+- **Schwarz 在外区数据下不一定更快**：$D=10^{-5}$、outer 数据时 Schwarz 需 M3 且墙钟 5914.58 s，而单域在 M1 上 167.95 s 即可——**优势依赖具体配置**。
+- **单向对照的失败原因未完全分解**："双向耦合的贡献"被隔离出来，但单向方法为何失败（是缺少内部反馈，还是收敛方式问题）未详细分析。
+- **FEniCS/dolfin-adjoint 的生态限制**：伴随梯度需完整前向/伴随记录；"观测位置还决定记录哪些伴随运算"（Schwarz 的拉伸内网格在 inner 区比单域同层网格有更多节点）——**数据位置同时影响信息内容与伴随计算量**，这是评估中易被忽略的混杂。
+- **代码尚未公开**（同行评审后），复现门槛较高。
 
 ---
 
 ## 相关工作
 
-- [[2026-10-30-GC-DMD-Granger-causality-reduced-order]]
-- [[域分解Schwarz]]
-- [[可微求解器]]
-- [[伴随法]]
-- [[逆问题]]
-- [[边界层]]
-- [[物理信息机器学习]]
-- [[函数基展开]]
+- [[Schwarz域分解与重叠迭代]]
+- [[奇异摄动理论与匹配渐近展开]]
+- [[薄边界层与高Péclet输运]]
+- [[可微分求解器与离散伴随法]]
+- [[反问题与参数反演]]
+- [[Tikhonov正则化与病态逆问题]]
+- [[函数基与稀疏识别SINDy]]
+- [[大语言模型作为优化器]]
+- [[Agentic AI科学计算工作流]]
+- [[SUPG稳定化与有限元对流扩散]]
+- [[双涡流基准]]
 
 ---
 
 ## 实现建议
 
-- **实现难度**：🔴 高。需同时具备：FEM + 重叠 Schwarz 域分解 + 可微编程（PyTorch/JAX 自动微分穿透求解器）+ 伴随 + LLM agent 工具链。
-- **预期性能**：Schwarz 相比单域可显著减少自由度（粗网格下仍能分辨近壁梯度），是**实打实的算力节省**；但伴随求解 + agent 多轮调用的端到端成本需实测。
-- **适用场景**：高 Pe/高 Ma 输运的**参数反演**——热边界条件反推、未知源项识别、多孔介质渗透率反演、涂层界面热阻辨识。
+- **实现难度**：🔴 高。需要 (a) 拉伸坐标下的 FEM 求解器；(b) 交替 Schwarz + 欠松弛 + 重叠区管理；(c) 离散伴随（dolfin-adjoint 或自研）；(d) 函数基参数化 + 非线性参数联合优化；(e) LLM/agent 优化循环 + 基库管理策略。
+- **预期性能**：薄层解析方面**优势明确**（内层网格与 $D$ 无关，粗网格即可），但**总墙钟优势依配置而定**（outer 数据下 Schwarz 反而慢 35 倍）。反演精度上，**双向 Schwarz 明显优于单向**（单向始终约 11% 偏差）。
+- **适用场景**：
+  - **高 Pe 输运反演**：动脉壁面传质（本文动机）、涂层/催化层内的传质、膜分离；
+  - **含分离/再附着的薄层**：经典匹配渐近在此失效，Schwarz 的双向交换是必要的；
+  - **壁面通量/扩散系数反演**，且测量点可能远离未知参数所在位置（跨子域伴随传播）；
+  - **未知通量有紧凑解析形式**的场景——此时用 agent 扩充函数基的收益最大。
 - **落地建议**：
-  1. **分三步渐进落地**：① 先实现"硬约束 FEM + 伴随梯度"的确定性逆问题（不引入 LLM），确认逆问题本身可解；② 再引入 Schwarz 降本；③ 最后才接 agentic 优化。
-  2. **未知场一律用函数基表示**（低维基 + 少量非线性参数），不要用节点场——本文明确表明这是 agent 优势的前提。
-  3. Agent 严格限定在"基函数库管理 + 参数提议"这类**结构化低维决策**上，不要让它直接输出高维参数向量。
+  1. **先实现无 LLM 的版本**：Schwarz + 离散伴随 + 函数基 + Adam/LM，即可复现主要工程收益；**agent 是在此之上的可选层**；
+  2. **不要在一维/低维问题上用 LLM 优化器**——本文已证明 Brent/Newton/secant 更快更稳；
+  3. **采用"平台期"成功判据而非"首次进入误差带"**，否则会高估瞬态穿越真值的方法；
+  4. **按"达到目标所需的最粗网格"比较方法**（等精度比较），而非同网格比较；
+  5. **保留单向对照算例**，用于确认双向耦合确实被激活；
+  6. **把 agent 的基库准入策略写成显式的、预设顺序的规则**（而非让模型自由发挥），并给库规模设上限；
+  7. **注意 wall-clock 才是约束**：本文中"75 epoch 胜过 1200 epoch"对应的是 19.8 min vs 12.9 min 的混合结果，**在工程预算下需实测**。
 
 已传递给 @墨鱼丸。
