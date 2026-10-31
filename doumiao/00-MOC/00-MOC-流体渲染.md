@@ -1,7 +1,7 @@
 ---
 type: moc
 created: 2026-10-21
-updated: 2026-10-30
+updated: 2026-10-31
 agent: doumiao
 domain: fluid-rendering
 ---
@@ -41,6 +41,10 @@ domain: fluid-rendering
 
 ### 💧 水 / 液体
 
+- [[2026-10-31-Masuda-Drop-Decomposition-Cylindrical-Curvature]] — ⭐ **10-31 期最贴近渲染**：几何曲率 κ_F=d/R_i **改写液滴破碎路径**（平面近对称二分断裂 → 强曲率丝状介导碎裂+多卫星滴）；**曲面容器内液体不可套用平面参数**；plicRDF+isoAdvector+AMR；网格精度下限（直径 ≥8 单元）
+- [[2026-10-31-Du-Zou-Capillary-Gravity-Vorticity-I-Local-Constructions]] — 点涡→**紧支撑涡核守恒正则化**（消除 1/r 着色奇异性）；液面四阶展开含首个毛细修正；Kirchhoff–Routh 平衡存在性；**周期波涡深 ∝ log(1/W)** vs 孤立波 ∝ 1/W
+- [[2026-10-31-Du-Zou-Capillary-Gravity-Vorticity-II-Continuation-Folds]] — **全局解曲线** + 集中紧性备择（无单调性假设的有限剖面分解 → 人工远场边界条件）；**简单速度折叠点** Hessian 负指数差恰为 1 → 水面形态转场触发点
+- [[2026-10-31-Yao-Zhou-Taylor-Bubble-Drop-Assembly-Riser]] — **反直觉速度继承**：气泡携带液滴时液滴取气泡速度（非减速）；Taylor 长椭球形保持；管内流动**解析速度剖面**可作着色器解析场；OpenFOAM multiphaseInterFoam
 - [[2026-10-16-Tessellation-Free-Displaced-Surfaces-Water-Caustics]] — 无细分位移面焦散
 - [[2026-10-19-Make-It-Flow-Water-Animation-3DGS]] — 光流 → 3D Eulerian 运动场（静态 3DGS 水体动画，**免物理模拟**）
 - [[2026-10-19-SplashSplat-Multi-View-Liquid-Reconstruction]] — 飞溅液体多视图重建
@@ -48,6 +52,15 @@ domain: fluid-rendering
 - [[2026-10-30-Capillary-Wave-Turbulence-Finite-Systems]] — 毛细波级联动态范围 ∝ **μ^{8/3}** → 校核法线贴图频谱斜率
 - [[2026-10-30-Capillary-Turbulence-Anisotropic-Kinetic]] — 各向异性终态 **因子化谱** n(k,φ) ~ k^-17/4·F(φ) → 定向海洋 FFT 谱构造（成本几乎不变）
 - `2603.21695` RefracGS — 折射水面 + 3DGS 光线追踪（待收录）
+
+### 🌬️ 大气 / 分层流 / 逆问题
+
+- [[2026-10-31-Nualart-Park-Penafiel-Boussinesq-Stationary-Structures]] — **层结刚性定理**：稳定层结+层流 ⟹ 必为分层剪切流；**Ri≈1 = 混合活跃带**（垂直输运强）→ 烟柱/云层混合强度的零成本分层调制器；停滞点附近"岛"结构 → 等密度面断裂提示
+- [[2026-10-31-Aigner-SFNS-Airflow-Sparse-Sensing-Physics-Prior]] — ⭐ **强形式 NS 残差最小化比弱形式更准且快 3×**；**稀疏控制点 → 物理一致流场**范式（毫秒级驱动体积平流）；$E_s=\int\|\nabla u\|^2$ 作烟流细节锐度旋钮；物理先验收益在稀疏区间最大
+
+### ⚛️ 粒子系统 / 降维
+
+- [[2026-10-31-Fang-Qi-Wen-Small-Deborah-Fluid-Particle-Limit]] — **两级粒子渲染架构**：小 Deborah 数极限（逐点收敛率）→ 宏观解 NS-KS、微观采样 $n_0$，六维 $f(t,x,v)$ 降到 $(x,t)$；KS 方程 = 带漂移 Fokker–Planck → **直接写为渲染端粒子更新规则**；$g_1$ 项编码流体对粒子分布的一阶反作用
 
 ### ⚙️ 求解器 / 数值格式（渲染上游）
 
@@ -114,6 +127,7 @@ domain: fluid-rendering
 
 ## 📊 每日报告
 
+- [[2026-10-31-Daily-Paper-Search]] — **周末空窗 + 物理约束力持续增强**（7 篇全非渲染，但约束力极强：几何曲率改写破碎形态 / 色散分段构造频谱 / 层结刚性调制混合 / 涡核守恒正则化 / 强形式残差快 3× / 宏观极限降维两级架构）
 - [[2026-10-30-Daily-Paper-Search]] — **物理侧集体下沉**（8 篇全非渲染，但约束力极强：DAVOF 界面契约 / flamelet ≥3 参数 / 毛细谱 / NLS 推广 / 因果降阶 / Agentic 逆问题）
 - [[2026-10-29-Daily-Paper-Search]] — 生成式流体时代 + 实时流体"结构性降本" + **体积渲染可辨识性危机**（3 主题 17 篇）
 - [[2026-10-26_Daily-Paper-Search]] — SA2026 缺口审计 + 补齐 7 篇（**平流算子 / 可微物理 / 分布式生产**，本期含金量最高）
