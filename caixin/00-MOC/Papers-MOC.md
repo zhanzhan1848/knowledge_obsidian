@@ -109,6 +109,23 @@
 
 ## 每日报告
 
+- [[daily-search-report-2026-10-31-run2]] — 周末批次：9 篇笔记**技术细节补强**（求解器/网格/格式/边界条件）+ cs.FL 分类建议下线
 - [[daily-search-report-2026-10-31]] — 6 篇深度重写 + cs.FL 分类误标更正
 - [[daily-search-report-2026-10-22]] / [[daily-search-report-2026-10-21]] / [[daily-search-report-2026-10-20]]
 - [[daily-search-report-2026-10-17]] / [[daily-search-report-2026-10-14]] / [[daily-search-report-2026-10-12]]
+
+---
+
+## 2026-10-31 补强要点（arXiv HTML/PDF 全文深挖）
+
+| 论文 | 新增可复用内容 |
+|---|---|
+| [[2026-10-30-arXiv-2610.37376_Target-Omega-Interfacial-Turbulence-Damping]] | CLSVOF + 调和平均面粘度 + 局部壁律 Newton 反演（额外开销仅 **≈2.3%**）；Stäbler 液深 10.24 mm 算例可作回归测试 |
+| [[2026-10-30-arXiv-2610.39522-causality-informed-dynamic-mode-decomposition]] | VAR(1) 条件 Granger + F 检验($d_2=T-r-1$) + BH-FDR($q{=}0.05$) + 行归一化权重 $C_{ij}$；**代码已开源** |
+| [[2026-10-30-arXiv-2610.40426-rom-constrained-flapping-wing-shape-optimization]] | 全阶 KKT 内存瓶颈($B,C,D$ 尺寸) → 降阶后 $r$ 维块；降阶基用**并集而非 POD**；Algorithm 3 非定常灵敏度采集；**1.5 TB → 4 MB** |
+| [[2026-10-30-arXiv-2610.39780-curved-vortex-generator-finned-tube-heat-exchanger]] | Fluent/SIMPLE/SST $k$–$\omega$ 共轭传热工作流；$y^+$ 0.99→0.26；UDF 迭代生成充分发展入口；CCD→回归→GA/NSGA-II 模板 |
+| [[2026-10-30-arXiv-2610.39586-taylor-bubble-drop-assembly-rise-vertical-tube]] | `multiphaseInterFoam`/PIMPLE/VOF；**3° 楔形轴对称**（算力省 100×）；速度分布解析式 + TOMS 748 双根分支 |
+| [[2026-10-30-arXiv-2610.39123-supersonic-turbulent-curved-wall-triadic-cascade]] | BASIC (2026.10) Python/GPU 求解器；11 点六阶中心差分 + 六阶滤波；显式五阶低存储 RK；网格 $2668{\times}384{\times}324$ |
+| [[2026-10-30-arXiv-2610.39348-liquid-metal-swirl-chaos-transition]] | OpenFOAM/PISO 工作流；电势 Laplace 预计算 $\mathbf{J}$ + Bessel 洛伦兹力展开（**解耦技巧**）；**592 组算例** |
+| [[2026-10-30-arXiv-2610.39386-helical-vortex-short-wave-nonlinear-dynamics]] | 柱坐标 6 阶紧致 + Fourier 谱；$565{\times}896{\times}256$；Frenet-Serret 局部坐标；基流冻结的动机 |
+| [[2026-10-28-arXiv-2610.37577_ATF-Flame-Thickening-TD-Unstable-Hydrogen]] | PeleLMeX AMR 低马赫数反应流；LES 80% 解析度判据（$\Lambda_{\mathrm{f}}^{F}\approx1$）；Peters 褶皱插值 |
