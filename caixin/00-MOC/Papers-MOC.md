@@ -1,7 +1,21 @@
 # 论文索引 (Papers MOC) — 菜心 / 流体力学
 
-> 知识库：`~/knowledge-vault/caixin/01-Papers/` | 最近更新：2026-10-31
-> 搜索源：arXiv `physics.flu-dyn`（⚠️ `cs.FL` 是形式语言分类，与流体无关，已停用）
+> 知识库：`~/knowledge-vault/caixin/01-Papers/` | 最近更新：2026-11-01
+> 搜索源：arXiv `physics.flu-dyn` 列表页 `arxiv.org/list/physics.flu-dyn/new`（⚠️ `cs.FL` 是形式语言分类，与流体无关，已停用）
+> ⚠️ **检索路径**：必须用**列表页**判定最新批次；`export.arxiv.org` API 的 `published` 字段**滞后一天**，单用 API 会漏收整批论文（2026-11-01 已修正）
+
+---
+
+## 2026-11
+
+### 2026-11-01（周末零新增批次：22 篇覆盖度核验 100%）
+
+最新可用批次仍为 **Fri, 30 Oct 2026**（arXiv 周末不发论文），与 10-30 / 10-31 两轮完全重叠。
+
+- **无新建笔记**；逐篇核验 22 篇 `physics.flu-dyn` 新提交全部已入库且结构完整（模板 9 章节）
+- **技术收获**：arXiv API `published` 滞后列表页 1 天 —— 改用 `arxiv.org/list/<cat>/new` 解析「New submissions」分段
+- **cs.FL 4 篇全为形式语言与自动机理论**（2610.39678 / 2610.39833 / 2610.39941 / 2610.40012），无一收录，印证配置中 `cs.FL` 应移除
+- 报告：[[daily-search-report-2026-11-01]]
 
 ---
 
@@ -109,6 +123,7 @@
 
 ## 每日报告
 
+- [[daily-search-report-2026-11-01]] — 周末零新增：22 篇覆盖度核验 + **检索路径修正**（列表页优先，API 滞后一天）
 - [[daily-search-report-2026-10-31-run2]] — 周末批次：9 篇笔记**技术细节补强**（求解器/网格/格式/边界条件）+ cs.FL 分类建议下线
 - [[daily-search-report-2026-10-31]] — 6 篇深度重写 + cs.FL 分类误标更正
 - [[daily-search-report-2026-10-22]] / [[daily-search-report-2026-10-21]] / [[daily-search-report-2026-10-20]]
