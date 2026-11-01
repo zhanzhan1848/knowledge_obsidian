@@ -157,7 +157,7 @@ recommendation: ⭐ 推荐（2.5D 几何 + 装配序约束，思路新但偏 RL 
 - [[2026-10-30-SA2026-Voronoi-Scissors-Approximate-Dissection]] — 组合设计 + 全局优化 + 合法性保证，同属「约束驱动的组合设计」
 - [[2026-10-30-SA2026-CuACD-GPU-Resident-Convex-Decomposition]] — 凸分解（组合结构生成）
 - [[2026-10-30-SA2026-S4R-Rigid-Body-Interpenetration-Resolution]] — 刚体物理约束解算
-- [[2026-10-19-2610-26861-FunCAD-Functional-CAD-Mechanisms]] — 功能约束下的 CAD 生成（同类「约束进设计」）
+- [[2026-10-20-2610-26861-FunCAD-Functional-CAD-Mechanisms]] — 功能约束下的 CAD 生成（同类「约束进设计」）
 - [[2026-10-26-2610-31113-AI-Agent-Prompt-to-Structure-Design]] — 结构设计生成
 - [[2026-10-31-SA2026-ViPS-Video-Informed-Pose-Spaces-Auto-Rigged-Meshes]] — 「学习替代昂贵求解」的范式对照
 

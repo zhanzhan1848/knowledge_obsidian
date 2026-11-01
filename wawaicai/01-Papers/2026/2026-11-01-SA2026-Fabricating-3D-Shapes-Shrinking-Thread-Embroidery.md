@@ -170,6 +170,8 @@ recommendation: ⭐⭐⭐ 强烈推荐（收缩场 + 参数化联合优化，是
 - [[2026-10-31-SA2026-ImageUnwrap-Single-View-Dense-UV-Parameterization]] — 单视图稠密参数化
 - [[2026-10-30-SA2026-SeamFlow-Artist-Like-UV-Unwrapping]] — 接缝布局（本文中接缝是核心自由度）
 - [[2026-10-26-2610-30149-Tutte-Like-Theorem-Injective-Flows-Meshes]] — 曲面映射理论背景
-- [[2026-10-19-2610-26861-FunCAD-Functional-CAD-Mechanisms]] — CAD 计算设计对照
+- [[2026-10-20-2610-26861-FunCAD-Functional-CAD-Mechanisms]] — CAD 计算设计对照
+- [[2026-11-01-SA2026-Stitch-Graphs-Non-Local-Knit-Topologies]] — 同批次 SA2026，另一种「平面材料 → 3D 形状」路径（针织拓扑）
+- [[2026-11-01-SA2026-Automatic-Sewing-Pattern-Layout-Two-Level-Semantic]] — 同批次 SA2026，服装缝纫结构语义
 
 相关主题：[[几何处理]] [[向量场优化]] [[参数化]] [[接缝设计]] [[曲率生成]] [[织物制造]] [[刺绣]] [[交替优化]] [[可制造性]]

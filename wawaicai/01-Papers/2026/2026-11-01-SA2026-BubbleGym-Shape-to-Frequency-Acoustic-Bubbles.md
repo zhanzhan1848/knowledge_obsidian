@@ -167,6 +167,6 @@ recommendation: ⭐ 推荐（几何-物理交叉：形状特征 → 频率，方
 - [[2026-06-14-Skeletal-Anchored-Dual-Harmonics]] — 谐波/球谐形状编码
 - [[2026-10-26-2610-31113-AI-Agent-Prompt-to-Structure-Design]] — 流体/结构设计代理的邻近方向
 - [[2026-10-28-2610-36945-Total-Deformation-MPM-Elastic-Solids]] — 物理量到几何的映射（反向）
-- [[2026-10-19-2610-26861-FunCAD-Functional-CAD-Mechanisms]] — 物理约束驱动的设计
+- [[2026-10-20-2610-26861-FunCAD-Functional-CAD-Mechanisms]] — 物理约束驱动的设计
 
 相关主题：[[几何处理]] [[代理模型]] [[形状描述子]] [[边界元法]] [[拉普拉斯方程]] [[声学]] [[流体模拟]] [[数值稳定性]]

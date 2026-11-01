@@ -168,5 +168,7 @@ recommendation: ⭐⭐⭐ 强烈推荐（把「编织工艺」直接提升为图
 - [[2026-10-30-SA2026-Efficient-Robust-Seamless-Parametrization]] — 服装/曲面参数化方向互补
 - [[2026-10-30-SA2026-PartLLM-Unified-3D-Part-Segmentation]] — 3D 部件语义分解
 - [[2026-10-30-SA2026-S4R-Rigid-Body-Interpenetration-Resolution]] — 刚体穿透解算（下游物理）
+- [[2026-11-01-SA2026-Fabricating-3D-Shapes-Shrinking-Thread-Embroidery]] — 同批次 SA2026，另一种「平面材料 → 3D 形状」路径（收缩场）
+- [[2026-11-01-SA2026-Automatic-Sewing-Pattern-Layout-Two-Level-Semantic]] — 同 session「Stitch in Time」，缝纫结构与布局
 
 相关主题：[[几何处理]] [[拓扑表示]] [[图结构几何]] [[非局部连接]] [[服装设计]] [[交互式建模]] [[参数化]] [[纱线模拟]]

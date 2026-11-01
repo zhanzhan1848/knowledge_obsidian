@@ -161,5 +161,7 @@ recommendation: ⭐⭐ 推荐（图结构 + 碰撞约束的布局生成，工程
 - [[2026-10-20-2610-28280-GALA-Geometry-Aware-Language-Model-Object-Arrangement]] — 语义 + 几何约束的对象布置
 - [[2026-10-31-SA2026-Stitch-Graphs-Non-Local-Knit-Topologies]] — 同 session，针织结构表示
 - [[2605.26391_Garment_Particles_Representation]] — 服装部件表示
+- [[2026-11-01-SA2026-Stitch-Graphs-Non-Local-Knit-Topologies]] — 同 session「Stitch in Time」，针织拓扑图表示
+- [[2026-11-01-SA2026-Fabricating-3D-Shapes-Shrinking-Thread-Embroidery]] — 同批次 SA2026，织物形状的收缩场生成
 
 相关主题：[[几何处理]] [[服装CAD]] [[布局优化]] [[图匹配]] [[语义分割]] [[碰撞检测]] [[数字人体]] [[缝纫图]]
