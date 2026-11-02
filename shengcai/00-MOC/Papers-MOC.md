@@ -1,5 +1,24 @@
 # 论文索引 (Papers MOC)
 
+## 2026-11
+
+### 2026-11-02
+> 📌 严格 24h 窗口内 cs.GR 新投稿 0 篇（周末批次空窗，arXiv 上一批次 10-30）。扩展至 10-26~11-02 共 30 篇，**渲染相关 7 篇均为重复确认**（10-27/10-28/10-29/10-31 已收录），本轮新增 1 篇 + 补充 2 篇较薄笔记。
+
+**新增**
+- [[2026-11-02_Dynamic-Skinning-Kinematics-Driven-Cartoon-Effects]] - 位置导数驱动的次级运动变形器，免物理求解；TVCG 2026 vol.32 no.3 ⭐⭐⭐ *(动画层，非渲染核心)*
+
+**重复确认（已补公式与量化数据）**
+- ~~[[2026-10-31_NeuOctree-Neural-Explicit-Shape-Representation]]~~ → 已补充：双分支解码器公式、递归精化 $\mathbf{q}_{k+1}=\Pi_{\text{ray}}(\widehat{\mathbf{p}}_k)$、**28 组压缩误差实测值**、正样本归一化技巧 ⭐⭐⭐⭐⭐
+- ~~[[2026-10-31_GOFish-Fisheye-Gaussian-Splatting-Mesh-Extraction]]~~ → 已补充：标定定义域公式、**+3.17 dB 单项贡献**、相机侧衰减分离式 ⭐⭐⭐⭐⭐
+- [[2026-10-28_GraftRay-Path-Tracing-Mesh-Insertion]] - OptiX 高斯路径追踪 + 基图像删失 NNLS ⭐⭐⭐⭐⭐
+- [[2026-10-28_Honeycomb-Surfels-Hexels]] - 六边形图元 + 一阶颜色场 ⭐⭐⭐⭐⭐
+- [[2026-10-27_CVTSplat-Adaptive-Centroidal-Voronoi-Tessellation]] - 自适应 CVT，构造快 5~10× ⭐⭐⭐⭐
+- [[2026-10-28_CTBakeGS]] - 免训练烘焙，光学深度解析匹配 ⭐⭐⭐⭐
+- [[2026-10-28_DomeGS]] - 天空并入 3DGS 几何 ⭐⭐⭐⭐
+
+- [[2026-11-02-daily-search-report]] - 📋 每日论文搜索报告 2026-11-02
+
 ## 2026-10
 
 ### 2026-10-31
