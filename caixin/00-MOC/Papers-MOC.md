@@ -1,12 +1,39 @@
 # 论文索引 (Papers MOC) — 菜心 / 流体力学
 
-> 知识库：`~/knowledge-vault/caixin/01-Papers/` | 最近更新：2026-11-01
+> 知识库：`~/knowledge-vault/caixin/01-Papers/` | 最近更新：2026-11-04
 > 搜索源：arXiv `physics.flu-dyn` 列表页 `arxiv.org/list/physics.flu-dyn/new`（⚠️ `cs.FL` 是形式语言分类，与流体无关，已停用）
 > ⚠️ **检索路径**：必须用**列表页**判定最新批次；`export.arxiv.org` API 的 `published` 字段**滞后一天**，单用 API 会漏收整批论文（2026-11-01 已修正）
 
 ---
 
 ## 2026-11
+
+### 2026-11-04（本次收录：13 篇，批次 Wed 4 Nov 2026 = 9 新提交 + 4 交叉）
+
+**数值方法 / 高阶格式**
+- [[2026-11-04-arXiv-2611.05095-compact-ALE-GKS-unstructured]] — 三维非结构网格紧致高阶 ALE 气体动理学格式；最小二乘二次多项式重构（$a_{12}=(b_2+c_1)/2$，1 个 $3\times3$ 矩阵 + 4 次最小二乘）；GENO + 梯度压缩；**重映射无关的直写 ALE**；两段四阶推进；CUDA+MPI；⚠️ 分布函数更新实际仅三阶 ⭐⭐⭐⭐⭐
+- [[2026-11-04-arXiv-2611.04606-history-kernel-finite-Re-sphere]] — 有限 Re 历史核 $K(s,\mathrm{Re})$（**Re 取源时刻**）；Leibniz 项靠加速/减速 ramp 外推消去；高 Re 中等滞后**非单调**（边界层/尾流延迟）；轴对称 FEM $P_1P_1$+BDF2+PARDISO，Re 0.2–200 ⭐⭐⭐⭐⭐
+- [[2026-11-04-arXiv-2611.04622-diffuse-interface-kinetic-model]] — 弥散界面动理学模型 DIKM：单网格单方程 + 局部化分子通量算子 + 任意吸收概率 $\beta$；**匹配渐近证明**锐界面极限；运动壁牵引分离吸收质量携带动量；Strang 分裂 DUGKS ⭐⭐⭐⭐⭐
+- [[2026-11-04-arXiv-2611.04443-FAI-ablation-DNS-Mach8]] — Mach 8 压缩斜坡烧蚀 DNS；**INCA+CHAMPS 双求解器交叉验证同一 GSI 模型**；Knudsen-Langmuir 升华 + 壁面能量平衡；凹坑加速仅作用于几何；CFL 0.5 五阶 WENO ⭐⭐⭐⭐
+
+**数据同化 / ML / 逆问题**
+- [[2026-11-04-arXiv-2611.04795-EnKF-Rayleigh-Benard-reconstruction]] — EnKF 数值验证 Charney 猜想；BO 区谱律 $E_u\sim k^{-11/5}$；卡尔曼增益上半部 $\hat\Sigma_{\omega\theta}$ 是温度→涡量通道；观测够频时温度估计**比观测本身更准**；附录 A 能量论证解释 DR 失败 ⭐⭐⭐⭐⭐
+- [[2026-11-04-arXiv-2611.04270-SSH-to-velocity-ML-SWOT]] — U-Net 从 SSH 预测速度（50 m RMSE 0.049 m/s，**-29%**）；**标准 U-Net 与地转近似无异**（负面发现）→ 须靠 4 项策略泛化；涡度相关 0.93 / 辐散度 0.66；**谱能量通量**显示地转近似错误表征级联 ⭐⭐⭐⭐
+- [[2026-11-04-arXiv-2611.04007-tensegrity-prestress-PINN-identification]] — PINN 逆问题：约束笛卡尔坐标 → 力密度**线性进入**残差 → 灵敏度闭式 → **Fisher/CRLB 前置可辨识性分析**；softplus 只受拉 vs Fischer-Burmeister；实测 13 预应力水平吻合 2.9% RMS ⭐⭐⭐⭐
+
+**湍流理论 / 统计**
+- [[2026-11-04-arXiv-2611.04706-designing-turbulence-hierarchies]] — 摆链层级复现湍流奇异特征（**无需不可压缩/涡拉伸**）；精确通量 $\Pi_k$；耗散异常 $\bar\epsilon\to0.34$（黏性跨 10 数量级）；统计局部 $|\langle Q_{k,k+n}\rangle|\propto2^{-n}$；隐藏尺度对称性；**级联正则性可调** $h_c=(1-\alpha)/3$ ⭐⭐⭐⭐⭐
+- [[2026-11-04-arXiv-2611.05282-Lagrangian-irreversibility-stratified]] — 分层湍流 Lagrangian 功率不对称；拓扑条件化：轴向拉伸主导区偏度最负、双轴区**正→负翻转**；方差降但偏度更负；压力贡献由近对称转显著负偏；⚠️ 因果未建立 ⭐⭐⭐⭐
+
+**高超声速 / 稀薄气体**
+- [[2026-11-04-arXiv-2611.04684-DSMC-ramp-unsteadiness-SPOD-DMD]] — SUGAR-3D，$200\times10^6$ 粒子、采样格 ≥150；$Kn=3.3\times10^{-4}$；**首次 SPOD 用于 DSMC 流场并与 DMD 对比**；**稳定性对壁温/来流速度的敏感性高于对斜坡角**；三机制 = 再附激波振荡 + 剪切层 K-H + 分离泡 c 形模态 ⭐⭐⭐⭐
+- [[2026-11-04-arXiv-2611.03657-shock-transmission-foil-explosion]] — 水下电箔爆炸激波穿固-水界面；500 万 fps 阴影摄影 + 光纤水听器 + 一维 MHD；**传输由阻抗失配 + 支撑材料有限厚度与动态响应共同决定**（静态阻抗公式不足） ⭐⭐⭐
+- [[2026-11-04-arXiv-2611.04288-square-spiral-Knudsen-pump]] — 方形螺旋 Knudsen 泵，热渗流 + Poiseuille 闭合成环；**并联 +70.80%**（含稀薄化增强）vs **串联 +3.35%**，但最终流量几乎相同 → 存在最优构型；**弯段是非线性压降与减速损失点** ⭐⭐⭐
+
+**多尺度场论 / 云物理**
+- [[2026-11-04-arXiv-2611.04924-twilight-clouds-statistical-field-theory]] — MSR + Gurari 型变分约化消去快速过饱和度浴；鞍结分岔产生边缘态与**禁带区**；Lamperti 势垒景观 → 液滴**长期徘徊**；"云极化子"动态惯性；伪抛物方程 + 空间相关马尔可夫闭合 ⭐⭐⭐⭐
+
+---
 
 ### 2026-11-01（周末零新增批次：22 篇覆盖度核验 100%）
 
@@ -123,6 +150,7 @@
 
 ## 每日报告
 
+- [[daily-search-report-2026-11-04]] — 13 篇深度笔记（Wed 4 Nov 批次：9 新 + 4 交叉）；紧致 ALE-GKS / 有限 Re 历史核 / 弥散界面动理学 / 双求解器烧蚀交叉验证 / EnKF 验证 Charney 猜想 / 摆链层级设计湍流 / SPOD×DSMC 首对比；**配置建议移除 cs.FL，补 math-ph 等 4 类**
 - [[daily-search-report-2026-11-01]] — 周末零新增：22 篇覆盖度核验 + **检索路径修正**（列表页优先，API 滞后一天）
 - [[daily-search-report-2026-10-31-run2]] — 周末批次：9 篇笔记**技术细节补强**（求解器/网格/格式/边界条件）+ cs.FL 分类建议下线
 - [[daily-search-report-2026-10-31]] — 6 篇深度重写 + cs.FL 分类误标更正
