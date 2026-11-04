@@ -35,9 +35,20 @@
           "ambient occlusion",
           "shadow mapping"
         ],
-        "sources": ["arxiv", "acm", "siggraph"],
-        "arxiv_categories": ["cs.GR"],
-        "conferences": ["SIGGRAPH", "SIGGRAPH Asia", "Eurographics", "I3D"],
+        "sources": [
+          "arxiv",
+          "acm",
+          "siggraph"
+        ],
+        "arxiv_categories": [
+          "cs.GR"
+        ],
+        "conferences": [
+          "SIGGRAPH",
+          "SIGGRAPH Asia",
+          "Eurographics",
+          "I3D"
+        ],
         "schedule": "0 22 * * *"
       },
       "directories": {
@@ -70,9 +81,20 @@
           "mesh generation",
           "curvature estimation"
         ],
-        "sources": ["arxiv", "acm", "siggraph"],
-        "arxiv_categories": ["cs.GR"],
-        "conferences": ["SIGGRAPH", "SIGGRAPH Asia", "Eurographics", "I3D"],
+        "sources": [
+          "arxiv",
+          "acm",
+          "siggraph"
+        ],
+        "arxiv_categories": [
+          "cs.GR"
+        ],
+        "conferences": [
+          "SIGGRAPH",
+          "SIGGRAPH Asia",
+          "Eurographics",
+          "I3D"
+        ],
         "schedule": "0 22 * * *"
       },
       "directories": {
@@ -102,10 +124,24 @@
           "LBM",
           "vortex method",
           "turbulence",
-          "computational fluid dynamics"
+          "computational fluid dynamics",
+          "DSMC",
+          "gas-kinetic",
+          "ALE",
+          "EnKF",
+          "ablation",
+          "Knudsen"
         ],
-        "sources": ["arxiv"],
-        "arxiv_categories": ["cs.FL", "physics.flu-dyn"],
+        "sources": [
+          "arxiv"
+        ],
+        "arxiv_categories": [
+          "physics.flu-dyn",
+          "math-ph",
+          "physics.comp-ph",
+          "physics.ao-ph",
+          "cs.CE"
+        ],
         "schedule": "0 22 * * *"
       },
       "directories": {
@@ -136,8 +172,12 @@
           "particle system",
           "volume rendering"
         ],
-        "sources": ["arxiv"],
-        "arxiv_categories": ["cs.GR"],
+        "sources": [
+          "arxiv"
+        ],
+        "arxiv_categories": [
+          "cs.GR"
+        ],
         "schedule": "0 22 * * *"
       },
       "directories": {
@@ -176,8 +216,15 @@
           "multimodal",
           "reasoning"
         ],
-        "sources": ["arxiv"],
-        "arxiv_categories": ["cs.AI", "cs.CL", "cs.NE", "cs.LG"],
+        "sources": [
+          "arxiv"
+        ],
+        "arxiv_categories": [
+          "cs.AI",
+          "cs.CL",
+          "cs.NE",
+          "cs.LG"
+        ],
         "arxiv_rss": "https://rss.arxiv.org/rss/cs.AI+cs.DM+cs.DS+cs.GR+cs.NE",
         "schedule": "0 22 * * *"
       },
