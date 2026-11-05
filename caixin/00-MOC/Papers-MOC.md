@@ -1,12 +1,49 @@
 # 论文索引 (Papers MOC) — 菜心 / 流体力学
 
-> 知识库：`~/knowledge-vault/caixin/01-Papers/` | 最近更新：2026-11-04
+> 知识库：`~/knowledge-vault/caixin/01-Papers/` | 最近更新：2026-11-05
 > 搜索源：arXiv `physics.flu-dyn` 列表页 `arxiv.org/list/physics.flu-dyn/new`（⚠️ `cs.FL` 是形式语言分类，与流体无关，已停用）
 > ⚠️ **检索路径**：必须用**列表页**判定最新批次；`export.arxiv.org` API 的 `published` 字段**滞后一天**，单用 API 会漏收整批论文（2026-11-01 已修正）
 
 ---
 
 ## 2026-11
+
+### 2026-11-05（本次收录：23 篇，批次 Thu 5 Nov 2026 = 18 新提交 + 5 交叉，全部收录）
+
+**⭐⭐⭐⭐⭐ 数值方法 / 精度（本日重头）**
+- [[2026-11-05-arXiv-2611.05365-FP32-wider-state-time-integration]] — **FP32 存储状态舍入 = $\propto1/\Delta t$ 强制项，与截断误差反向 → 加密网格反而放大误差**；折返步长 $\Delta t^*=(k_R/pk_\tau)^{1/(p+1)}$，$E_{\min}\propto k_R^{p/(p+1)}$；**双 FP32 未求值和状态**（无需 FP64 算术、不改写格式）→ 恢复设计阶收敛；NASA 求解器 SSPRK(3,3)+CFL≈1，**544M 单元高升力机翼：FP32 升力 +2.1%/+4.5%/+7.7%，双浮点 ≤0.3%**；B200/MI355X FP64 1/2、Rubin 1/4、**Blackwell Ultra 1/64** ⭐⭐⭐⭐⭐
+- [[2026-11-05-arXiv-2611.05428-Rosenbrock-regularized-Stokeslet]] — MRS 刚性 ODE 首次用 ROS；**加速 20–2000 倍**；**标度律 $\rho(J)\approx0.35S_C\epsilon^{-4}$**（弯曲刚度线性、细长比四次方反比）；TLJ 只在 $1,k+1,2k+1,\ldots$ 算 Jacobian（ROW1 再快 30/35 倍）；AD(JAX) Jacobian 比 FD 快 2 倍、10 位精度快 40 倍；ERK 需 $2\times10^6$ 步/鞭毛周期 ⭐⭐⭐⭐⭐
+- [[2026-11-05-arXiv-2611.06407-LBM-mushy-layer-sea-ice]] — **link-based VOP**（相变速率逐链路求解，解析方向依赖）+ **广义 Robin 边界**（2D→3D D3Q19、适用区间扩到整个单元跨度；一阶~二阶收敛）；Stefan 验证 200×10；$Da=B\Delta TL/D$；应用海冰盐水通道糊状层 ⭐⭐⭐⭐⭐
+- [[2026-11-05-arXiv-2611.06239-packed-bed-mixing-LBM]] — **有限时间混合由剪切变形主导、指数拉伸仅次要**（修正经典认知）；$\sigma_c^2\sim\mathrm{Pe}^{-\alpha/(2\alpha+1)}t^{-1/2}$；表面 $\sigma_s^2\propto(\gamma^*\mathrm{Pe})^{-\alpha/[2(\alpha+1)]}$（推广 Aquino 2023 到 $\alpha\approx2$）；D3Q19+`lbdm`、**$7.5\times10^7$/$1.31\times10^8$ 体素、$\Delta x/d\approx1/40$、Pe≈280、Re=0.5、500 轨迹 RK3 + Protean 坐标系** ⭐⭐⭐⭐⭐
+- [[2026-11-05-arXiv-2611.06733-poroelastic-FEM-dissipative-interface]] — 混合理论（非 Biot）+ **ALE** + 耗散界面；**FE 空间 P2/P2/P1（+界面 P1）**；COMSOL + **MUMPS** + 变阶 BDF；MMS 验证 5 级均匀加密 $h=2.5$mm；Yeoh 超弹性网格运动；耗散项惩罚**过滤速度跳跃** $\mu_{\mathcal S}$ ⭐⭐⭐⭐
+
+**⭐⭐⭐⭐ 多相流 / 界面力学**
+- [[2026-11-05-arXiv-2611.06882-odd-capillarity-CHNS]] — **宇称奇毛细应力** $\Sigma^{\text{odd}}_{ij}=\frac32e\sigma\epsilon[\epsilon_{ik}\partial_k\phi\partial_j\phi+\epsilon_{jk}\partial_k\phi\partial_i\phi]$；$\mathbf{f}^{\text{odd}}=2\chi\hat e_z\times\mathbf{f}^{\text{even}}$；**$P^{\text{odd}}$ 是唯一净能量注入**（$\chi=2$ 粗化停滞、$\chi=4$ 组分超均匀 + 液滴停滞）；1024² 伪谱 + **ETDRK2** + CUDA/H100；$\langle P^{\text{odd}}\rangle\sim\chi^{1.45}$、偶/奇比 $10^{-2}$、Re 仅 0.20–0.28 ⭐⭐⭐⭐⭐
+- [[2026-11-05-arXiv-2611.06464-microdroplet-uncertainty-inverse-design]] — Basilisk **VOF + AMR**（小波误差引导，$\alpha$ 阈值 $10^{-3}$、$\mathbf{u}$ $3\times10^{-2}$）；**二维轴对称降维**；committee disagreement 定位流态边界不确定区 + 物理引导富化；PSO 约束逆设计；396 例（96/121/179）；0–3% 误差占比近翻倍 ⭐⭐⭐⭐
+- [[2026-11-05-arXiv-2611.05575-mafic-enclaves-magma-mingling]] — 96 例二维 Level-Set；$\mu_r=10^{-6}$–$10^{-3}$、$\mathrm{Ca}=10^6$–$8\times10^9$、Bo $3.5/9.8\times10^6$、Re<0.02；**$\mathrm{Ca}/\mathrm{Bo}\approx1$ 分离下沉 vs 剪切主导**（转变区间随限位移动）；六种结果分类 ⭐⭐⭐
+
+**⭐⭐⭐⭐ 湍流 / 实验**
+- [[2026-11-05-arXiv-2611.06825-propeller-HIT-interscale-energy]] — 螺旋桨 HIT 装置；**KHM 框架不假设各向同性** → **纯正向级联贯穿全尺度空间**（其他强迫方式逆/正级联共存）；弱平均流 → Taylor 冻结失效 → **实验验证 Tennekes 欧拉频率谱**；SPIV $\Delta x=0.69$mm、7250 图对、**$2.5\leq\Delta x/\eta\leq6$**（LEPIV 修正）；5 工况 $Re_\lambda$ 225–352 ⭐⭐⭐⭐
+- [[2026-11-05-arXiv-2611.06834-Kolmogorov-similarity-shear-thinning]] — **Kolmogorov 第一相似性假设在剪切变稀流体中成立**（实验证实 Rosti JFM 1012 R5 2025 的数值结论）；Carbopol 0.04%/0.05%（$n=0.719/0.584$，$\tau_y=0.055/0.214$ Pa，$K_\mu=0.136/0.468$）；平均粘度 + 平均耗散率归一化 → 二三阶结构函数塌缩 ⭐⭐⭐⭐
+- [[2026-11-05-arXiv-2611.06354-porous-high-frequency-boundary-layers]] — 多孔介质高频渐近**逐阶展开**（80 页）；WKB + 非奇异条件 + 位位移流 Neumann 问题；$\Sigma$ 负 ↔ 孔尺寸平行无序、**三阶项大而正 ↔ 流动路径强收缩/扩张**；热参数退化为纯几何（积分平均曲率、Willmore 度量）；锐边 $\varepsilon^w$ 奇异项抵消 → 有限 knife-edge 律 ⭐⭐⭐⭐
+
+**⭐⭐⭐⭐ ML / 数据驱动**
+- [[2026-11-05-arXiv-2611.06912-FlowReconBench-sparse-sensor-reconstruction]] — 10 学习 + 5 经典方法 × 3 regime；**OpenFOAM 9 圆柱尾流 12 块 O-grid 23,800 单元、Re 60–250、St 0.143–0.206（差 1–6%）**、Kolmogorov 流、JHTDB $125^3$×4（$Re_\lambda\approx418$）；**经典（线性随机估计/gappy POD/IDW）在低阶+稠密传感强，学习法在稀疏/不可观测时胜**；CRPS 与误差给出**不同排名**；可查询法内存平、全网格法 OOM ⭐⭐⭐⭐
+- [[2026-11-05-arXiv-2611.05577-readable-not-steerable]] — **"可读"≠"可操纵"**；预注册三项研究：JEPA **不支持**（非物理 JEPA 与静态模型打平或更好）、AE **部分支持**（enstrophy $|r|$ 0.80–0.86 vs 0.38，但 VICReg 削弱该突出度）、dial **部分支持**（响度旋钮 8/8、形状旋钮 3/5 < 门槛 4）；$\sigma_{\text{shape}}\geq0.7$（形状）$/\leq0.2$（响度）；**70 GPU 小时**，全部预注册/代码公开 ⭐⭐⭐⭐
+- [[2026-11-05-arXiv-2611.05780-pi-former-dimensionless-learning]] — π-former 从 **1,288 个已建无量纲群**学关联与指数赋值模式；量纲约束下提出基本群 + 组合优化；7 个物理问题数秒内识别无量纲坐标；接入方程发现表达随工况变化的系数；蒸发驱动润湿实验 → 统一轨迹方程并跨液体泛化 ⭐⭐⭐
+- [[2026-11-05-arXiv-2611.05691-PINN-turbine-blade-inverse-design]] — **压力同伦交替 PINN**（3 子步：流场适应 1000 步 $w_p{=}30/w_w{=}1$ → 冻结场几何更新 300 步 $1.5/40$ → 流场重锚 500 步 $7.5/15$）；10 周期 18,000 步 Adam，$\alpha_c=\min(0.2c,1)$；LS89 叶栅 28 目标点 → **PS/SS RMS 误差 1.13%/2.21%**；SharC 黏性独立验证复现实验趋势；网络 3×20 tanh；**Euler 逆 + 黏性验证** ⭐⭐⭐⭐
+
+**⭐⭐⭐ 其他**
+- [[2026-11-05-arXiv-2611.06749-Pearson-IV-drift-diffusion]] — Pearson IV = 线性漂移+二次扩散 FPE 的定常解；**重尾 ← 扩散局部非线性曲率；不对称 ← 扩散梯度**；**对称线性恢复漂移也能产生不对称定常涨落**；显式 CDF/矩递推/偏度/峰度/众数 ⭐⭐⭐
+- [[2026-11-05-arXiv-2611.05639-hypersonic-grazing-particle-receptivity]] — HIFLIER Mach 6；**掠飞粒子穿入不足半层即产生与撞壁粒子相当的波包**；多尺度渐近 + 临界层解释（伴随模态流向动量最大）；**不需直接撞击即可激发显著稳定性波** ⭐⭐⭐
+- [[2026-11-05-arXiv-2611.05610-biofilm-hydrogen-fracture]] — 生物膜使**表观渗透率降 65%**；两类机制（Type I 非单调：粗糙度涡先限制后被生物膜抑制；Type II 单调：输运阻力+微生物消耗）；**$Re_D=u\sqrt{K_0}/\nu$** 判别 ⭐⭐⭐
+- [[2026-11-05-arXiv-2611.05732-protoplasmic-streaming-Finsler-Couette]] — Langevin+Navier–Stokes + **Finsler 几何**（IDOF 驱动相互作用强度）；速度剖面线性 + 分布峰值结构与**激光光散射实测一致**；剪切变稀 + 边界区粘度最小 ⭐⭐⭐
+- [[2026-11-05-arXiv-2611.06317-Miles-wind-wave-approach]] — Miles 风浪理论简化为可用函数形式；**计入完整波谱后并不低估增长率**（纠正普遍误解）；推广到复杂水动力情形直接 ⭐⭐⭐
+- [[2026-11-05-arXiv-2611.06467-IR-imaging-vapor-concentration]] — 红外吸收成像测蒸气摩尔分数；Hele-Shaw 基准，**30.5 μm/pixel**；仅用端点浓度 + 区间长度的 Stefan 预测做盲对比（**不拟合内部数据**）；n-pentane 分辨非线性 Stefan 剖面，n-hexane/heptane 趋线性扩散极限 ⭐⭐⭐
+- [[2026-11-05-arXiv-2611.05880-KHI-driven-dynamo-BNS]] — BNS 并合 KHI 驱动发电机；Re→∞ 极限：平均垂直场立即播种、运动学增长率渐近、$\mathcal{O}(0.1$ ms) 脱离运动学阶段达磁星强度；**警示：多数全局 BNS 并合模拟未解析正确发电机机制** ⭐⭐⭐
+- [[2026-11-05-arXiv-2611.05554-Stroh-Hamiltonian-poroelastic]] — Stroh 六次式 ↔ 正则 Hamiltonian 结构 → 推广到 Biot 孔弹性；不可压固体 + 无压力梯度 + 完美排水 + **忽略耗散**（作者明确列出四条限制） ⭐⭐⭐
+
+---
 
 ### 2026-11-04（本次收录：13 篇，批次 Wed 4 Nov 2026 = 9 新提交 + 4 交叉）
 
@@ -122,24 +159,39 @@
 ## 主题索引
 
 ### 数值方法
+- **精度与舍入**: [[2026-11-05-arXiv-2611.05365-FP32-wider-state-time-integration]]（FP32 存储舍入 $\propto1/\Delta t$、双浮点状态）
+- **刚性 ODE / 时间积分**: [[2026-11-05-arXiv-2611.05428-Rosenbrock-regularized-Stokeslet]]（ROS、$\rho(J)\approx0.35S_C\epsilon^{-4}$）
+- **LBM / 界面几何**: [[2026-11-05-arXiv-2611.06407-LBM-mushy-layer-sea-ice]]（link-based VOP + 广义 Robin）、[[2026-11-05-arXiv-2611.06239-packed-bed-mixing-LBM]]（D3Q19 + Protean）
+- **有限元 / 多物理耦合**: [[2026-11-05-arXiv-2611.06733-poroelastic-FEM-dissipative-interface]]（混合理论 + ALE + 耗散界面）、[[2026-11-05-arXiv-2611.05554-Stroh-Hamiltonian-poroelastic]]（Stroh–Hamiltonian）
 - **界面捕捉**: [[2026-10-30-DAVOF-dual-area-volume-of-fluid-interface-normal]]（VOF 闭式法向/位置）
 - **域分解**: [[2026-10-30-differentiable-Schwarz-solver-agentic-AI-inverse]]、[[2026-10-17_arXiv-2610.20621_XPINN-Domain-Decomposition-Shock-Burgers]]
 - **降阶模型**: [[2026-10-30-arXiv-2610.40426-rom-constrained-flapping-wing-shape-optimization]]、[[2026-10-30-arXiv-2610.39522-causality-informed-dynamic-mode-decomposition]]
 - **稳定性理论**: [[2026-10-30-kinetic-linear-stability-full-Boltzmann-collision]]、[[2026-07-31-kinetic-linear-stability-theory-compressible-flows]]
 
 ### 科学机器学习
+- **潜空间物理性检验**: [[2026-11-05-arXiv-2611.05577-readable-not-steerable]]（预注册、"可读≠可操纵"）
+- **基准与可观测性**: [[2026-11-05-arXiv-2611.06912-FlowReconBench-sparse-sensor-reconstruction]]（学习 vs 经典方法排序）
+- **无量纲与知识引导**: [[2026-11-05-arXiv-2611.05780-pi-former-dimensionless-learning]]
+- **PINN 逆设计**: [[2026-11-05-arXiv-2611.05691-PINN-turbine-blade-inverse-design]]（压力同伦）、[[2026-11-05-arXiv-2611.06464-microdroplet-uncertainty-inverse-design]]（UQ 引导 + PSO）
 - **PINN 失败模式**: [[2026-10-30-PINN-buoyancy-nondimensionalization-failure-modes]]（无量纲化）、[[2026-10-30-PINN-deep-lid-driven-cavity-regional-accuracy]]（分区评估）
-- **可微分求解器**: [[2026-04-11-AegirJAX-differentiable-coastal-hydrodynamics]]、[[2026-04-09-bottom-topography-PINNs-adjoint]]、[[2026-08-21-PINN-granular-flows-inverse-modeling]]
+- **可微分求解器**: [[2026-04-11-AegirJAX-differentiable-coastal-hydrodynamics]]、[[2026-04-09-bottom-topography-PINNs-adjoint]]、[[2026-08-21-PINN-granuliar-flows-inverse-modeling]]
 - **Agentic AI**: [[2026-10-30-differentiable-Schwarz-solver-agentic-AI-inverse]]、[[2026-10-30-arXiv-2610.39003-agentic-ai-task-aware-sparse-view-ct-hemodynamics]]
 - **图神经网络**: [[2026-10-30-arXiv-2610.37986-coarse-mesh-gnn-sparse-observables-unsteady-flows]]
 
 ### 多相流
+- [[2026-11-05-arXiv-2611.06882-odd-capillarity-CHNS]] — 宇称奇毛细应力、粗化停滞、超均匀
+- [[2026-11-05-arXiv-2611.06464-microdroplet-uncertainty-inverse-design]] — VOF + 不确定性引导逆设计
+- [[2026-11-05-arXiv-2611.05575-mafic-enclaves-magma-mingling]] — Level-Set 液滴变形
 - [[2026-10-30-DAVOF-dual-area-volume-of-fluid-interface-normal]] — 界面重构精度
 - [[2026-10-30-VOF-drop-breakup-rotating-cylinders-plicRDF]] — 曲率对破碎机制的影响
 - [[2026-10-30-arXiv-2610.39586-taylor-bubble-drop-assembly-rise-vertical-tube]] — 气泡-液滴组合体
 - [[2026-10-30-arXiv-2610.38011-optimal-seed-spontaneous-splitting-turbulent-puffs]] — 湍流团裂解
 
 ### 湍流
+- [[2026-11-05-arXiv-2611.06825-propeller-HIT-interscale-energy]] — KHM 逐尺度分析、纯正向级联、Tennekes 谱
+- [[2026-11-05-arXiv-2611.06834-Kolmogorov-similarity-shear-thinning]] — 剪切变稀下第一相似性假设
+- [[2026-11-05-arXiv-2611.06354-porous-high-frequency-boundary-layers]] — 逐阶渐近（准静态）
+- [[2026-11-05-arXiv-2611.06749-Pearson-IV-drift-diffusion]] — 重尾涨落
 - [[2026-10-30-arXiv-2610.39348-liquid-metal-swirl-chaos-transition]] — RTN 路线
 - [[2026-10-30-arXiv-2610.39123-supersonic-turbulent-curved-wall-triadic-cascade]] — 三重级联
 - [[2026-10-30-arXiv-2610.40474-flamlet-closure-non-orthogonal-composition]] — 燃烧 flamlet 闭包
@@ -150,6 +202,7 @@
 
 ## 每日报告
 
+- [[daily-search-report-2026-11-05]] — 23 篇（Thu 5 Nov 批次：18 新 + 5 交叉，**全收录**）；FP32 双浮点状态 / Rosenbrock 加速 MRS / link-based VOP / 有限时间混合标度律 / 宇称奇毛细 / 混合理论孔弹性 FEM；**cs.FL 分类应从配置移除（确认为形式语言）**
 - [[daily-search-report-2026-11-04]] — 13 篇深度笔记（Wed 4 Nov 批次：9 新 + 4 交叉）；紧致 ALE-GKS / 有限 Re 历史核 / 弥散界面动理学 / 双求解器烧蚀交叉验证 / EnKF 验证 Charney 猜想 / 摆链层级设计湍流 / SPOD×DSMC 首对比；**配置建议移除 cs.FL，补 math-ph 等 4 类**
 - [[daily-search-report-2026-11-01]] — 周末零新增：22 篇覆盖度核验 + **检索路径修正**（列表页优先，API 滞后一天）
 - [[daily-search-report-2026-10-31-run2]] — 周末批次：9 篇笔记**技术细节补强**（求解器/网格/格式/边界条件）+ cs.FL 分类建议下线
