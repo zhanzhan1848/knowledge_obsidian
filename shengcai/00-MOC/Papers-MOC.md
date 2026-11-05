@@ -2,6 +2,32 @@
 
 ## 2026-11
 
+### 2026-11-05
+> 📌 严格 24h 窗口内 cs.GR 新投稿仅 1 条（视觉分析类，非渲染）。**高价值来自 SIGGRAPH Asia 2026 的 TOG 上载批次**（9 月起陆续上传，本轮补齐此前遗漏）。本轮 **9 篇新笔记**。ACM DL 仍被 Cloudflare 拦截（CDP 授权未完成），以 arXiv 上的 TOG 版本替代覆盖。
+
+**全局光照 / 光线追踪**
+- [[2026-11-05_Gaussian-Light-Transport-13D-Gaussian-GI]] - 光传输方程解表示为位置×方向×法线×材质的 **13D 高斯混合**，直接最小化渲染方程残差（绕过 Neumann 级数）；训练 7–12 分钟、1080p@63fps、模型 1–5.9MB，比 NR(VF) 快 3.7× 且 FLIP 更低；Morton tile + 逐子空间 Mahalanobis 剔除（每像素仅 76 核）；半梯度降方差；各向异性惩罚。SA 2026 / TOG ⭐⭐⭐⭐⭐
+- [[2026-11-05_ResLRB-Constant-Memory-Differentiable-Light-Tracing]] - 光线追踪每路 k 个传感器连接使伴随图分支化 → **加权蓄水池采样随机保留 1 个** + PRNG 重放 + 逐顶点局部 AD 作用域 → **显存恒定 142MB**（naive AD 深度 16 即 OOM），深度 16 快 2×，梯度无偏；Attached 扩展用前向 Jacobian 链。SA 2026 / TOG ⭐⭐⭐⭐⭐
+
+**可微渲染 / 工具**
+- [[2026-11-05_Sensitivity-AOV-Differentiable-Rendering-Derivatives]] - 把 $\partial M/\partial\theta$ 提升为**一等渲染输出**：敏感性缓冲区 + 四级管线（选择/聚合/绑定/编码）；一次 adjoint sweep 全部视图复用（延迟着色类比）；自由检视相机；反向/正向对偶定位。SA 2026 / TOG ⭐⭐⭐⭐
+
+**实时渲染 / 网格 / 纹理**
+- [[2026-11-05_GRTMesh-GPU-Native-Real-Time-Textured-Mesh]] - TSDF→MC→去噪→纹理→修补→辐射度接缝校正**全 GPU 常驻**；0.02m 体素 **13.1ms/帧**（vs nvblox 208ms / Open3D CPU 1359ms）；**24×16 每相机对数增益场**消除曝光接缝（接缝失配降 27.3–33.3%，单增益只拿 30–72%）；代码开源 ⭐⭐⭐⭐
+- [[2026-11-05_GaussianRenderFormer-Transformer-Rendering-3DGS]] - Transformer **无光栅化器**直接渲染 3D 高斯：38.08 vs 44.02 dB（低 5.94 dB，慢 275×）；**投影足迹**显式注入（23K 参数零初始化）→ +1.4~1.7 dB；2D 嵌入 −5.2dB、4×4 patch −3.0dB；诚实的瓶颈诊断框架（分离泛化/输入损失/欠训练）；TMLR 审稿中，代码开源 ⭐⭐⭐⭐
+
+**光照 / 重光照 / HDR**
+- [[2026-11-05_RelightFormer-Feedforward-Multiview-Relighting]] - **渲染方程积分 = Cross-Attention**（注意力隐式学 $f(\omega_i,\omega_o)(\omega_i\cdot n)$），完全绕过逆向渲染；PRope 置换不变多视图编码（角度来自物理相机配置）；LOD 数据集 90,545 对象 × 39,008 HDRIs；多视图性能随参考数单调提升。SA 2026，代码开源 ⭐⭐⭐⭐
+- [[2026-11-05_Recurrent-Dynamic-Range-Extension-HDR-Reconstruction]] - 单 EV 扩展（曝光不变、输出有界 $[0,2]$）**递归**恢复 HDR；**Memory Replay 从 NLP 迁移到图像** → 全 ResNet 跨阶段反传；推理自适应平均 5 步、档数翻倍以上；4K 半秒。SA 2026 / TOG ⭐⭐⭐⭐
+- [[2026-11-05_Shedding-Light-Benchmark-Lighting-Understanding]] - 用「光探针 + inpaint」把生成模型的光照理解转成**可量化的光照参数匹配**（方向/颜色/辐射分布）；代码与数据全开源。SA 2026 / TOG ⭐⭐⭐
+
+**几何恢复 / 绑定 / 矢量**
+- [[2026-11-05_TailorRig-Garment-Aware-Controllable-Rigging]] - 绑定重述为**可控结构化完整绑定生成**：用户指定身体模板 + 语义标签驱动自回归辅助骨链；**层级 chain-to-bone 蒙皮**（先定运动链再细分）消除跨链权重渗漏；Human-Mix 数据集 38,088 角色 / 21 类；Body J2J 0.023、蒙皮 L₁ 7.70（消融：层级编码器 2.4×、Chain-to-Bone 1.46×）。SA 2026 / TOG ⭐⭐⭐⭐
+- [[2026-11-05_PIE-PS-Photometric-Stereo-Event-Streams]] - 相邻事件 + 光照方向配对成 PIE，**PIEF = 有符号事件率**（免对比度阈值）；PIE-GNN 跨时空共享 + RGA 软可靠性加权；MAE 8.70°(DiLiGenT-Sim)/10.38°(真实) 全优；消融：去 PIEF 14.52°、去 RGA 11.99°。SA 2026 ⭐⭐⭐
+- [[2026-11-05_SketchForge-Training-Free-Scene-to-Vector-Sketching]] - **结构/纹理解耦**的免训练矢量化（DiffVG + 轮廓/DINO 注意力引导初始化，结构分支 SSIM 0.112→0.807）；multiply 融合；Aesthetic 4.84 / Edge F1 0.978。SA 2026 ⭐⭐⭐
+
+- [[2026-11-05-daily-search-report]] - 📋 每日论文搜索报告 2026-11-05
+
 ### 2026-11-02
 > 📌 严格 24h 窗口内 cs.GR 新投稿 0 篇（周末批次空窗，arXiv 上一批次 10-30）。扩展至 10-26~11-02 共 30 篇，**渲染相关 7 篇均为重复确认**（10-27/10-28/10-29/10-31 已收录），本轮新增 1 篇 + 补充 2 篇较薄笔记。
 
