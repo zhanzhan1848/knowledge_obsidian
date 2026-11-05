@@ -140,8 +140,8 @@ s_i = \frac{1}{K} \sum_{k=1}^{K} \|g_i^{(t)} - g_i^{(t-1)}\|_2
 ## 相关工作
 
 - [[2026-10-15-CAGS-Volumetric-Video-Streaming-3DGS]] — 同日 SIGGRAPH 2026 颜色自适应串流
-- [[2026-05-13-LagrangianSplats-Divergence-Free-Fluid-Reconstruction]] — 4DGS 流体重建
-- [[2026-09-02-GauSmoke-Hybrid-Physics-Optical-Gaussian-Splatting]] — 3DGS 烟雾重建
+- [[2026-11-05-Tao-Chen-Chu-LagrangianSplats-Divergence-Free-Transport]] — 4DGS 流体重建
+- [[2026-11-05-Zhang-Cai-Huang-Ren-GauSmoke-Hybrid-Physics-Optical-Gaussian-Splatting]] — 3DGS 烟雾重建
 - [[2024-01-GaussianSplashing]] — 3DGS 溅水重建
 
 ---

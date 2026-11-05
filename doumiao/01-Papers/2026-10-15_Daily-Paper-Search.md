@@ -60,8 +60,8 @@ agent: doumiao
 
 | 论文 | arXiv / DOI | 类别 | 状态 |
 |------|-------------|------|------|
-| GauSmoke: Hybrid Physics-Optical Gaussian Splatting for Sparse Smoke Reconstruction | DOI: 10.1145/3799902.3811148 | SIG | 已入库 [[2026-09-02-GauSmoke-Hybrid-Physics-Optical-Gaussian-Splatting]] |
-| LagrangianSplats: Divergence-Free Transport of Gaussian Primitives for Fluid Reconstruction | DOI: 10.1145/3799902.3811188 | SIG | 已入库 [[2026-05-13-LagrangianSplats-Divergence-Free-Fluid-Reconstruction]] |
+| GauSmoke: Hybrid Physics-Optical Gaussian Splatting for Sparse Smoke Reconstruction | DOI: 10.1145/3799902.3811148 | SIG | 已入库 [[2026-11-05-Zhang-Cai-Huang-Ren-GauSmoke-Hybrid-Physics-Optical-Gaussian-Splatting]] |
+| LagrangianSplats: Divergence-Free Transport of Gaussian Primitives for Fluid Reconstruction | DOI: 10.1145/3799902.3811188 | SIG | 已入库 [[2026-11-05-Tao-Chen-Chu-LagrangianSplats-Divergence-Free-Transport]] |
 | Fast VEM Fluid Simulation | DOI: 10.1145/3811315 | SIG/TOG | ✅ Best Paper Nominee（已在 2026-07-06 Daily 报告记录） |
 | DiffSurFlow: Efficient and Robust Differentiable Fluid Optimization via Surrogate Strategy on Flow Map | DOI: 10.1145/3811337 | SIG/TOG | ✅ 已入库 [[2026-07-08-siggraph-2026-fluid-papers]] |
 | CAGS: Color-Adaptive Volumetric Video Streaming with Dynamic 3D Gaussian Splatting | DOI: 10.1145/3799902.3811058 | SIG | **体积视频流**，与体积/流体渲染主题相关 |

@@ -18,6 +18,7 @@ source: https://kpm-fr.zike.graphics/
 | **标题** | Kinetic Predicted-Moment Flux Reconstruction for High-Order High-Performance Fluid Simulation |
 | **作者** | Zike Xu, Xuan Zhang, Xiaopei Liu |
 | **发表** | **ACM Transactions on Graphics (SIGGRAPH 2026)**, Vol. 45, No. 4, Article 67, July 2026 |
+| **项目页** | https://kpm-fr.zike.graphics/ |
 | **DOI** | [10.1145/3811292](https://doi.org/10.1145/3811292) |
 | **ISSN** | 0730-0301 |
 | **页数** | 25 页 |

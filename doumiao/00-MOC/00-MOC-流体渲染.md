@@ -1,7 +1,7 @@
 ---
 type: moc
 created: 2026-10-21
-updated: 2026-10-31
+updated: 2026-11-05
 agent: doumiao
 domain: fluid-rendering
 ---
@@ -9,7 +9,7 @@ domain: fluid-rendering
 # 🌊 豆苗 MOC — 计算机图形学流体渲染
 
 > 领域：**体积渲染 / 粒子渲染 / 表面渲染 / 烟雾火焰**
-> 更新：2026-11-02
+> 更新：2026-11-05
 
 ## 🎯 三条技术路线总览
 
@@ -27,6 +27,9 @@ domain: fluid-rendering
 
 ### 🔥 烟雾 / 火焰 / 燃烧
 
+- [[2026-11-05-Zhang-Cai-Huang-Ren-GauSmoke-Hybrid-Physics-Optical-Gaussian-Splatting]] — ⭐⭐⭐⭐⭐ **SIG 2026 Article 51**：Beer–Lambert 体积密度场 + Eulerian 无散速度场驱动 Lagrangian 图元；稀疏视角联合重建速度+密度；**PSNR 34.83 / 0.80 h / 114 FPS**（比 NeuSmoke 快 2×、PSNR 高 12 dB）；南开 + 南大 Bo Ren 组
+- [[2026-11-05-Tao-Chen-Chu-LagrangianSplats-Divergence-Free-Transport]] — ⭐⭐⭐⭐⭐ **SIG 2026 Article 52**：**Divergence-Free Kernel 构造性保证不可压缩性**（告别软惩罚）+ Sliding Window 长时程梯度；**代码 + 数据集 + 补充材料全开源**；北大 Tao/Chen/Chu
+- [[2026-11-05-Schneider-Schuh-Kaddar-Artificial-Flame-Thickening-Hydrogen-Turbulence]] — 人工加厚火焰**双通道标定**：$Ka_f^F=Ka_f\sqrt F$、$Da_f^F=Da_f/F$，方向相反 → 匹配这两个数则不同 $F$ **结果塌缩**；含隐式效率修正因子
 - [[2026-10-21-FluidGen-Physics-Aware-Fluid-Video]] — 速度场监督 + 物理奖励 DPO（2026-10-19）
 - [[2026-10-21-WildFireGS-3DGS-Forest-Wildfire-Simulation]] — 3DGS 原生粒子燃烧（2026-08-11）
 - [[2026-10-21-FieryGS-In-the-Wild-Fire-Synthesis]] — MLLM 材质推理 + 体积燃烧（2026-04-30）
@@ -36,12 +39,15 @@ domain: fluid-rendering
 
 ### 🌊 表面流体 / 涡方法
 
+- [[2026-11-05-Zhang-Rautek-Hadwiger-Generic-Variational-Vortex-Core-Manifolds]] — ⭐ **SIG 2026 Article 53**：3D 非定常流涡核的**通用变分框架**（时空双流形）；拉格朗日量按流 pushforward **预积分** → 单时间步单空间变量求解；**任意涡旋准则可插拔**；KAUST
 - [[2026-11-02-Unified-Multi-Scale-Two-Phase-Immiscible-Flows]] — ⭐ **11-02 期新增**：SA2026 共享欧拉网格 + 拉格朗日相分数，**分层↔弥散统一闭合模型** + 体积耦合力联合压力投影（强耦合）；单模拟覆盖瀑布/水轰炸机/水下气泡/间歇泉/拍岸海浪
 - [[2026-10-25-Divisor-Dynamics-Surface-Fluid]] — SA2026 任意拓扑曲面点涡 + 因子类不变量（拓扑正确性）
 - [[2026-10-30-DAVOF-Interface-Normal-Position-VOF]] — ⭐ **10-30 期最贴近渲染**：几何 VOF **单元内闭式**恢复界面法向与位置（额外面分数输运，**无需邻居/无需迭代**）；非结构网格渲染的界面输入契约；**寄生电流消除 = 液面着色稳定性**；已进 OpenFOAM 分支
 
 ### 💧 水 / 液体
 
+- [[2026-11-05-Nayak-Mohammed-Aidun-Monocular-3D-Bubble-Reconstruction]] — 单张阴影图 → 3D 气泡位置 + 物理等效直径：**DNS + 校验过的 MC 光追（~30× CPU 速度，强度误差<3%）+ 焦点条件化多任务学习**，~97.6% 归一化深度精度；**多相流渲染前向模型**可复用
+- [[2026-11-05-Zhang-Cai-Huang-Ren-GauSmoke-Hybrid-Physics-Optical-Gaussian-Splatting]] — 烟雾体积密度场（见 🔥 烟雾区）
 - [[2026-10-31-Masuda-Drop-Decomposition-Cylindrical-Curvature]] — ⭐ **10-31 期最贴近渲染**：几何曲率 κ_F=d/R_i **改写液滴破碎路径**（平面近对称二分断裂 → 强曲率丝状介导碎裂+多卫星滴）；**曲面容器内液体不可套用平面参数**；plicRDF+isoAdvector+AMR；网格精度下限（直径 ≥8 单元）
 - [[2026-10-31-Du-Zou-Capillary-Gravity-Vorticity-I-Local-Constructions]] — 点涡→**紧支撑涡核守恒正则化**（消除 1/r 着色奇异性）；液面四阶展开含首个毛细修正；Kirchhoff–Routh 平衡存在性；**周期波涡深 ∝ log(1/W)** vs 孤立波 ∝ 1/W
 - [[2026-10-31-Du-Zou-Capillary-Gravity-Vorticity-II-Continuation-Folds]] — **全局解曲线** + 集中紧性备择（无单调性假设的有限剖面分解 → 人工远场边界条件）；**简单速度折叠点** Hessian 负指数差恰为 1 → 水面形态转场触发点
@@ -61,12 +67,16 @@ domain: fluid-rendering
 
 ### ⚛️ 粒子系统 / 降维
 
+- [[2026-11-05-Zhang-Cen-Zhu-Chen-Ren-DIQ-MPM-Fluid-Solid-Coupling]] — **DIQ 双界面求积**：免重叠网格的强流固耦合，Schur 补统一稀疏纯压力 SPD 系统，**消除数值断裂**（TVCG 2026，南开）
+- [[2026-10-27-Boettcher-Ridder-Bender-Total-Deformation-MPM-Perfectly-Elastic-Solids]] — 从粒子位置+固定参考网格**直接算形变**（不用速度梯度累积）+ **当前网格算弹性力** → **无数值断裂 + 兼容标准网格碰撞** + 零能量模式抑制
+- [[2026-10-29-Feng-Luan-Mastering-Multi-State-Dynamics-Continuum-Damage-Viscoplastic-MPM]] — 工具中心化**局部化相场损伤求解**（隐式 Ginzburg-Landau + 几何多重网格 V-cycle 预条件）；**双向工具耦合把材料抗力直接暴露给 PPO**；统一逐粒子本构层覆盖软固体/脆性/颗粒/黏塑性
 - [[2026-10-31-Fang-Qi-Wen-Small-Deborah-Fluid-Particle-Limit]] — **两级粒子渲染架构**：小 Deborah 数极限（逐点收敛率）→ 宏观解 NS-KS、微观采样 $n_0$，六维 $f(t,x,v)$ 降到 $(x,t)$；KS 方程 = 带漂移 Fokker–Planck → **直接写为渲染端粒子更新规则**；$g_1$ 项编码流体对粒子分布的一阶反作用
 
 ### ⚙️ 求解器 / 数值格式（渲染上游）
 
+- [[2026-11-05-Zhang-Ren-FastVEM-Fluid-Simulation]] — ⭐⭐⭐⭐⭐ **SIG/TOG 2026 Article 65**：**二阶 VEM 压力离散 + 保凸性 BSP cut-cell + Galerkin 几何多重网格**；压力投影 **最高 100× 加速**；128³ 上复杂/超薄边界烟雾模拟 **< 1 min/frame**；稳健处理窄缝/无人机扫描几何/**相对厚度 10⁻⁵ 超薄壳体**；**代码开源**（南开）
+- [[2026-10-25-KPM-FR-High-Order-Flux-Reconstruction]] — SIGGRAPH 2026 矩空间 GKS + 通量重构（8G 解点/s，显存降 5×，18 亿解点单机）
 - [[2026-10-26-Lanczos-Advection-Near-Orthogonal-SL-Reconstruction]] — SA2026 Lanczos 核近正交半拉格朗日重构（**能量保持 4.3×**，开销仅 1.3×，⭐ 本库工程性价比最高）
-- [[2026-10-25-KPM-FR-High-Order-Flux-Reconstruction]] — SIGGRAPH 2026 矩空间 GKS + 通量重构（8G 解点/s，显存降 5×）
 - [[2026-10-25-ML-Operator-Lexicon-PDE-Solvers]] — SA2026 ML 算子化 PDE 求解器（**可微管线**、矩阵自由、多重网格）
 - [[2026-10-26-DiffPhD-Unified-Differentiable-Solver-Heterogeneous-Elastodynamics]] — SA2026 可微异质投影动力学（**100× 刚度对比仍收敛**、10× 加速、代码开源）
 - [[2026-10-24-Fast-Subspace-Fluid-Simulation-DMD]] — 降阶谱方法
@@ -74,6 +84,9 @@ domain: fluid-rendering
 
 ### 🔧 可微物理 / 实时交互（渲染管线工程）
 
+- [[2026-11-05-Quan-Wang-Lian-DiffSurFlow-Differentiable-Fluid-Optimization]] — ⭐⭐⭐⭐ **SIG/TOG 2026**：**流图代理梯度** —— 发现反向传播中"计算强度 vs 梯度重要性"错配，**跨步连接 = 梯度"高速公路"**；保留关键连接 + 物理剪除冗余伴随计算 → **显存↓ 梯度几乎不变**；Dragon→SIG2026 烟雾变形 / 翼型升阻比 / 城市风场 / trefoil 涡场；**代码开源**（SJTU DALab）
+- [[2026-11-05-Cao-Ren-Xu-Mo-Hu-End-to-End-Differentiable-SPH-Fluid-Rigid-Optimization]] — ⭐ **SIG/TOG 2026**：SPH 端到端可微（IISPH 流体-刚体耦合）；**自适应伴随修正序列**作**下降方向保持的前置预条件器**，抑制长时程伴随变量爆炸；冲量/形状/水射流平衡/**神经流体介导钟摆控制**
+- [[2026-11-05-Modgil-Readable-Is-Not-Steerable-Learned-Fluid-Representations]] — ⚠️ **方法论警示**：预注册实验证明 **"隐空间可读物理量" ≠ "可操控"**；JEPA 竟**不如未训练网络**；对照组（线性动力学 JEPA / 静态模型）是必要设计；**"能读出"不能作为"可控"的证据**
 - [[2026-10-26-RealSimLoop-Online-RealToSim-Differentiable-ReducedOrder]] — SA2026 神经降阶 + 可微 3DGS + 滑动窗口在线适配（**2.5×~7.7× 加速**，sim-to-real 误差 7.1→4.6 mm）
 - [[2026-10-26-Beyond-Kirchhoff-Love-Volumetric-ThinShell]] — SA2026 从体积力学推导的薄壳（**KL 壳缺泊松收缩**，比体积仿真快 2.6×~4.6×）
 - [[2026-10-26-Fast-Cutting-Cage-Deformation-Walk-on-Spheres]] — SIGGRAPH 2026 WoS 增量复用（局部修改仅失效 5-10% → **10×~40× 加速**，代码开源）
@@ -128,6 +141,7 @@ domain: fluid-rendering
 
 ## 📊 每日报告
 
+- [[2026-11-05-daily-report-2026-11-05]] — ⭐⭐⭐⭐⭐ **SIGGRAPH 2026 流体板块全景**（5 篇重磅 + 7 篇补充）：3DGS 流体重建双路线（GauSmoke 光学-物理 / LagrangianSplats 构造性无散）+ FastVEM 边界贴合 100× + DiffSurFlow 流图代理梯度 + KPM-FR 动理学高阶格式 + 涡核时空变分框架；24h 窗口 arXiv cs.GR **无流体新论文**，转向会议论文深挖
 - [[2026-11-02-Daily-Research-Summary]] — **SA2026 流体论文全景（16 篇）+ Unified Multi-Scale 两相流新收录**；24h 窗口无新增（周末空窗），转向会议论文补充与既有笔记复核
 - [[2026-11-02-SIGGRAPH-Asia-2026-Fluid-Papers-Roundup]] — SA2026 流体模拟三大主线全景综述（多尺度求解器 / 自由表面与涡量 / 粒子-学习-可微-分布式）
 - [[2026-10-31-Daily-Paper-Search]] — **周末空窗 + 物理约束力持续增强**（7 篇全非渲染，但约束力极强：几何曲率改写破碎形态 / 色散分段构造频谱 / 层结刚性调制混合 / 涡核守恒正则化 / 强形式残差快 3× / 宏观极限降维两级架构）
@@ -167,6 +181,10 @@ domain: fluid-rendering
 23. **Hamilton / 变分结构回潮**（11-02 期）— Zakharov 波动模型（Hamiltonian Two-Way Coupling）以 $(\eta,\psi)$ 正则共轭对自动获得守恒律，与 2023–2024 *Particle Flow Maps* 系列一脉相承；**结构保持正在取代人工耗散项**
 24. **"选择性物理"成为数据驱动方法论**（11-02 期）— SplashSplat 提出「**只在观测能约束处施加物理结构**」；与 PhysRepair（诊断-修复）同属"物理按需介入"思路，比"全物理"或"全生成"更务实
 25. **3DGS 正在吞并"模拟结果的可视化表示"层**（11-02 期）— ParticleGS（科学粒子，@65× 压缩 30.03 dB，比 SZ3 高 5–8 dB）+ SplashSplat + WildFireGS + FieryGS + Make It Flow：把**离线模拟**连接到**实时可交互渲染**已成 2026 明确趋势
+26. **"Eulerian 场驱动 Lagrangian 图元"成为 3DGS 流体重建的统一范式**（11-05 期）— GauSmoke、Make It Flow、LagrangianSplats 三篇**独立收敛**到同一架构：不再用逐图元独立形变（deformation field），而是**全局运动场 + 图元随流运动**；物理强度分三档（光流 < 光学-物理耦合 < 构造性无散）
+27. **流体模拟瓶颈已拆解为三个正交维度**（11-05 期）— FastVEM 攻**线性代数**（压力投影 100×）/ DiffSurFlow 攻**梯度传播**（显存↓ 梯度不变）/ KPM-FR 攻**格式与 kernel**（2 kernel/步、8G 解点/s）；三篇互不重叠，**可组合**
+28. **"可读 ≠ 可操控"是可微流体的新红线**（11-05 期）— 预注册实验证明 JEPA 隐空间组织流体物理量**不优于未训练网络**；设计上必须**同时检验"能读出"与"推动后有效果"**，且必须有**非物理对照组**
+29. **物理正确性开始被"标定"而非被"假设"**（11-05 期）— 人工加厚火焰给出 $Ka_f$/$Da_f$ **双通道**标定公式，匹配两数则不同加厚倍数结果**塌缩**；配合 GauSmoke/LagrangianSplats 把物理写进表示，**物理正确性正成为可验证的工程量**
 
 ## 🔗 相关 Agent
 

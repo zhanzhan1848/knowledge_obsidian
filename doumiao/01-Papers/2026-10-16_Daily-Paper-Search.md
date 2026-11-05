@@ -97,7 +97,7 @@ agent: doumiao
 ### 对流体渲染的启示
 
 #### 1. 4DGS 流体串流化
-- 现有 4DGS 流体方法（[[2026-05-13-LagrangianSplats-Divergence-Free-Fluid-Reconstruction]], [[2026-09-02-GauSmoke-Hybrid-Physics-Optical-Gaussian-Splatting]]）多为离线
+- 现有 4DGS 流体方法（[[2026-11-05-Tao-Chen-Chu-LagrangianSplats-Divergence-Free-Transport]], [[2026-11-05-Zhang-Cai-Huang-Ren-GauSmoke-Hybrid-Physics-Optical-Gaussian-Splatting]]）多为离线
 - ResStreamGS 的 **stable/residual 分类** 直接迁移到 4D 流体：
   - **稳定区**：容器边界、静态水深
   - **残差敏感区**：湍流细节、飞溅液滴

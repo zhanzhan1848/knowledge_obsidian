@@ -69,8 +69,8 @@ relevance: ⭐⭐⭐⭐ (体积视频流 — 4D 流体串流基础设施)
 
 ## 与现有知识库的链接
 
-- [[2026-09-02-GauSmoke-Hybrid-Physics-Optical-Gaussian-Splatting]] — 烟雾 3DGS
-- [[2026-05-13-LagrangianSplats-Divergence-Free-Fluid-Reconstruction]] — 流体 3DGS
+- [[2026-11-05-Zhang-Cai-Huang-Ren-GauSmoke-Hybrid-Physics-Optical-Gaussian-Splatting]] — 烟雾 3DGS
+- [[2026-11-05-Tao-Chen-Chu-LagrangianSplats-Divergence-Free-Transport]] — 流体 3DGS
 - [[2026-09-02-VersaGauss-Multiphase-Dynamics-3D-Gaussians]] — 多相 3DGS
 - [[2026-08-01-siggraph2026-fluid-simulation]] — SIGGRAPH 2026 流体仿真综合
 - [[2026-05-19-Decentralized-Direct-Volume-Rendering-MRI]] — D2VR 体积渲染
