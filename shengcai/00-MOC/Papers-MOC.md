@@ -2,6 +2,23 @@
 
 ## 2026-11
 
+### 2026-11-06
+> 📌 严格 24h 窗口内 cs.GR 新批次 **13 条**（11-05 提交 9 条 + 11-04 提交 4 条），渲染相关 **5 篇**全部收录。**ACM DL 仍被 Cloudflare 拦截**（403）；SIGGRAPH Asia 2026（12/1-4 吉隆坡）论文尚未上载完毕，本轮以 arXiv 上的 TOG 版本覆盖。本轮 **5 篇新笔记**。
+
+**实时渲染 / 纹理 / PBR**
+- [[2026-11-06_Neural-Texture-Upscaling-Generalized-MLP]] - **广义神经纹理上采样**：单个泛化 MLP 集成进**纹理采样阶段**，渲染时按需上采样 → **无需改纹理数据、无需改资产管线、无需逐资产训练**，且共享权重 → **GPU 执行不发散**（破解 NTC 的最大拦路虎）；$3\times3$ 输入→$2\times2$ 输出，$d{=}256$/$L{=}4$；**解析双线性 + 学习残差**；**LPIPS 而非 PSNR** 评价（PSNR 会偏好模糊图）；隐藏维 $d\ge64$ 后收益饱和；**漫反射顶点可跳过 MLP**（NTC 做不到）；渲染端 FLIP 0.0519 vs bicubic 0.0573 / bilinear 0.0626。**AMD（TOG）** ⭐⭐⭐⭐
+- [[2026-11-06_T2-Splat-Adaptive-Topology-Mesh-Splatting]] - **拓扑自适应与外观精修解耦**：Stage I Safe RDT + **DTE**（QEM 边折叠 + 梯度驱动顶点分裂 + 优化器状态拼接）；Stage II **零初始化逐面残差 Mip-texture** + 尺度自适应过滤；$\sigma$ 退火 $1.0\to0.0001$ + $\alpha_{\text{floor}}\to1$ → **末端退化为实心三角形、over-drawing 归零、原生兼容游戏引擎**；Mip-NeRF360 **+0.71 dB** vs MeshSplatting；**OpenGL 236 FPS（1.87×）**、**网格 −59%**；面数可压到 **10%**（$4^2$ 纹理是性价比拐点）。NeurIPS 2026 ⭐⭐⭐⭐
+
+**3DGS / 在线重建 / 网格编辑**
+- [[2026-11-06_HIBS-Hierarchical-Incremental-Beta-Splatting]] - **beta 核当几何置信度旋钮**：形状参数 $\beta$ 在「类高斯 ↔ 平顶 solid surfel」间插值 → 有证据处生成硬表面片、没证据处生成软探针；**可观测性 $c_z=(B/z)/\theta_0$ × MVS 一致性 $c_{\mathrm{mvs}}$** 交叉验证初始化；**beta 专属 tile 剔除界** $x_{\text{cut}}=1-(255o)^{-1/\beta}$（标准高斯阈值对低不透明度 solid 核**是正确性 bug**）；**闭式矩匹配合并**（$\xi(\beta)=4.5/(\beta{+}2.5)$、$\kappa(\beta)=15(\beta{+}2.5)/(\beta{+}3.5)$，闭式逆 $\beta=15/(15{-}\kappa)-3.5$）——**KL 合并在有界核上会发散**；误差驱动重定位替代 clone/split；在线 MipNeRF360 **27.47 dB / 1:18**（i3DGS 26.66 / 2:09），**时间 −40%**。WACV 2027 ⭐⭐⭐⭐
+- [[2026-11-06_P-MGS-Perceptual-Gaussian-Allocation]] - **感知优先于几何**：现有方法每面固定 $K$ 个高斯 = 误把「网格细分密度」当「表达容量需求」；本文按需求分数 $Q_f=\frac1V\sum_v A_{fv}^2\bar\rho_{fv}$（近似误差 ∝ 梯度能量 × 面积²）分配，**拉格朗日负载定价**求解带逐视图负载约束 $\sum_f n_fT_{fv}\le W_v$ 的整数规划；**事后绑定**保留重建自由度；**局部仿射变形传递**更新中心与协方差；NeRF-Synthetic **34.00 dB / 545K**（Mani-GS −0.75 dB 但高斯少 79.7%）、DTU **32.36 dB / 191K** 全优；**错配证据**：GaMeS 在 Chair −5.12 dB、Hotdog −4.29 dB，Lego 用 **8.5× 高斯仍低 2.58 dB** ⭐⭐⭐⭐
+- [[2026-11-06_EDGAR-Diffusion-Gaussian-Avatar-Refinement]] - **用合成失败驱动扩散精修高斯化身**：EDGAR-SET 三元组 $(I_f,I_{gt},I_r)$（400K 图 / 数千身份，NeRSemble+RGBAvatar 真实 × CAFCA+3DGS 合成），**LPIPS 过滤划定「可恢复域」**；**Sapiens 身份特征注入 cross-attention 的 K/V**、扩散特征作 Q；**SD-Turbo 单步**、冻结 residual/cross-attn 只训 self-attn；**MoE** 应对退化多样性；**精修结果蒸馏回 3D** → 推理期零扩散开销、保持 Base 速率；vs SDEdit 主观偏好 **98%**（且 SDEdit 的 CLIP 0.9078 **低于** Base 0.9369、LPIPS 更差 0.2728 vs 0.2133）；诚实承认 CAP4D 上 L1 略退化、GaussianAvatars **tWE 上升**。**TOG，代码开源** ⭐⭐⭐⭐
+
+**传感器可微渲染 / 仿真**
+- [[2026-11-06_4DPS-mmWave-Radar-Micro-Doppler-Rendering]] - **把慢时间轴引入雷达前向模型**：现有可微雷达渲染器全假设静态、每点每帧只评估一个相位 → **无从定义速度**；本文把**速度作为可微参数**，点直接泼溅进 **range + Doppler bin**（而非逐 chirp 重渲染）→ 成本不再随 chirp 数线性增长；**输出原始复数回波** → 复用真实 DSP 得到任意表示；**单 H100：HuPR 5.7 min/序列**；RT-Pose 微多普勒相关性 **0.966**、下游姿态模型 **21.9 cm MPJPE**（真实训练 16.7 / RF-Genesis **127.6**）⭐⭐⭐
+
+- [[2026-11-06-daily-search-report]] - 📋 每日论文搜索报告 2026-11-06
+
 ### 2026-11-05
 > 📌 严格 24h 窗口内 cs.GR 新投稿仅 1 条（视觉分析类，非渲染）。**高价值来自 SIGGRAPH Asia 2026 的 TOG 上载批次**（9 月起陆续上传，本轮补齐此前遗漏）。本轮 **9 篇新笔记**。ACM DL 仍被 Cloudflare 拦截（CDP 授权未完成），以 arXiv 上的 TOG 版本替代覆盖。
 
