@@ -1,12 +1,40 @@
 # 论文索引 (Papers MOC) — 菜心 / 流体力学
 
-> 知识库：`~/knowledge-vault/caixin/01-Papers/` | 最近更新：2026-11-05
-> 搜索源：arXiv `physics.flu-dyn` 列表页 `arxiv.org/list/physics.flu-dyn/new`（⚠️ `cs.FL` 是形式语言分类，与流体无关，已停用）
+> 知识库：`~/knowledge-vault/caixin/01-Papers/` | 最近更新：2026-11-07
+> 搜索源：arXiv **列表页** `arxiv.org/list/<cat>/new`（⚠️ `cs.FL` 是形式语言分类，与流体无关，**已连续 4 轮确认为误标，建议从配置移除**）
 > ⚠️ **检索路径**：必须用**列表页**判定最新批次；`export.arxiv.org` API 的 `published` 字段**滞后一天**，单用 API 会漏收整批论文（2026-11-01 已修正）
+> 🟢 **建议加入 `math.NA`**（2026-11-07 命中 6 篇，质量最高）；`physics.comp-ph`/`cs.CE`/`math-ph` 亦有稳定高质量命中
 
 ---
 
 ## 2026-11
+
+### 2026-11-07（本次收录：12 篇，批次 Thu 5 Nov 2026 残余；周末 arXiv 不发布新批次）
+
+**⭐⭐⭐⭐⭐ 湍流建模 / 数据驱动闭合**
+- [[2026-11-07-arXiv-2611.07582-BKAN-Bayesian-Reynolds-stress]] — **首次把「可解释性」与「可信不确定度」放进同一个 RANS 闭合**；KAN 边函数=可学习样条（可符号蒸馏）+ 张量基硬约束不变性/对称/无迹 + realisability 仅软正则；局部重参数化使样条输出本身为高斯；Periodic hill RMSE **0.046±0.001**，BKAN ECE **0.06** vs 宽 BNN 0.13（容量↑精度不变但校准变差）；⚠️ **几何外推下过度自信**（epistemic 增大但不足以覆盖误差，under-coverage）⭐⭐⭐⭐⭐
+
+**⭐⭐⭐⭐⭐ 数值方法 —— 预条件与刚性求解**
+- [[2026-11-07-arXiv-2611.08402-hybrid-PIC-preconditioned-quasi-Newton]] — **混合 PIC 隐式能量守恒 + Hall-MHD 物理预条件子 + 解析质量矩阵(AMM)**；Krylov 迭代 **357→~6**，前 25 步每步时间 **↓186×**（vs 未预条件 JFNK）；AMM 仅 4 值/节点且**无粒子循环**、**不破坏守恒性**；显式需 **40× 更小步长 + 9× 墙钟**才达同等能量误差；容差 $10^{-13}$ 下能量到舍入、动量到 $10^{-9}$（Alfvén 单位）；WarpX/AMReX 实现 ⭐⭐⭐⭐⭐
+- [[2026-11-07-arXiv-2611.08429-Stokes-preconditioning-Radau-IIA-weighted-DG]] — 时间依赖 Stokes 的 **FOV 等价预条件子**，常数**与粘性/步长/网格无关**；**可直接抄的 Radau IIA 权重表**（2 级 0.51216588/0.11995468；3 级 0.29272466/0.29076228/0.04863362）；$C_r$ 的 $\lambda_{\min}$ 表显示 **$s\le7$ 用 $\hat W=W$ 即可，$s\ge8$ 转负需另选**；块对角（每级一块）；NGSolve+NETGEN+ngsxfem ⭐⭐⭐⭐⭐
+
+**⭐⭐⭐⭐ 自由表面 / 多孔介质**
+- [[2026-11-07-arXiv-2611.07360-energy-conserving-shallow-water-capillary]] — 浅水+毛细**完全离散能量守恒**：缩放深度梯度增广（二次毛细能→凸熵）+ 能量守恒两点通量 + SBP + CN 型时间离散；**非分裂**双曲/毛细（既有分裂格式尚无严格证明）；二次模型二阶、非线性趋近二阶；能量到机器精度；步长由**双曲 CFL** 决定（不受色散限制）；液态金属包层动机 ⭐⭐⭐⭐
+- [[2026-11-07-arXiv-2611.08169-semi-implicit-shallow-water-sphere]] — 球面浅水二阶半隐式投影：DG-upwind SSPRK3 + $H(\text{div})$ 一致隐式 + hybridisation；**三步对称分裂**（显式半步→完整对流步→隐式半步含投影）保二阶；稳定性**仅受对流 CFL 约束**，超限可**子循环且不增隐式求解**；Williamson 5 / Galewsky 斜压不稳定；Courant~1（2 子循环）；Firedrake ⭐⭐⭐⭐
+- [[2026-11-07-arXiv-2611.08276-HVEM-Richards-variably-saturated-flow]] — Richards 方程**质量守恒混合 VEM**：仅节点水头为全局自由度，单元内凝聚 Darcy 通量（无散部分+特定线性散度场）→ **逐单元水量平衡恒等成立**（任意迭代/任意步长）；**无需稳定化参数**（无散场取按旋转排序的调和多项式，给出参数个数闭式规则）；**Kirchhoff 平均传导率**→静水平衡与重力排水任意网格精确；单元算子全化边界积分；分层边坡 cut grid 用 **40% 节点**达均匀网格 2 倍加密精度 ⭐⭐⭐⭐
+
+**⭐⭐⭐⭐ 高维动理学 / 低秩**
+- [[2026-11-07-arXiv-2611.07107-low-rank-Vlasov-6D]] — **首个以 PDE 物理可观测量（而非纯矩阵量）驱动秩选择**的 HPC 低秩自适应策略；三种判据 `df`/`ef`(电场)/`ee`(电场能量)；升秩则**拒绝当前步并重启**；只存 rank $r$ 对象、GPU 友好；对比自适应 BUG：**内存更省、墙钟 ↓**（GPU 上积分 452→373 s）；线性/非线性 Landau 阻尼、两流、峰尾不稳 ⭐⭐⭐⭐
+- [[2026-11-07-arXiv-2611.07364-APTNN-high-field-kinetic]] — 3D3V 高场动理学（VPFP）的**渐近保持张量神经网络**：CP 分解且**残差保持分解形式**→高维损失积分可按维求值（成本**指数→多项式**）；**增强 AP loss 加入一阶矩方程**直接约束极限通量闭合；3D3V 多随机输入**单 GPU 训练 <30 min** ⭐⭐⭐⭐
+
+**⭐⭐⭐ 理论 / 其他**
+- [[2026-11-07-arXiv-2611.07981-SSP-bound-RK-AI-assisted-proofs]] — 非负系数 RK 三定理：**二阶隐式 SSP 系数 ≤ 2s（锐）→ 全隐式相对 DIRK 无优势**（解决 Ketcheson-Macdonald-Gottlieb 猜想）；**三阶 + 非负系数 → 不可能代数稳定**（排除性判据）；AI 发现 **SSP Butcher 矩阵 ↔ phase-type 分布**关系 ⭐⭐⭐
+- [[2026-11-07-arXiv-2611.06945-dissipative-spin-hydrodynamics]] — 完美自旋流体动力学的耗散扩展；能量-动量张量**反对称部分**两重效应（自旋张量源项→自旋-轨道交换；进入能量/线动量守恒律）；IS 动力学趋向局部平衡**先过 NS 区**；NS 框架因引入**一阶以上导数**而破坏方程结构 ⭐⭐⭐
+- [[2026-11-07-arXiv-2611.08084-OPENSC2-winding-pack-quench]] — 开源 **OPENSC²** 扩展：匝间**横向导热**（破 1D 横向绝热）+ 3D 场分辨电流分配温度/感应损耗 + **集总水力网络**（传输线模型 + 场-网络耦合，借鉴电场-电路耦合）；W7-X 2006 试验验证：**出口温度误差 55 K → 12 K**，复现相邻绕组经入口**流量反向**加热 ⭐⭐⭐
+- [[2026-11-07-arXiv-2611.07985-boundary-preserving-RNN-Poisson]] — Poisson 的**硬边界**随机神经网络：线性提升精确满足 Dirichlet、**无需平衡边界/内部罚权重**；广义重心坐标+超限插值（多面体）+径向参数化（星形曲线域）⭐⭐⭐
+- [[2026-11-07-arXiv-2611.07781-Z-Grammars-credible-grade-semiring]] — ⚠️ **cs.FL 误标，与流体无关**（Z-number 加权文法/自动机）；第 4 轮确认，建议下线该分类 ⛔
+
+---
 
 ### 2026-11-05（本次收录：23 篇，批次 Thu 5 Nov 2026 = 18 新提交 + 5 交叉，全部收录）
 
@@ -159,6 +187,16 @@
 ## 主题索引
 
 ### 数值方法
+- [[2026-11-07-arXiv-2611.08429-Stokes-preconditioning-Radau-IIA-weighted-DG]] — FOV 等价预条件；Radau IIA 权重表；$C_r$ 特征值表
+- [[2026-11-07-arXiv-2611.08402-hybrid-PIC-preconditioned-quasi-Newton]] — Hall-MHD 预条件子移植 + 解析质量矩阵（4 值/节点）
+- [[2026-11-07-arXiv-2611.07360-energy-conserving-shallow-water-capillary]] — 缩放深度梯度增广 + SBP + CN 型时间离散（非分裂）
+- [[2026-11-07-arXiv-2611.08169-semi-implicit-shallow-water-sphere]] — 三步对称分裂 + DG-upwind SSPRK3 + $H(\text{div})$ + hybridisation
+- [[2026-11-07-arXiv-2611.08276-HVEM-Richards-variably-saturated-flow]] — 质量守恒混合 VEM（无稳定化参数）+ Kirchhoff 平均传导率
+- [[2026-11-07-arXiv-2611.07107-low-rank-Vlasov-6D]] — 物理量驱动秩自适应（`df`/`ef`/`ee`）+ projector-splitting
+- [[2026-11-07-arXiv-2611.07981-SSP-bound-RK-AI-assisted-proofs]] — SSP 系数上界 $2s$（二阶隐式）+ 三阶代数稳定障碍
+- [[2026-11-07-arXiv-2611.07985-boundary-preserving-RNN-Poisson]] — 线性提升硬边界 + 重心坐标/超限插值/径向参数化
+- [[2026-11-05-arXiv-2611.05365-FP32-wider-state-time-integration]] — FP32 存储状态舍入 = $\propto1/\Delta t$ 强制项；双 FP32 未求值和状态
+- [[2026-11-05-arXiv-2611.05428-Rosenbrock-regularized-Stokeslet]] — ROS 时间积分 + TLJ；Jacobian 成本 $C_J=c_1\epsilon^{-2.5}$
 - **精度与舍入**: [[2026-11-05-arXiv-2611.05365-FP32-wider-state-time-integration]]（FP32 存储舍入 $\propto1/\Delta t$、双浮点状态）
 - **刚性 ODE / 时间积分**: [[2026-11-05-arXiv-2611.05428-Rosenbrock-regularized-Stokeslet]]（ROS、$\rho(J)\approx0.35S_C\epsilon^{-4}$）
 - **LBM / 界面几何**: [[2026-11-05-arXiv-2611.06407-LBM-mushy-layer-sea-ice]]（link-based VOP + 广义 Robin）、[[2026-11-05-arXiv-2611.06239-packed-bed-mixing-LBM]]（D3Q19 + Protean）
@@ -169,6 +207,9 @@
 - **稳定性理论**: [[2026-10-30-kinetic-linear-stability-full-Boltzmann-collision]]、[[2026-07-31-kinetic-linear-stability-theory-compressible-flows]]
 
 ### 科学机器学习
+- [[2026-11-07-arXiv-2611.07582-BKAN-Bayesian-Reynolds-stress]] — 贝叶斯 KAN + 张量基 RANS 闭合；epistemic/aleatoric 二分；冻结场 UQ 传播
+- [[2026-11-07-arXiv-2611.07364-APTNN-high-field-kinetic]] — CP 残差分解保持 + 增强 AP loss（一阶矩方程）
+- [[2026-11-07-arXiv-2611.07985-boundary-preserving-RNN-Poisson]] — 随机神经网络 + 硬边界提升
 - **潜空间物理性检验**: [[2026-11-05-arXiv-2611.05577-readable-not-steerable]]（预注册、"可读≠可操纵"）
 - **基准与可观测性**: [[2026-11-05-arXiv-2611.06912-FlowReconBench-sparse-sensor-reconstruction]]（学习 vs 经典方法排序）
 - **无量纲与知识引导**: [[2026-11-05-arXiv-2611.05780-pi-former-dimensionless-learning]]
@@ -188,6 +229,7 @@
 - [[2026-10-30-arXiv-2610.38011-optimal-seed-spontaneous-splitting-turbulent-puffs]] — 湍流团裂解
 
 ### 湍流
+- [[2026-11-07-arXiv-2611.07582-BKAN-Bayesian-Reynolds-stress]] — 可解释 + 可信不确定度的 RANS 闭合（BKAN）
 - [[2026-11-05-arXiv-2611.06825-propeller-HIT-interscale-energy]] — KHM 逐尺度分析、纯正向级联、Tennekes 谱
 - [[2026-11-05-arXiv-2611.06834-Kolmogorov-similarity-shear-thinning]] — 剪切变稀下第一相似性假设
 - [[2026-11-05-arXiv-2611.06354-porous-high-frequency-boundary-layers]] — 逐阶渐近（准静态）
@@ -202,6 +244,8 @@
 
 ## 每日报告
 
+- [[daily-search-report-2026-11-07]] — 12 篇（周末批次空窗，处理 Thu 5 Nov 批次残余）；**BKAN 贝叶斯 KAN RANS 闭合** / 混合 PIC 物理预条件（**186×**）/ Stokes FOV 预条件（**Radau IIA 权重表**）/ 浅水毛细能量守恒 / 球面浅水半隐式 / Richards HVEM 质量守恒 / 6D Vlasov 物理量驱动秩自适应 / APTNN / SSP 定理；**cs.FL 第 4 轮确认误标，建议移除；建议加入 math.NA**
+- [[daily-search-report-2026-11-06]] — 24 篇（Thu 5 Nov 批次）；MANTRA 低秩张量湍流重建 / ESE 熵变量稀薄输运 / 特征映射法耗散方程 / DSMC 高超声速侧喷 / HemeLB exascale 动脉 LES 等
 - [[daily-search-report-2026-11-05]] — 23 篇（Thu 5 Nov 批次：18 新 + 5 交叉，**全收录**）；FP32 双浮点状态 / Rosenbrock 加速 MRS / link-based VOP / 有限时间混合标度律 / 宇称奇毛细 / 混合理论孔弹性 FEM；**cs.FL 分类应从配置移除（确认为形式语言）**
 - [[daily-search-report-2026-11-04]] — 13 篇深度笔记（Wed 4 Nov 批次：9 新 + 4 交叉）；紧致 ALE-GKS / 有限 Re 历史核 / 弥散界面动理学 / 双求解器烧蚀交叉验证 / EnKF 验证 Charney 猜想 / 摆链层级设计湍流 / SPOD×DSMC 首对比；**配置建议移除 cs.FL，补 math-ph 等 4 类**
 - [[daily-search-report-2026-11-01]] — 周末零新增：22 篇覆盖度核验 + **检索路径修正**（列表页优先，API 滞后一天）
