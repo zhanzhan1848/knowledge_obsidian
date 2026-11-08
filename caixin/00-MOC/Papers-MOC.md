@@ -1,13 +1,39 @@
 # 论文索引 (Papers MOC) — 菜心 / 流体力学
 
-> 知识库：`~/knowledge-vault/caixin/01-Papers/` | 最近更新：2026-11-07
-> 搜索源：arXiv **列表页** `arxiv.org/list/<cat>/new`（⚠️ `cs.FL` 是形式语言分类，与流体无关，**已连续 4 轮确认为误标，建议从配置移除**）
+> 知识库：`~/knowledge-vault/caixin/01-Papers/` | 最近更新：2026-11-08
+> 搜索源：arXiv **列表页** `arxiv.org/list/<cat>/new`（⚠️ `cs.FL` 是形式语言分类，与流体无关，**已连续 5 轮确认为误标，建议从配置移除**）
 > ⚠️ **检索路径**：必须用**列表页**判定最新批次；`export.arxiv.org` API 的 `published` 字段**滞后一天**，单用 API 会漏收整批论文（2026-11-01 已修正）
 > 🟢 **建议加入 `math.NA`**（2026-11-07 命中 6 篇，质量最高）；`physics.comp-ph`/`cs.CE`/`math-ph` 亦有稳定高质量命中
+> 🔧 **去重必须固化**（2026-11-08 发现）：周末 arXiv 不发批次，连续多轮候选池重叠（11-06 收 24 / 11-07 收 12 / 11-08 初筛 30 → 仅 9 新增）；建笔记前须先扫 `01-Papers/` 建 arXiv ID 集合比对
 
 ---
 
 ## 2026-11
+
+### 2026-11-08（本次收录：**9 篇**，批次 Fri 6 Nov 2026；周末 arXiv 不发布新批次）
+
+> ⚠️ **跨批次去重发现**：本轮初筛命中 30 篇，其中 **21 篇已在 11-06 / 11-07 入库**（`cs.FL` 0 篇）。已删除全部重复笔记，仅保留 9 篇真正新增。**建议把去重逻辑固化进流程**（见报告内 `dedup.py` 建议代码）。
+
+**⭐⭐⭐⭐⭐ 动力学理论**
+- [[2026-11-08-arXiv-2611.07999-Hypocoercivity-for-a-thermostatted-Boltzmann-equation]] — 恒温器 Boltzmann **谱隙上下界**；识别**亚 hypoelliptic** 参数区（谱隙幂律退化至零，宏观流体极限失效）；谱隙 ∝ Kn²；**可用作 kinetic 求解器数值耗散的「安全阈值」** ⭐⭐⭐⭐⭐
+
+**⭐⭐⭐⭐⭐ AI for CFD（可信度范式）**
+- [[2026-11-08-arXiv-2611.07387-Projection-based-segregated-iterative-and-multi-stage-physics-informed-neural-ne]] — **投影解耦 + 多阶段课程** PINN 求解不可压 N-S；速度-压力分块迭代；Re=10⁴ 圆柱绕流 L2 误差 **~1%**、卡门涡频误差 **<3%**；训练快 2-5× ⭐⭐⭐⭐⭐
+- [[2026-11-08-arXiv-2611.07231-Efficient-Projection-Based-Reduced-Order-Modeling-for-Computational-Fluid-Dynami]] — **多保真基 + Galerkin 投影** ROM；同等高保真样本下气动系数误差低 **2-5 倍**；评估提速 **3-4 个数量级**（3-4 个数量级）⭐⭐⭐⭐
+- [[2026-11-08-arXiv-2611.07458-Physics-informed-latent-conditional-flow-matching-for-generative-modeling-of-gra]] — **物理信息潜空间流匹配**生成连续流场；连续性 + 摩擦边界软约束；DEM 真值 L2 误差 5-10%；推理提速 **4-5 个数量级** ⭐⭐⭐⭐
+
+**⭐⭐⭐⭐ 海洋 / 大气观测**
+- [[2026-11-08-arXiv-2611.07969-Estimating-Vertical-Ocean-Velocity-from-Horizontal-Currents-Linear-and-Depth-Con]] — **深度条件化**共享网络反演垂向流速；单网络覆盖全剖面；RMSE 显著优于线性模型与 OI；32 页 14 图 6 表 ⭐⭐⭐⭐
+- [[2026-11-08-arXiv-2611.08148-Detecting-Weather-Fronts-from-Satellite-Observations-What-Does-Reanalysis-Add]] — 卫星锋面检测；ERA5 作伪标签弱监督；再分析提高完整性但**削弱弱锋面** ⭐⭐⭐⭐
+- [[2026-11-08-arXiv-2611.07910-Inertial-sub-range-detection-and-characterization-for-ground-layer-turbulence-at]] — 望远镜台址**地面层湍流惯性子区**分离（scintillometer + 多层超声风速塔）；占视宁度 **30-50%** ⭐⭐⭐⭐
+
+**⭐⭐⭐ 双曲守恒律 / 统计物理**
+- [[2026-11-08-arXiv-2611.08292-Overcompressive-shocks-in-a-2times2-hyperbolic-system-of-conservation-laws]] — 2×2 双曲系统**过压缩激波**允许条件（特征场退化）；完整波型相图；标准捕捉格式在此失效 ⭐⭐⭐
+- [[2026-11-08-arXiv-2611.08038-The-stochastic-Ginzburg-Landau-equation-with-harmonic-potential-in-the-full-subc]] — 随机 GL（模型 B）**亚临界区完整解析解**；临界点**对数修正**（长期未决）；与 MC 定量一致 ⭐⭐⭐
+
+**方法论观察**：3 篇 AI 论文同属一范式 —— **把物理结构编入求解器/模型本身，而非事后修正**（投影法入 PINN、Galerkin 入 ROM、守恒律入生成模型）。配合谱隙阈值，共同主张「可信度来自结构性保证，而非拟合精度」。
+
+---
 
 ### 2026-11-07（本次收录：12 篇，批次 Thu 5 Nov 2026 残余；周末 arXiv 不发布新批次）
 
@@ -187,6 +213,7 @@
 ## 主题索引
 
 ### 数值方法
+- [[2026-11-08-arXiv-2611.07999-Hypocoercivity-for-a-thermostatted-Boltzmann-equation]] — 谱隙上下界 + 亚 hypoelliptic 退化区；数值耗散安全阈值
 - [[2026-11-07-arXiv-2611.08429-Stokes-preconditioning-Radau-IIA-weighted-DG]] — FOV 等价预条件；Radau IIA 权重表；$C_r$ 特征值表
 - [[2026-11-07-arXiv-2611.08402-hybrid-PIC-preconditioned-quasi-Newton]] — Hall-MHD 预条件子移植 + 解析质量矩阵（4 值/节点）
 - [[2026-11-07-arXiv-2611.07360-energy-conserving-shallow-water-capillary]] — 缩放深度梯度增广 + SBP + CN 型时间离散（非分裂）
@@ -207,6 +234,8 @@
 - **稳定性理论**: [[2026-10-30-kinetic-linear-stability-full-Boltzmann-collision]]、[[2026-07-31-kinetic-linear-stability-theory-compressible-flows]]
 
 ### 科学机器学习
+- [[2026-11-08-arXiv-2611.07387-Projection-based-segregated-iterative-and-multi-stage-physics-informed-neural-ne]] — 投影解耦 + 课程学习；Re=10⁴ 误差 ~1%；涡频误差 <3%
+- [[2026-11-08-arXiv-2611.07458-Physics-informed-latent-conditional-flow-matching-for-generative-modeling-of-gra]] — 物理约束嵌入潜空间流匹配；推理提速 4-5 数量级
 - [[2026-11-07-arXiv-2611.07582-BKAN-Bayesian-Reynolds-stress]] — 贝叶斯 KAN + 张量基 RANS 闭合；epistemic/aleatoric 二分；冻结场 UQ 传播
 - [[2026-11-07-arXiv-2611.07364-APTNN-high-field-kinetic]] — CP 残差分解保持 + 增强 AP loss（一阶矩方程）
 - [[2026-11-07-arXiv-2611.07985-boundary-preserving-RNN-Poisson]] — 随机神经网络 + 硬边界提升
@@ -220,7 +249,8 @@
 - **图神经网络**: [[2026-10-30-arXiv-2610.37986-coarse-mesh-gnn-sparse-observables-unsteady-flows]]
 
 ### 多相流
-- [[2026-11-05-arXiv-2611.06882-odd-capillarity-CHNS]] — 宇称奇毛细应力、粗化停滞、超均匀
+- [[2026-11-08-arXiv-2611.07458-Physics-informed-latent-conditional-flow-matching-for-generative-modeling-of-gra]] — 物理约束潜空间流匹配（颗粒流生成模型）
+- [[2026-11-07-arXiv-2611.06882-odd-capillarity-CHNS]] — 宇称奇毛细应力、粗化停滞、超均匀
 - [[2026-11-05-arXiv-2611.06464-microdroplet-uncertainty-inverse-design]] — VOF + 不确定性引导逆设计
 - [[2026-11-05-arXiv-2611.05575-mafic-enclaves-magma-mingling]] — Level-Set 液滴变形
 - [[2026-10-30-DAVOF-dual-area-volume-of-fluid-interface-normal]] — 界面重构精度
@@ -229,6 +259,7 @@
 - [[2026-10-30-arXiv-2610.38011-optimal-seed-spontaneous-splitting-turbulent-puffs]] — 湍流团裂解
 
 ### 湍流
+- [[2026-11-08-arXiv-2611.07910-Inertial-sub-range-detection-and-characterization-for-ground-layer-turbulence-at]] — 地面层湍流惯性子区分离（scintillometer + 超声风速塔）
 - [[2026-11-07-arXiv-2611.07582-BKAN-Bayesian-Reynolds-stress]] — 可解释 + 可信不确定度的 RANS 闭合（BKAN）
 - [[2026-11-05-arXiv-2611.06825-propeller-HIT-interscale-energy]] — KHM 逐尺度分析、纯正向级联、Tennekes 谱
 - [[2026-11-05-arXiv-2611.06834-Kolmogorov-similarity-shear-thinning]] — 剪切变稀下第一相似性假设
@@ -244,6 +275,7 @@
 
 ## 每日报告
 
+- [[daily-search-report-2026-11-08]] — **9 篇**（批次 Fri 6 Nov 2026；周末 arXiv 空窗）；⚠️ **跨批次去重发现**：初筛 30 篇中 21 篇已在 11-06/11-07 入库，已全部删除；真正新增 = 恒温器 Boltzmann 谱隙（亚 hypoelliptic 区间）/ 投影分离多阶段 PINN（Re=10⁴ 误差 ~1%）/ 多保真投影 ROM / 物理信息流匹配颗粒流 / 深度条件化海洋垂向流速反演 / 卫星锋面检测 / 地面层湍流惯性子区 / 过压缩激波相图 / 随机 GL 亚临界区对数修正；**cs.FL 第 5 轮确认误标，建议移除；建议固化 dedup.py 去重逻辑**
 - [[daily-search-report-2026-11-07]] — 12 篇（周末批次空窗，处理 Thu 5 Nov 批次残余）；**BKAN 贝叶斯 KAN RANS 闭合** / 混合 PIC 物理预条件（**186×**）/ Stokes FOV 预条件（**Radau IIA 权重表**）/ 浅水毛细能量守恒 / 球面浅水半隐式 / Richards HVEM 质量守恒 / 6D Vlasov 物理量驱动秩自适应 / APTNN / SSP 定理；**cs.FL 第 4 轮确认误标，建议移除；建议加入 math.NA**
 - [[daily-search-report-2026-11-06]] — 24 篇（Thu 5 Nov 批次）；MANTRA 低秩张量湍流重建 / ESE 熵变量稀薄输运 / 特征映射法耗散方程 / DSMC 高超声速侧喷 / HemeLB exascale 动脉 LES 等
 - [[daily-search-report-2026-11-05]] — 23 篇（Thu 5 Nov 批次：18 新 + 5 交叉，**全收录**）；FP32 双浮点状态 / Rosenbrock 加速 MRS / link-based VOP / 有限时间混合标度律 / 宇称奇毛细 / 混合理论孔弹性 FEM；**cs.FL 分类应从配置移除（确认为形式语言）**
