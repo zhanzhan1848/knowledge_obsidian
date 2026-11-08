@@ -1,7 +1,7 @@
 ---
 type: moc
 created: 2026-10-21
-updated: 2026-11-07
+updated: 2026-11-08
 agent: doumiao
 domain: fluid-rendering
 ---
@@ -9,7 +9,7 @@ domain: fluid-rendering
 # 🌊 豆苗 MOC — 计算机图形学流体渲染
 
 > 领域：**体积渲染 / 粒子渲染 / 表面渲染 / 烟雾火焰**
-> 更新：2026-11-07
+> 更新：2026-11-08
 
 ## 🎯 三条技术路线总览
 
@@ -62,6 +62,7 @@ domain: fluid-rendering
 
 ### 🌬️ 大气 / 分层流 / 逆问题
 
+- [[2026-11-08-EnKF-Rayleigh-Benard-Temperature-Only-Reconstruction]] — ⭐⭐⭐ **11-08 期新增，方法论价值最高**：仅凭**温度场**稀疏噪声观测用**正确标定 EnKF + inflation** 重建完整速度/涡量（数值验证 Charney 猜想）；关键：温度与涡量**不同属一个决定模态集** → nudging/直接替换必失效，靠**流依赖的温度-涡量交叉协方差**绕开；**逐尺度谱分析**（非整体 RMSE）；**观测密度阈值**（低于此仅大尺度同步）；⚠️ 仅 2D、inflation 需重标定、属纯数据同化
 - [[2026-10-31-Nualart-Park-Penafiel-Boussinesq-Stationary-Structures]] — **层结刚性定理**：稳定层结+层流 ⟹ 必为分层剪切流；**Ri≈1 = 混合活跃带**（垂直输运强）→ 烟柱/云层混合强度的零成本分层调制器；停滞点附近"岛"结构 → 等密度面断裂提示
 - [[2026-10-31-Aigner-SFNS-Airflow-Sparse-Sensing-Physics-Prior]] — ⭐ **强形式 NS 残差最小化比弱形式更准且快 3×**；**稀疏控制点 → 物理一致流场**范式（毫秒级驱动体积平流）；$E_s=\int\|\nabla u\|^2$ 作烟流细节锐度旋钮；物理先验收益在稀疏区间最大
 
@@ -74,6 +75,7 @@ domain: fluid-rendering
 
 ### ⚙️ 求解器 / 数值格式（渲染上游）
 
+- [[2026-11-08-HGKS-Compact-ALE-Gas-Kinetic-Unstructured-Mesh]] — ⭐⭐⭐ **11-08 期新增**：三维非结构网格上的**紧凑高阶气体动理学格式（HGKS）**；**降内存重构**——单元及邻居**平均梯度**最小二乘替代矩阵求逆（**3×3 系数矩阵 + 4 次最小二乘**），正对 ALE 移动网格每步重算几何的开销；**GENO + 梯度压缩**抑制强间断振荡；**CUDA + MPI 多 GPU** 全显式（cell-level 并行）→ 离线火/爆炸渲染的扩展范式；算例含**直升机旋翼**；⚠️ 全显式 CFL 严、无渲染实验
 - [[2026-11-05-Zhang-Ren-FastVEM-Fluid-Simulation]] — ⭐⭐⭐⭐⭐ **SIG/TOG 2026 Article 65**：**二阶 VEM 压力离散 + 保凸性 BSP cut-cell + Galerkin 几何多重网格**；压力投影 **最高 100× 加速**；128³ 上复杂/超薄边界烟雾模拟 **< 1 min/frame**；稳健处理窄缝/无人机扫描几何/**相对厚度 10⁻⁵ 超薄壳体**；**代码开源**（南开）
 - [[2026-10-25-KPM-FR-High-Order-Flux-Reconstruction]] — SIGGRAPH 2026 矩空间 GKS + 通量重构（8G 解点/s，显存降 5×，18 亿解点单机）
 - [[2026-10-26-Lanczos-Advection-Near-Orthogonal-SL-Reconstruction]] — SA2026 Lanczos 核近正交半拉格朗日重构（**能量保持 4.3×**，开销仅 1.3×，⭐ 本库工程性价比最高）
@@ -129,6 +131,9 @@ domain: fluid-rendering
 
 ### 🧮 代理模型 / 降阶（物理结构硬约束化）
 
+- [[2026-11-08-FlowRig-Unified-Skeleton-Generation-Flow-Matching]] — ⚠️ **边缘相关（11-08 期新增）**：**流匹配**统一 3D/4D 绑定，**一次前馈生成整段序列的时间对齐骨架**（替代逐序列优化）；收录理由仅为"**序列级一次前馈保证时间一致性**"范式——正对流体渲染中逐帧独立优化的时序漂移（GauSmoke / SplashSplat 类）
+- [[2026-11-08-Pore-Scale-Capillary-Imbibition-FIB-SEM-DNS]] — ⚠️ **边缘相关（11-08 期新增）**：FIB-SEM **真实水泥骨料微观结构**上的孔隙级 DNS，首次直接看到毛细自发浸润的**气-水界面瞬态动力学**；发现局部动力学由**演化界面曲率与毛细压力场**决定（**非仅孔隙尺寸**），**完全润湿下毛细孔内仍显著气体封闭** → 提醒渲染中忽略封闭气泡的简化假设可能失真；**界面捕获技术族**（VOF/level-set/前沿跟踪）是自由表面渲染的直接对应
+
 - [[2026-10-29-Neural-Eigenfluid-Bases-NEB]] — 微分提升**硬约束**不可压缩；**谱方差关系**解释势/速空间加权差异；状态 ~1/1000，复用时毫秒级
 - [[2026-10-29-Neural-Operator-Splitting-Fluid-Complex-Geometry]] — 保留**分步格式**物理结构的 CL-FNO；2D 误差 −68% / 3D −40%；推理快 **10³×**
 - [[2026-10-29-Neural-Basis-Method-Navier-Stokes]] — **表示-投影**原则；残差给出**后验速度误差估计**（认证的无数据训练目标）
@@ -142,6 +147,7 @@ domain: fluid-rendering
 
 ## 📊 每日报告
 
+- [[2026-11-08-Daily-Research-Summary]] — ⚠️ **cs.GR 连续三轮零流体新论文**（11-06 批次 11 篇逐条核对）；**新增 5 篇**（EnKF 温度→速度重建 ⭐ / HGKS 紧凑 ALE 气体动理学 ⭐ / GPU-Native 体积视频 / FIB-SEM 毛细浸润 / FlowRig）；**重大修正：上轮"SIGGRAPH Asia 2026 论文未公布"结论有误**——清单实可查，**24 篇流体论文已 100% 覆盖入库**；SIGGRAPH 2026 另有独立分类 **"Fluid Reconstruction & Optimization"**；**发现 `dedup.py` 递归扫描 bug**（只扫顶层，漏 `2026/11/` 子目录，导致去重失效、本轮误判 11 篇新增实为 5 篇）
 - [[2026-11-07-Daily-Research-Summary]] — ⚠️ **近 48h cs.GR 零流体新论文**（11-06 批次 11 篇 + 11-05 批次 9 篇**逐条核对**）；跨全 arXiv 扫描仅 **1 篇新增**（SIM-PINN，方法论价值最高）；**SIGGRAPH Asia 2026（12/01–04 吉隆坡）论文清单尚未公布**，距开幕约 3.5 周 → 下轮重点盯会议列表页
 - [[2026-11-05-daily-report-2026-11-05]] — ⭐⭐⭐⭐⭐ **SIGGRAPH 2026 流体板块全景**（5 篇重磅 + 7 篇补充）：3DGS 流体重建双路线（GauSmoke 光学-物理 / LagrangianSplats 构造性无散）+ FastVEM 边界贴合 100× + DiffSurFlow 流图代理梯度 + KPM-FR 动理学高阶格式 + 涡核时空变分框架；24h 窗口 arXiv cs.GR **无流体新论文**，转向会议论文深挖
 - [[2026-11-02-Daily-Research-Summary]] — **SA2026 流体论文全景（16 篇）+ Unified Multi-Scale 两相流新收录**；24h 窗口无新增（周末空窗），转向会议论文补充与既有笔记复核
