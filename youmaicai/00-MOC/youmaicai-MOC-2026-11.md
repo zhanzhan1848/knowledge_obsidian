@@ -215,5 +215,137 @@
 | [2611.07283](https://arxiv.org/abs/2611.07283) | [Encoding and Propagation of Grammatical Number in Large Language Models](2026-11-07-2611.07283-encoding-and-propagation-of-grammatical-number-in-large-language-models.md) | cs.CL | [笔记](2026-11-07-2611.07283-encoding-and-propagation-of-grammatical-number-in-large-language-models.md) |
 | [2611.07256](https://arxiv.org/abs/2611.07256) | [TriAttention: Unified Sparse Mixed-Precision Attention for Long-Context LLM Inference](2026-11-07-2611.07256-triattention-unified-sparse-mixed-precision-attention-for-long-context-llm-infer.md) | cs.LG | [笔记](2026-11-07-2611.07256-triattention-unified-sparse-mixed-precision-attention-for-long-context-llm-infer.md) |
 
+## 2026-11-09（60 篇）
 
-*最后更新: 2026-11-07*
+> 覆盖 arXiv 2026-11-09 公告批次（周一正常发布），主力提交日期 2026-11-05 / 11-06。采集自 cs.AI / cs.CL / cs.NE / cs.LG 及交叉分类。RSS 批次 722 条 → 关键词候选 572 条 → 去重后新增 566 条 → 强相关 436 条 → **60 篇强相关论文**。去重基线：知识库已入库 2137 个 arXiv ID，剔除 6 条重复。
+
+**今日主线**：**「状态」正在从模型外部被搬进模型内部——而且被三组互不相干的论文同时搬了进去。**
+
+- **KV cache 是状态**（5 篇独立工作，路径各异 → 这条赛道解空间尚未收敛）：LaProx（把 eviction 重新形式化为输出感知的逐层矩阵乘近似）、Transformer-FSQ（用 FSQ 瓶颈把 cache 本身离散化，Qwen3-1.7B 保留 200K entry 需 21 GiB = 权重的 6.6 倍；12×–97.5× 压缩比下 RULER 最准，32× 时吞吐 1.01×、97.5× 时 1.54× 于原生 SDPA）、BitDecoding-FP4（FP4 Tensor Core 原生解码，算法与系统两端各欠一块的夹缝）、PriorityFEC（把 KV 交付建模为 deadline-aware 流式 FEC）、MINE（单流解码强内存带宽受限，权重也当作可熵编码的 cache）
+- **上下文是状态**：Beyond Truncation?（熵门控 logits processor 免训练移除 19.9%–34.9% 冗余 token，判据是相对「直接截断到同长度」是否保住内容）、Can LLMs Take Retrieved Information with a Grain of Salt?（8 个 LLM 上的 context-certainty obedience，医疗/金融有实际后果）
+- **推理轨迹是状态**（4 篇把 CoT 从「一次性文本」重写为「可采样、可重放、可归因、可蒸馏的中间状态」）：TraceSpec、Counterfactual Distillation、Failure Profiling and Reachable Trajectory Selection、Characterize Then Distill
+
+**「状态是隐式的，且正在被污染」**——三组方向撞上同一结论：
+
+- **Reconstructing LLM Lineage Trees**：微调血缘目前依赖自述且不可验证；误标会让验证者无法审计外包微调、确认许可证合规、追溯父模型传给子模型的漏洞——三者都需要派生**方向**而非仅关系存在
+- **Same Request, Different Answer**：开启 prefix cache 后同请求给出不同答案，且**量化放大分歧**——不开启时 10 种配置下每 token 与 log-prob 均可复现
+- **AuthGateBench**：coding agent 把授权判断委托给 LLM，而 LLM 作为授权门存在 scope escalation 失效模式
+
+**安全：从「分数」转向「结构」与「退化路径」**
+
+- **AttentionSwitch**：越狱防御做进注意力结构本身——联合学习稀疏注意力头的选择与缩放，避免微调的灾难性遗忘
+- **Guardrail Erosion**：审计 25 个生物医学域微调模型，聚焦此前少有人研究的 **knowledge-centric abstention**（"我不知道" 而非 "我拒绝"）——此前主要研究 value-centric refusal
+- **Safety and accuracy diverge**（SaFE-Scale / RadSaFE-200）：200 题放射学基准，直接检验「更大模型 = 更安全」这一默认假设；医学场景中少数自信的、���证据矛盾的错误危害远超平均性能
+- **Learning to Persuade**：只要**一个**针对性说服论证就能把准确率打到接近零——**即使该论证在事实上是错的**
+- **PACZero**：用 PAC Privacy（instance-based）替代 DP 的 (ε,δ)，对 ZO 微调做符号量化，绕开 DP 对 LLM 过于严苛的效用-隐私权衡
+- **Minerva**：CTI 领域用 RLVR（CTI 标准定义了规范标识符，奖励可确定性验证）替代 SFT
+- **Subliminal Learning in VLMs**：把 LLM 的隐性学习扩展到视觉-语言模型——教师 VLM 偏好某动物或面部属性，控制组用无关数字数据，学生仍继承偏好
+- **BiG-SURE**：黑盒场景下的不确定性估计，跨温度语义一致性 + 二部图
+
+**推理能力：反例一个接一个**
+
+- **Does Reasoning Improve Psychological Depth**：DeepSeek-R1 vs V3、GPT-5 vs 4o，60 次盲测两两评测（7 名人类 + LLM-judge 集成）——推翻「benchmark 收益外溢到开放式创作」
+- **Weak-to-Strong Legibility**：推理模型应按它与更弱模型的**交互效应**来评估（安全监控与蒸馏场景更相关）
+- **Hide to See**（NeurIPS 2026）：长 think-answer 轨迹存在**视觉遗忘**；reasoning-prefix masking 要求学生把思考锚定到视觉证据上
+
+**检索与知识：KG 从「相似度检索」转向「确定性知识源」**
+
+- **Typed-Centrality Grounding for Agentic GraphRAG**：批评现有 GraphRAG 把 KG 当同质图、依赖 prompt–context 文本相似度；本文引入符号层
+- **PersonalAI 2.0**：多阶段动态管线，用抽取实体、匹配图顶点、生成线索查询引导自适应迭代检索
+- **KG-RAG4SM**：schema matching 中相似度方法解决不了语义歧义与冲突，LLM 又易幻觉
+
+**多目标：一个反复出现的事实**
+
+- **MATO**（NeurIPS 2026）：prompt-based 个性化免训练但**可控性有限**——模型过度强调或忽略某些偏好，用户无法可靠控制目标相对重要性；用测试时优化解决
+- **MoMHa / Meta-Harness**（NeurIPS 2026）：harness 是一等设计面且本质多目标——「准确但从不拒绝不安全请求、或消耗多一个数量级 token 的 harness，不是好 harness」
+- **Follow the Features**：SAE 特征引导数据选择；用于选择的 LLM-SAE 与被微调模型**无关**，因而可跨目标模型复用
+- **KDFP**：指出被忽视的缺口——近期蒸馏几乎都在蒸馏**后训练**能力，而**通用知识蒸馏**对边缘部署（高效 + 隐私）仍关键
+- **Dominant-Layer ZO**：反直觉发现——ZO 微调被**单个解码层急剧主导**，只微调该层持续达到甚至超过全模型 ZO；该层任务无关但模型特定，训练前即可识别
+
+**注意力机制本身**
+
+- **Adamas**（Hadamard 稀疏注意力）：固定/粗粒度 token 选择会漏掉重要 token 或保留大量冗余
+- **Attend at the Right Resolution**：head-adaptive 稀疏注意力，用 query-key 交互结构低成本定位相关区域
+- **Gated DeltaNet-2**（NeurIPS 2026）：线性注意力的难点不是「忘记什么」而是**如何编辑压缩记忆而不打乱已有联结**；贡献正是把**擦除与写入解耦**
+
+**其他值得单独点名**
+
+- **Fine-Tuned Language Models Exhibit Improved Information Conveyance**：主流认知是「微调降低不确定性」，但既有分析忽略**输出长度**这个关键混淆因子；提出 Canopy Entropy (CE★)，把生成视为一棵树
+- **DunbaaBERT**（ACL 2026）：乌尔都语 RoBERTa-base 家族，从零训练，Byte-BPE 32k/52k/96k，17 GB 去重语料
+- **Does Country Matter?**：孟加拉 CKD 数据集 284 人（112/172），**只改 prompt 里的国家**、患者特征不变
+- **Sampling Reveals Style**（EMNLP 2026 BlackboxNLP Workshop）：免训练、prompt 条件化的隐激活风格轴发现
+- **Human-AI Collaboration in LLM-Integrated BEMS**：85 名被试，考察领域知识与 **AI 素养**的实际影响
+- **PixelBench**：不问能否理解图像，而问能否**逐像素生成**——不学 image tokenizer 或 decoder
+- **AtariBench**（NeurIPS 2026 Datasets & Evaluations）：20 个 Atari 2600 游戏，把游戏内 dynamics 与 wall-clock latency 解耦
+- **MetaEncoder**：bi-encoder / cross-encoder / 候选打分三种架构在「System One」式决策中的扩展动态与效率权衡
+- **MotionDecipher**（PACMIM）：人体运动信号 → 临床步态描述；上下文质量直接影响 LLM 对连续信号的推理
+- **AlienBench**：创造力评测的「有多新」没有固定参照，本文以**结构新颖性**构建基准
+- **LEMMO**：预训练 LLM 用于宽带电磁信号的百万样本级指令理解
+- **Turkish Multimodal Video Fact-Checking**：首个土耳其语多模态视频事实核查数据集 **TeViD**
+- **SCDBench**：LLM 生成「能编译、看似合理」的 Solidity 但语义可能背离原合约，需语义一致性更严的反编译基准
+- ⚠️ **OMG-Agent**（2602.04144）：**作者已撤稿**（核心方法与范围有实质性变更），笔记保留以记录该事实，不推荐使用
+
+| arXiv | 标题 | 类别 | 笔记 |
+|-------|------|------|------|
+| [2510.18413](https://arxiv.org/abs/2510.18413) | [Adamas: Hadamard Sparse Attention for Efficient Long-Context Inference](2026-11-09-2510.18413-adamas-hadamard-sparse-attention-for-efficient-lon.md) | cs.CL | [笔记](2026-11-09-2510.18413-adamas-hadamard-sparse-attention-for-efficient-lon.md) |
+| [2605.25342](https://arxiv.org/abs/2605.25342) | [MATO: Multi-objective Personalized Alignment with Test-time Optimization for Large Language Models](2026-11-09-2605.25342-mato-multi-objective-personalized-alignment-with-test-tim.md) | cs.CL | [笔记](2026-11-09-2605.25342-mato-multi-objective-personalized-alignment-with-test-tim.md) |
+| [2611.08752](https://arxiv.org/abs/2611.08752) | [AttentionSwitch: Jailbreak Defense for LLMs via Joint Learning of Sparse Attention-Head Selection and Scaling](2026-11-09-2611.08752-attentionswitch-jailbreak-defense-for-llms-via-joint-lea.md) | cs.AI, cs.CL, cs.CR | [笔记](2026-11-09-2611.08752-attentionswitch-jailbreak-defense-for-llms-via-joint-lea.md) |
+| [2605.07234](https://arxiv.org/abs/2605.07234) | [Reformulating KV Cache Eviction Problem for Long-Context LLM Inference](2026-11-09-2605.07234-reformulating-kv-cache-eviction-problem-for-long-context-llm.md) | cs.CL, cs.AI | [笔记](2026-11-09-2605.07234-reformulating-kv-cache-eviction-problem-for-long-context-llm.md) |
+| [2611.09414](https://arxiv.org/abs/2611.09414) | [Typed-Centrality Grounding for Agentic GraphRAG: A Symbolic Approach for Agentic Reasoning](2026-11-09-2611.09414-typed-centrality-grounding-for-agentic-graphrag-a-symboli.md) | cs.AI | [笔记](2026-11-09-2611.09414-typed-centrality-grounding-for-agentic-graphrag-a-symboli.md) |
+| [2610.10854](https://arxiv.org/abs/2610.10854) | [KDFP: A first-principles approach to knowledge distillation in large language models](2026-11-09-2610.10854-kdfp-a-first-principles-approach-to-knowledge-distillation.md) | cs.LG | [笔记](2026-11-09-2610.10854-kdfp-a-first-principles-approach-to-knowledge-distillation.md) |
+| [2605.04039](https://arxiv.org/abs/2605.04039) | [Safety and accuracy diverge across deployment conditions in clinical large language models](2026-11-09-2605.04039-safety-and-accuracy-diverge-across-deployment-condition.md) | cs.CL, cs.AI, cs.LG | [笔记](2026-11-09-2605.04039-safety-and-accuracy-diverge-across-deployment-condition.md) |
+| [2611.09506](https://arxiv.org/abs/2611.09506) | [On the Effectiveness and Limitations of Open-Weight LLMs for Low-Resource Offensive Language Detection in Danish](2026-11-09-2611.09506-on-the-effectiveness-and-limitations-of-open-weight-llms.md) | cs.CL | [笔记](2026-11-09-2611.09506-on-the-effectiveness-and-limitations-of-open-weight-llms.md) |
+| [2611.08780](https://arxiv.org/abs/2611.08780) | [Guardrail Erosion in Domain Fine-Tuned Large Language Models: A Paired Audit of Knowledge-Centric Abstention in Biomedical LLMs](2026-11-09-2611.08780-guardrail-erosion-in-domain-fine-tuned-large-language-models-a.md) | cs.CL, cs.AI | [笔记](2026-11-09-2611.08780-guardrail-erosion-in-domain-fine-tuned-large-language-models-a.md) |
+| [2611.08651](https://arxiv.org/abs/2611.08651) | [Turkish Multimodal Video Fact-Checking: A New Dataset and a Comparison of Zero-Shot Agentic and Fine-Tuned Systems](2026-11-09-2611.08651-turkish-multimodal-video-fact-checking-a-new-dataset.md) | cs.CV, cs.CL | [笔记](2026-11-09-2611.08651-turkish-multimodal-video-fact-checking-a-new-dataset.md) |
+| [2606.05516](https://arxiv.org/abs/2606.05516) | [Dominant-Layer ZO: A Single Layer Dominates Zeroth-Order Fine-Tuning of LLMs](2026-11-09-2606.05516-dominant-layer-zo-a-single-layer-dominates-zeroth-orde.md) | cs.LG | [笔记](2026-11-09-2606.05516-dominant-layer-zo-a-single-layer-dominates-zeroth-orde.md) |
+| [2605.11651](https://arxiv.org/abs/2605.11651) | [Hide to See: Reasoning-prefix Masking for Visual-anchored Thinking in VLM Distillation](2026-11-09-2605.11651-hide-to-see-reasoning-prefix-masking-for-visual-anch.md) | cs.CV, cs.AI, cs.CL | [笔记](2026-11-09-2605.11651-hide-to-see-reasoning-prefix-masking-for-visual-anch.md) |
+| [2611.09061](https://arxiv.org/abs/2611.09061) | [Does Reasoning Improve Psychological Depth in Large Language Models?](2026-11-09-2611.09061-does-reasoning-improve-psychological-depth-in-large-l.md) | cs.CL | [笔记](2026-11-09-2611.09061-does-reasoning-improve-psychological-depth-in-large-l.md) |
+| [2611.04085](https://arxiv.org/abs/2611.04085) | [Follow the Features: SAE Feature-Guided Data-Efficient Instruction-Tuning of Large Language Models](2026-11-09-2611.04085-follow-the-features-sae-feature-guided-data-eff.md) | cs.LG | [笔记](2026-11-09-2611.04085-follow-the-features-sae-feature-guided-data-eff.md) |
+| [2611.08795](https://arxiv.org/abs/2611.08795) | [MotionDecipher: LLM-Assisted Clinical Interpretation of Human Motion Signals for Efficient Gait Analysis](2026-11-09-2611.08795-motiondecipher-llm-assisted-clinical-interpretation.md) | cs.HC, cs.AI | [笔记](2026-11-09-2611.08795-motiondecipher-llm-assisted-clinical-interpretation.md) |
+| [2603.16843](https://arxiv.org/abs/2603.16843) | [Counterfactual Distillation: Internalizing Reflective Experience into LLM Agent](2026-11-09-2603.16843-counterfactual-distillation-internalizing-reflective-ex.md) | cs.AI | [笔记](2026-11-09-2603.16843-counterfactual-distillation-internalizing-reflective-ex.md) |
+| [2608.01684](https://arxiv.org/abs/2608.01684) | [GABench: A Comprehensive Benchmark for Evaluating LLM Agents on Graph Analysis Tasks](2026-11-09-2608.01684-gabench-comprehensive-benchmark-for-evaluating-llm.md) | cs.AI | [笔记](2026-11-09-2608.01684-gabench-comprehensive-benchmark-for-evaluating-llm.md) |
+| [2611.09194](https://arxiv.org/abs/2611.09194) | [Large Language Model Consensus and Corpus-Adaptive Topic Modeling for Classifying and Mapping Patent Innovation](2026-11-09-2611.09194-large-language-model-consensus-and-corpus-adaptive-top.md) | cs.AI, cs.IR | [笔记](2026-11-09-2611.09194-large-language-model-consensus-and-corpus-adaptive-top.md) |
+| [2611.09232](https://arxiv.org/abs/2611.09232) | [RAG-Enhanced LLMs for Interactive Explainability in Clinical Decision Support Systems](2026-11-09-2611.09232-rag-enhanced-llms-for-interactive-explainability-in.md) | cs.AI, cs.HC, cs.LG | [笔记](2026-11-09-2611.09232-rag-enhanced-llms-for-interactive-explainability-in.md) |
+| [2605.13481](https://arxiv.org/abs/2605.13481) | [PersonalAI 2.0: Enhancing knowledge graph traversal/retrieval with planning mechanism for Personalized LLM Agents](2026-11-09-2605.13481-personalai-2-0-enhancing-knowledge-graph-traversal.md) | cs.CL | [笔记](2026-11-09-2605.13481-personalai-2-0-enhancing-knowledge-graph-traversal.md) |
+| [2609.30967](https://arxiv.org/abs/2609.30967) | [MoMHa: Multi-Objective Optimization of LLM Harnesses over Accuracy, Safety, and Tokens](2026-11-09-2609.30967-momha-multi-objective-optimization-of-llm-harnesses.md) | cs.AI | [笔记](2026-11-09-2609.30967-momha-multi-objective-optimization-of-llm-harnesses.md) |
+| [2608.30646](https://arxiv.org/abs/2608.30646) | [BiG-SURE - Bipartite Graph for Semantic Uncertainty and Reliability Estimation of LLMs](2026-11-09-2608.30646-big-sure-bipartite-graph-for-semantic-uncertainty-and-reli.md) | cs.CL, cs.AI, cs.LG | [笔记](2026-11-09-2608.30646-big-sure-bipartite-graph-for-semantic-uncertainty-and-reli.md) |
+| [2501.19040](https://arxiv.org/abs/2501.19040) | [Towards the Worst-case Robustness of Large Language Models](2026-11-09-2501.19040-towards-the-worst-case-robustness-of-large-language-models.md) | cs.LG | [笔记](2026-11-09-2501.19040-towards-the-worst-case-robustness-of-large-language-models.md) |
+| [2602.00513](https://arxiv.org/abs/2602.00513) | [Minerva: Reinforcement Learning with Verifiable Rewards for Cyber Threat Intelligence LLMs](2026-11-09-2602.00513-minerva-reinforcement-learning-with-verifiable-rewards.md) | cs.LG | [笔记](2026-11-09-2602.00513-minerva-reinforcement-learning-with-verifiable-rewards.md) |
+| [2602.16140](https://arxiv.org/abs/2602.16140) | [Human-AI Collaboration in Large Language Model-Integrated Building Energy Management Systems: The Role of User Domain Knowledge and AI Literacy](2026-11-09-2602.16140-human-ai-collaboration-in-large-language-model-integrated-bu.md) | cs.HC, cs.AI | [笔记](2026-11-09-2602.16140-human-ai-collaboration-in-large-language-model-integrated-bu.md) |
+| [2602.04144](https://arxiv.org/abs/2602.04144) | [OMG-Agent: Toward Robust Missing Modality Generation with Decoupled Coarse-to-Fine Agentic Workflows](2026-11-09-2602.04144-omg-agent-toward-robust-missing-modality-generation.md) | cs.AI, cs.LG | [笔记](2026-11-09-2602.04144-omg-agent-toward-robust-missing-modality-generation.md) |
+| [2605.26935](https://arxiv.org/abs/2605.26935) | [DunbaaBERT: From Sacrifice to Semantics](2026-11-09-2605.26935-dunbaabert-from-sacrifice-to-semantics.md) | cs.CL | [笔记](2026-11-09-2605.26935-dunbaabert-from-sacrifice-to-semantics.md) |
+| [2611.09598](https://arxiv.org/abs/2611.09598) | [Transformer-FSQ: Discrete Latents for Extreme KV-Cache Compression](2026-11-09-2611.09598-transformer-fsq-discrete-latents-for-extreme-kv-cache.md) | cs.LG | [笔记](2026-11-09-2611.09598-transformer-fsq-discrete-latents-for-extreme-kv-cache.md) |
+| [2611.09770](https://arxiv.org/abs/2611.09770) | [ROSE: Risk-Aware Orthogonal Subspace Navigation for Lifelong Knowledge Editing in Multimodal Large Language Models](2026-11-09-2611.09770-rose-risk-aware-orthogonal-subspace-navigation-for-lifelong.md) | cs.CL, cs.AI, cs.CV | [笔记](2026-11-09-2611.09770-rose-risk-aware-orthogonal-subspace-navigation-for-lifelong.md) |
+| [2611.09825](https://arxiv.org/abs/2611.09825) | [BitDecoding-FP4: Native FP4 KV Cache Decoding via Algorithm-System Co-Design](2026-11-09-2611.09825-bitdecoding-fp4-native-fp4-kv-cache-decoding-via-algori.md) | cs.AI, cs.AR, cs.CL | [笔记](2026-11-09-2611.09825-bitdecoding-fp4-native-fp4-kv-cache-decoding-via-algori.md) |
+| [2605.22791](https://arxiv.org/abs/2605.22791) | [Gated DeltaNet-2: Decoupling Erase and Write in Linear Attention](2026-11-09-2605.22791-gated-deltanet-2-decoupling-erase-and-write-in-linear-att.md) | cs.AI | [笔记](2026-11-09-2605.22791-gated-deltanet-2-decoupling-erase-and-write-in-linear-att.md) |
+| [2610.21390](https://arxiv.org/abs/2610.21390) | [PriorityFEC: Deadline-Aware Streaming FEC for KV-Cache Handoff in Edge Multi-Agent Systems](2026-11-09-2610.21390-priorityfec-deadline-aware-streaming-fec-for-kv-cache-handoff-in-edge-multi-agent-systems.md) | cs.NI, cs.AI | [笔记](2026-11-09-2610.21390-priorityfec-deadline-aware-streaming-fec-for-kv-cache-handoff-in-edge-multi-agent-systems.md) |
+| [2611.09092](https://arxiv.org/abs/2611.09092) | [AdaAlloc: Adaptive Visual Token Allocation for Long-Video Question Answering](2026-11-09-2611.09092-adaalloc-adaptive-visual-token-allocation-for-long-video-question-answering.md) | cs.CV, cs.AI | [笔记](2026-11-09-2611.09092-adaalloc-adaptive-visual-token-allocation-for-long-video-question-answering.md) |
+| [2501.08686](https://arxiv.org/abs/2501.08686) | [Knowledge Graph-based Retrieval-Augmented Generation for Schema Matching](2026-11-09-2501.08686-knowledge-graph-based-retrieval-augmented-generation-for-schema-matching.md) | cs.DB, cs.CL, cs.IR | [笔记](2026-11-09-2501.08686-knowledge-graph-based-retrieval-augmented-generation-for-schema-matching.md) |
+| [2611.09476](https://arxiv.org/abs/2611.09476) | [LEMMO: A Large Electromagnetic Model leveraging Pretrained LLMs for Million-Sample Signal Understanding](2026-11-09-2611.09476-lemmo-a-large-electromagnetic-model-leveraging-pretrained-llms-for-million-sample-signal-understanding.md) | cs.AI, cs.SD | [笔记](2026-11-09-2611.09476-lemmo-a-large-electromagnetic-model-leveraging-pretrained-llms-for-million-sample-signal-understanding.md) |
+| [2611.09424](https://arxiv.org/abs/2611.09424) | [MINE: Entropy-coded Memory-efficient Inference for Large Language Models](2026-11-09-2611.09424-mine-entropy-coded-memory-efficient-inference-for-large-language-models.md) | cs.LG, cs.DC, cs.PF | [笔记](2026-11-09-2611.09424-mine-entropy-coded-memory-efficient-inference-for-large-language-models.md) |
+| [2610.41177](https://arxiv.org/abs/2610.41177) | [TraceSpec: Understanding and Improving Speculative Decoding for LLM Agents](2026-11-09-2610.41177-tracespec-understanding-and-improving-speculative-decoding-for-llm-agents.md) | cs.CL | [笔记](2026-11-09-2610.41177-tracespec-understanding-and-improving-speculative-decoding-for-llm-agents.md) |
+| [2605.06505](https://arxiv.org/abs/2605.06505) | [PACZero: PAC-Private Fine-Tuning of Language Models via Sign Quantization](2026-11-09-2605.06505-paczero-pac-private-fine-tuning-of-language-models-via-sign-quantization.md) | cs.LG, cs.AI, cs.CR | [笔记](2026-11-09-2605.06505-paczero-pac-private-fine-tuning-of-language-models-via-sign-quantization.md) |
+| [2611.08507](https://arxiv.org/abs/2611.08507) | [Does Country Matter? Evaluating Geographic Sensitivity of Large Language Models in Zero-Shot Chronic Kidney Disease Screening](2026-11-09-2611.08507-does-country-matter-evaluating-geographic-sensitivity-of-large-language-models-in-zero-shot-chronic-kidney-disease-screening.md) | cs.LG | [笔记](2026-11-09-2611.08507-does-country-matter-evaluating-geographic-sensitivity-of-large-language-models-in-zero-shot-chronic-kidney-disease-screening.md) |
+| [2611.09094](https://arxiv.org/abs/2611.09094) | [AlienBench: A Benchmark of Structural Novelty in Language Model Outputs](2026-11-09-2611.09094-alienbench-a-benchmark-of-structural-novelty-in-language-model-outputs.md) | cs.CL, cs.AI | [笔记](2026-11-09-2611.09094-alienbench-a-benchmark-of-structural-novelty-in-language-model-outputs.md) |
+| [2608.11624](https://arxiv.org/abs/2608.11624) | [Learning to Persuade Exposes How Easily LLMs Abandon Correct Beliefs](2026-11-09-2608.11624-learning-to-persuade-exposes-how-easily-llms-abandon-correct-beliefs.md) | cs.CL, cs.AI | [笔记](2026-11-09-2608.11624-learning-to-persuade-exposes-how-easily-llms-abandon-correct-beliefs.md) |
+| [2611.02540](https://arxiv.org/abs/2611.02540) | [PixelBench: Can LLMs Understand and Generate Images Pixel by Pixel?](2026-11-09-2611.02540-pixelbench-can-llms-understand-and-generate-images.md) | cs.CV, cs.CL, cs.LG | [笔记](2026-11-09-2611.02540-pixelbench-can-llms-understand-and-generate-images.md) |
+| [2609.04748](https://arxiv.org/abs/2609.04748) | [Same Request, Different Answer: Quantization Amplifies Cache-Induced Divergence in LLM Serving](2026-11-09-2609.04748-same-request-different-answer-quantization-amplifies-cache.md) | cs.SE, cs.DC, cs.LG | [笔记](2026-11-09-2609.04748-same-request-different-answer-quantization-amplifies-cache.md) |
+| [2609.19150](https://arxiv.org/abs/2609.19150) | [Sampling Reveals Style: Unsupervised, Training-Free Discovery of Prompt-Conditional Stylistic Axes in LLM Activations](2026-11-09-2609.19150-sampling-reveals-style-unsupervised-training-free-discovery.md) | cs.CL, cs.LG | [笔记](2026-11-09-2609.19150-sampling-reveals-style-unsupervised-training-free-discovery.md) |
+| [2603.20508](https://arxiv.org/abs/2603.20508) | [Measuring Weak-to-Strong Legibility of Reasoning Models](2026-11-09-2603.20508-measuring-weak-to-strong-legibility-of-reasoning.md) | cs.MA, cs.AI, cs.CL | [笔记](2026-11-09-2603.20508-measuring-weak-to-strong-legibility-of-reasoning.md) |
+| [2611.08755](https://arxiv.org/abs/2611.08755) | [AtariBench: Evaluating Spatiotemporal Reasoning of Vision-Language Models in Atari Gameplay](2026-11-09-2611.08755-ataribench-evaluating-spatiotemporal-reasoning-of-vlms.md) | cs.CV, cs.AI | [笔记](2026-11-09-2611.08755-ataribench-evaluating-spatiotemporal-reasoning-of-vlms.md) |
+| [2611.08866](https://arxiv.org/abs/2611.08866) | [Reconstructing LLM Lineage Trees via Fine-Tuning Path Inference](2026-11-09-2611.08866-reconstructing-llm-lineage-trees-via-fine-tuning.md) | cs.LG | [笔记](2026-11-09-2611.08866-reconstructing-llm-lineage-trees-via-fine-tuning.md) |
+| [2611.08975](https://arxiv.org/abs/2611.08975) | [Beyond Truncation? Entailment-Licensed Elision and the Limits of Semantic Preservation in LLM Decoding](2026-11-09-2611.08975-beyond-truncation-entailment-licensed-elision.md) | cs.CL | [笔记](2026-11-09-2611.08975-beyond-truncation-entailment-licensed-elision.md) |
+| [2605.30844](https://arxiv.org/abs/2605.30844) | [Fine-Tuned Language Models Exhibit Improved Information Conveyance](2026-11-09-2605.30844-fine-tuned-language-models-exhibit-improved.md) | cs.CL, cs.AI, stat.ML | [笔记](2026-11-09-2605.30844-fine-tuned-language-models-exhibit-improved.md) |
+| [2605.29059](https://arxiv.org/abs/2605.29059) | [SCDBench: A Benchmark for LLM-Based Smart Contract Decompilers](2026-11-09-2605.29059-scdbench-a-benchmark-for-llm-based-smart.md) | cs.SE, cs.AI, cs.CR | [笔记](2026-11-09-2605.29059-scdbench-a-benchmark-for-llm-based-smart.md) |
+| [2610.16426](https://arxiv.org/abs/2610.16426) | [AuthGateBench: Benchmarking LLMs as Authorization Gate](2026-11-09-2610.16426-authgatebench-benchmarking-llms-as-authorization-gate.md) | cs.AI | [笔记](2026-11-09-2610.16426-authgatebench-benchmarking-llms-as-authorization-gate.md) |
+| [2611.09042](https://arxiv.org/abs/2611.09042) | [Failure Profiling and Reachable Trajectory Selection for Reasoning Distillation](2026-11-09-2611.09042-failure-profiling-and-reachable-trajectory-selection-for-re.md) | cs.CL, cs.AI, cs.LG | [笔记](2026-11-09-2611.09042-failure-profiling-and-reachable-trajectory-selection-for-re.md) |
+| [2611.08538](https://arxiv.org/abs/2611.08538) | [Subliminal Learning in Vision-Language Models](2026-11-09-2611.08538-subliminal-learning-in-vision-language-models.md) | cs.CV, cs.AI, cs.CL | [笔记](2026-11-09-2611.08538-subliminal-learning-in-vision-language-models.md) |
+| [2611.09700](https://arxiv.org/abs/2611.09700) | [Attend at the Right Resolution: Head-Adaptive Sparse Attention via Query-Key Interaction Structure](2026-11-09-2611.09700-attend-at-the-right-resolution-head-adaptive-sparse-attent.md) | cs.AI | [笔记](2026-11-09-2611.09700-attend-at-the-right-resolution-head-adaptive-sparse-attent.md) |
+| [2611.09536](https://arxiv.org/abs/2611.09536) | [Multimodal Training with Knowledge Traction for Video Anomaly Detection](2026-11-09-2611.09536-multimodal-training-with-knowledge-traction-for-video-an.md) | cs.CV, cs.AI | [笔记](2026-11-09-2611.09536-multimodal-training-with-knowledge-traction-for-video-an.md) |
+| [2609.08572](https://arxiv.org/abs/2609.08572) | [AgentGrad: Intervention-guided Prompt Optimization for Multi-Agent Systems](2026-11-09-2609.08572-agentgrad-intervention-guided-prompt-optimization-for-multi.md) | cs.AI | [笔记](2026-11-09-2609.08572-agentgrad-intervention-guided-prompt-optimization-for-multi.md) |
+| [2611.09491](https://arxiv.org/abs/2611.09491) | [An Effective Spoken Language Understanding Approach Leveraging Query-Adaptive Intent Detection](2026-11-09-2611.09491-an-effective-spoken-language-understanding-approach-le.md) | cs.CL | [笔记](2026-11-09-2611.09491-an-effective-spoken-language-understanding-approach-le.md) |
+| [2605.06919](https://arxiv.org/abs/2605.06919) | [Can LLMs Take Retrieved Information with a Grain of Salt?](2026-11-09-2605.06919-can-llms-take-retrieved-information-with-a-grain-of-salt.md) | cs.CL | [笔记](2026-11-09-2605.06919-can-llms-take-retrieved-information-with-a-grain-of-salt.md) |
+| [2606.06840](https://arxiv.org/abs/2606.06840) | [Characterize Then Distill: Mechanistic Reasoning in Large Output Spaces](2026-11-09-2606.06840-characterize-then-distill-mechanistic-reasoning-in-large.md) | cs.CL, cs.AI, cs.LG | [笔记](2026-11-09-2606.06840-characterize-then-distill-mechanistic-reasoning-in-large.md) |
+| [2610.11316](https://arxiv.org/abs/2610.11316) | [MetaEncoder: Exploring the Limit of Bi-Encoders for Multimodal System One Decision Making with Natural Language Interface](2026-11-09-2610.11316-metaencoder-exploring-the-limit-of-bi-encoders-for-multimod.md) | cs.CL, cs.AI | [笔记](2026-11-09-2610.11316-metaencoder-exploring-the-limit-of-bi-encoders-for-multimod.md) |
+
+*最后更新: 2026-11-09*
