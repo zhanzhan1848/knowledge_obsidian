@@ -2,6 +2,23 @@
 
 ## 2026-11
 
+### 2026-11-09
+> 📌 **arXiv 周一恢复发布**，新批次 **7 条**（`list/cs.GR/recent` 按日分组确认），渲染相关 **4 篇**全部收录。**ACM DL 仍被 Cloudflare 拦截**（403）；SIGGRAPH Asia 2026 论文集本轮**无新增**（Ke-Sen Changelog 最新仍为 09-17）。本轮 **4 篇新笔记**。
+
+**稀疏网格 / GPU 数据结构**
+- [[2026-11-09_NanoVDB-Dynamic-GPU-Sparse-Grids-Voxel-Sequential]] - **NanoVDB 解除「拓扑只读」限制**：稀疏网格一旦建成体素集不可变 → 无法用于模拟/动态几何；本文给出 **bit-parallel 动态拓扑算子**（膨胀/剪枝/合并/粗化/细化）+ **体素序贯访问 (VBM)**（VDB 首次提供**逆映射**：序贯索引→树位置，**≤1.5 bit/活跃体素**，与网格大小无关）；**叶级 27-bit 影响掩码**（`Mask<3>` 按位 OR/AND）算邻居；**叶主序→抽头主序** shared memory 转置消除 atomic 争用；CUB 前缀和→**单块分配**；**簿记仅 4 KB + 16 MB/tile，占据率 >0.01% 即被数据开销反超**。**最易迁移技巧：窄支撑模板触及叶数 << 抽头数**（WENO5 **19 抽头 ≤4 叶**；3×3×3 卷积 **27 抽头 ≤7 叶**）→ warp 同步无分歧算全部抽头。网格体素化 **≈10×**（hairball 280 万三角形 @0.003：2.30 s vs OpenVDB 23.87 s；@0.001 OpenVDB 显存耗尽）；实景捕获 **2.8–11.5×**（@1.5 cm 59.1 vs 678.6 ms/f；@5 mm 仅本文可行）；WENO5 **1.98×**（≈20 Gvoxel-upd/s）。**诚实披露 4 条退化 regime**：Open3D 在 20–5 mm **11–46× 领先**；冷 ESDF 比 nvblox 慢 1.0–2.0×；密集粗体素内存反而偏向 nvblox 1.6×；**VBM 对 ESDF sweep 仅 3–6%**（膨胀使叶密集占据，价值在低占据率模板计算）。**TOG (SIGGRAPH Asia) / DOI 10.1145/3842564 / 开源** ⭐⭐⭐⭐⭐
+
+**实时渲染 / 蒙皮 / 碰撞**
+- [[2026-11-09_Self-Penetration-Repair-Skinned-Characters]] - **体型变了姿态就穿模**：免训练实时后处理，**不改动作生成器**；**Layer 1 姿态层**（顶点级盒约束凸 QP，纯 C 单核）+ **Layer 2 无状态接触变形器**（作用在宿主最终蒙皮网格）；残差是**加性指数坐标增量 $d+x$**（非旋转复合）→ 线性化简单；**碰撞接触软代价 + 部件盒硬约束**；**脊柱/颈节点残差权重 $\nu=8$**（其他 1–4）= 「躯干不许乱动」的结构表达；**源穿模零放行 $\sigma_{\rm src}=0$** 切断「复制动作自带穿模→给更多空间→逐帧累积」的链；坐标下降 + 每坐标**至多 8 次保护性 Newton** 括住标量最小值、增量更新梯度；**诚实标注「固定 sweep ≠ 收敛保证」**。320 未见片段×3 体型：手—躯干 >20 mm 帧比例 **15.53% → 0.00%**，最大深度 **9.3 mm**，**1.11+1.18 = 2.29 ms**（亚帧），关节速度高频比 **1.008** ⭐⭐⭐⭐
+
+**实时模拟 / 管线编排**
+- [[2026-11-09_CrowdDirector-Natural-Language-Crowd-Control]] - **语言用于意图变更，计算用于持续运行**：手写规则僵化、每 tick 问 LLM 则延迟成本非法动作全占；**LLM 只在指令新增/修改时调用**（Claude Haiku → 结构化指令）→ **五态场景验证器**（executable/partially/unsupported/ambiguous/invalid reference）→ 存为 **directive** 持续生效 → 三层关系型 **GNN**（64 维，层数=信息最大路径长度，支持 `event→operation→target→agent`）在每个 tick 选动作 → Unity 执行。**「结构化指令是对用户意图的主张，不是修改场景的许可」**；**指针网络式候选打分**（候选≤64，长度可变）；**策略中无文本编码器**。**验证器必须独立于生成器**：与人类判断一致性 **0.83 vs LLM 自评 0.47**；行为基准 Q2 Jaccard **0.595**（手写规则 0.300，每 tick LLM 0.683）、**禁止率 0.211 ≈ 每 tick LLM 的 0.217**；**延迟 3,880→20.5 ms（189×）、会话成本 $2.30→$0.03（77×）**（6 次调用 vs 606 次）。**消融揭示能力分工**：去 directive-target 编码 → **Q3 0.611→0.278**（选对**响应**）；去消息传递 → **禁止率 0.211→0.344**（不做**不该做的事**）⭐⭐⭐
+
+**网格分割 / 几何纹理**
+- [[2026-11-09_Geometric-Texture-Segmentation-Meshes]] - **中层几何纹理**（砖缝/经纬/铆钉阵列）介于高层语义部件与低层像素之间，现有 3D 分割抓不住、VLM 认不出；**核心表征决策：用曲率渲染作特征载体**（沿区域平均法向 $\mathbf{n}_a$ 放正交相机渲染局部曲率图 $J_a$ → DINOv2 patch token）→ 导向**内在表面变化**而非颜色/光照/语义；合成数据路径 **Chord + DTD（350 张位移贴图）→ 800 训练模型**，省掉真实扫描采集成本；**按可见次数归一化的 3D 投票** $V_{r,f}=\frac{V^{\mathrm{raw}}_{r,f}}{\max(1,|\mathcal{V}_{r,f}|)}$ + 角度权重 $\cos(\theta_{a,f})$ 消偏；LoRA 微调 SAM3 → **GTSAM**。消融（PQ50）：零样本 SAM3 **29.15** / 去聚类 **32.79** / 去过滤 **48.55** / **完整 59.32** → **零样本腰斩，微调必需**。**Pacific Graphics 2026** ⭐⭐⭐
+
+- [[2026-11-09-daily-search-report]] - 📋 每日论文搜索报告 2026-11-09
+
 ### 2026-11-06
 > 📌 严格 24h 窗口内 cs.GR 新批次 **13 条**（11-05 提交 9 条 + 11-04 提交 4 条），渲染相关 **5 篇**全部收录。**ACM DL 仍被 Cloudflare 拦截**（403）；SIGGRAPH Asia 2026（12/1-4 吉隆坡）论文尚未上载完毕，本轮以 arXiv 上的 TOG 版本覆盖。本轮 **5 篇新笔记**。
 
@@ -233,6 +250,8 @@
 - [[2026-06-23-2606.22481-DOT3D-Lighting-Consistent-Transfer]]
 
 ### Ray Tracing & Real-time Rendering
+- [[2026-11-09_NanoVDB-Dynamic-GPU-Sparse-Grids-Voxel-Sequential]]
+- [[2026-11-09_Self-Penetration-Repair-Skinned-Characters]]
 - [[2026-05-05-Power-Foam-Unifying-Real-Time-Differentiable-Ray-Tracing-and-Rasterization]]
 - [[2026-05-05-Rethinking-Collision-Detection-on-GPU-Ray-Tracing-Architecture]]
 - [[2026-04-04-Ref-DGS-2603.07664]]
@@ -250,11 +269,16 @@
 - [[2026-04-04-E2EGS-2603.14684]]
 
 ### GPU Optimization
+- [[2026-11-09_NanoVDB-Dynamic-GPU-Sparse-Grids-Voxel-Sequential]]
 - [[2026-08-01-2607.26506-global-pass-barriers-rhi]]
 - [[2026-03-17-Texture-Lookup-Bezier-GPU]]
 
 ### Geometry & Rasterization
+- [[2026-11-09_Geometric-Texture-Segmentation-Meshes]]
 - [[2026-06-23-2606.22880-DJM-Displacement-Mapping]]
+
+### Simulation & Scene Orchestration
+- [[2026-11-09_CrowdDirector-Natural-Language-Crowd-Control]]
 
 ### Fluid Simulation
 - [[2026-03-17-GPU-Fluid-Granular-Solver]]
