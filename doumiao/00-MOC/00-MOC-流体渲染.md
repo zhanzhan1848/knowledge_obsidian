@@ -9,7 +9,7 @@ domain: fluid-rendering
 # 🌊 豆苗 MOC — 计算机图形学流体渲染
 
 > 领域：**体积渲染 / 粒子渲染 / 表面渲染 / 烟雾火焰**
-> 更新：2026-11-08
+> 更新：2026-11-11
 
 ## 🎯 三条技术路线总览
 
@@ -46,6 +46,11 @@ domain: fluid-rendering
 
 ### 💧 水 / 液体
 
+- [[2026-11-11-Mishra-Pal-Singular-Jet-Drop-Impact-Crater-Collapse]] — ⭐⭐ **11-11 期最贴近特效**：撞击凹坑塌陷**绕过夹断奇点** → **奇异射流**；AMR 轴对称 DNS（Basilisk）：**夹带气泡 ~210 μm**、**射流 61.7 m/s**、**侧壁-底部临界夹角 109.2°**（射流区判据）；**相图 We=45.5·Fr^0.237 / 53.5·Fr^0.251**（卷吸区上下界）；**射流速度量级可作飞溅特效物理锚点**
+- [[2026-11-11-Lewin-Jones-Harris-Cimpeanu-Bouncing-Merging-Drop-Bath-Impacts]] — ⭐⭐ **11-11 期特效判据**：液滴撞液池**弹开 vs 合并**由被困气膜是否破裂决定；**带显著曲率的薄膜润滑 + 有限元 + 范德华分离压 + 气体动理学(平均自由程)** → **仅用独立测量的材料参数**首次与实验**定量吻合临界撞击速度**；浅池/薄膜出现 **bounce-merge-bounce-merge 转变**
+- [[2026-11-11-Qin-Sun-Tian-HaiRuo-Ocean-Eddy-Forecasting]] — ⭐⭐ **11-11 期海洋方向**：**HaiRuo-1B (10.5亿参数开放权重, 24年卫星测高无标签预训练) + XuanJi 拉格朗日物体解码器**（随动极坐标系 + 3轮前瞻）；**15天涡心误差 25.2 vs 30.6 km (−18%)**，预注册全球评估**全端点优于 14 方法**，穿越 ENSO 两阶段保持；固定 tracker 下**物体轨迹使管线误差 −77~78%**；**代码开源**
+- [[2026-11-11-Modesti-Ceci-Variable-Property-Water-Turbulent-Heat-Transfer]] — 液态水**导热率不与粘性成正比** → Pr 沿程变化；把空气的"变物性→常物性"积分变换**推广到液体**（涡粘性/涡扩散率修正在 DNS 上标定）→ **摩擦与换热预测误差 <2%**，**Spalart–Allmaras 摩擦误差减半**；常物性假设下摩擦偏差 **−39%~+32%**、换热最高 **2.3×**
+- [[2026-11-11-Bonart-Amortized-Transport-Map-Wetting-Inverse-Problem]] — ⭐ **11-11 期方法论**：**三角传输映射似然**一次训练、全 cell 复用 → 分层贝叶斯的后验评估**省几百倍**前向求解（200 后验标定**省 ~5 数量级**）；应用于**润湿反演**（薄液膜稳定孔洞 → 接触角 + 毛细长度，Young–Laplace）；**原位测量润湿性质不扰动液体** → 直接服务**液体着色器材质参数标定**
 - [[2026-11-05-Nayak-Mohammed-Aidun-Monocular-3D-Bubble-Reconstruction]] — 单张阴影图 → 3D 气泡位置 + 物理等效直径：**DNS + 校验过的 MC 光追（~30× CPU 速度，强度误差<3%）+ 焦点条件化多任务学习**，~97.6% 归一化深度精度；**多相流渲染前向模型**可复用
 - [[2026-11-05-Zhang-Cai-Huang-Ren-GauSmoke-Hybrid-Physics-Optical-Gaussian-Splatting]] — 烟雾体积密度场（见 🔥 烟雾区）
 - [[2026-10-31-Masuda-Drop-Decomposition-Cylindrical-Curvature]] — ⭐ **10-31 期最贴近渲染**：几何曲率 κ_F=d/R_i **改写液滴破碎路径**（平面近对称二分断裂 → 强曲率丝状介导碎裂+多卫星滴）；**曲面容器内液体不可套用平面参数**；plicRDF+isoAdvector+AMR；网格精度下限（直径 ≥8 单元）
@@ -68,6 +73,12 @@ domain: fluid-rendering
 
 ### ⚛️ 粒子系统 / 降维
 
+- [[2026-11-11-Shramko-Govindarajan-Spaghetti-Splatting]] — ⭐⭐⭐⭐ **11-11 期最贴近粒子渲染**：把"**低频核卷积 Dirac 质点**"配方从点/三角形推广到**曲线基元**——折线近似 + **逐段体积渲染**（接头**不重复计数**）+ **逐段线性化相机投影**（顺带支持 **Beta 核**）；**3DGS 的严格超集**（点=零长曲线），**原生抗锯齿**，优于线状几何专用方法；**产出长连通细丝可直接接入物理模拟**
+- [[2026-11-11-Platenburg-Koupai-Cinnella-TurtLES-Turbulent-Neural-PDE-Surrogate-Benchmark]] — ⭐⭐⭐ **11-11 期基准必读**：**14 TB** 三维湍流圆柱尾迹基准（隐式 LES，剪切层转捩区，**400 轨迹 × 400 步**，每帧 **3–11 M 点**，稠密不规则网格，变化几何/Re/攻角）；**暴露神经算子自回归 rollout 三大失效模式：时间不稳定 / 小尺度能量丢失 / 大不规则域学习困难** → 直接对应渲染中"烟流逐渐糊掉/闪烁"的症状
+- [[2026-11-11-Barman-Ray-Hankel-Neural-Operator]] — ⭐⭐⭐ **11-11 期理论突破**：证明区间上线性常系数边值问题的解算子 = **Toeplitz(有理核) + 有限秩 Hankel(携带边界信息)**（Kronecker–Nehari–A–A–K）；**FNO 是 HNO 的特例**；**Darcy 误差从 85² 到 421² 网格几乎不变，FNO 增长 8×**；ODE 上把更优基线误差降 **2.1–5.2×**
+- [[2026-11-11-Sakib-Mychkovsky-Babaee-Low-Rank-Tensor-Manifolds-Turbulence]] — ⭐⭐ **11-11 期重建路线**：**MANTRA** = 连续张量积基 × **低秩 Tucker 流形** + 黎曼优化 + 自适应选秩；**不需网格化观测、不需控制方程**；采样密度可**低于底层网格数个量级**，抗 **20% 峰值速度高斯噪声**；实验 PIV 上**揭示散乱测量本身看不见的时变结构**
+- [[2026-11-11-Rezaei-Bastanfard-3D-Cellular-Automata-XR]] — **3D 元胞自动机进 XR** 的**五层架构**（体素与规则管理 / 并行计算 / 互操作中间件 / 可视化 / XR 交互）+ 硬件感知执行 + **异步模拟-渲染** + 自适应保真度
+- [[2026-11-11-Sun-Radovanovic-CrowdDirector-Natural-Language-Crowd-Control]] — **LLM 只在指令变化时调用**（非逐帧）→ 结构化指令 + **场景验证器**（比 LLM 自身判断更贴近人类）+ **GNN 每 tick 选动作/目标**；Unity 负责移动/动画；**避免重复 LLM 调用**的实用中间路线
 - [[2026-11-05-Zhang-Cen-Zhu-Chen-Ren-DIQ-MPM-Fluid-Solid-Coupling]] — **DIQ 双界面求积**：免重叠网格的强流固耦合，Schur 补统一稀疏纯压力 SPD 系统，**消除数值断裂**（TVCG 2026，南开）
 - [[2026-10-27-Boettcher-Ridder-Bender-Total-Deformation-MPM-Perfectly-Elastic-Solids]] — 从粒子位置+固定参考网格**直接算形变**（不用速度梯度累积）+ **当前网格算弹性力** → **无数值断裂 + 兼容标准网格碰撞** + 零能量模式抑制
 - [[2026-10-29-Feng-Luan-Mastering-Multi-State-Dynamics-Continuum-Damage-Viscoplastic-MPM]] — 工具中心化**局部化相场损伤求解**（隐式 Ginzburg-Landau + 几何多重网格 V-cycle 预条件）；**双向工具耦合把材料抗力直接暴露给 PPO**；统一逐粒子本构层覆盖软固体/脆性/颗粒/黏塑性
@@ -75,6 +86,11 @@ domain: fluid-rendering
 
 ### ⚙️ 求解器 / 数值格式（渲染上游）
 
+- [[2026-11-11-Shu-Huang-Chen-Same-Physics-Different-Gradients]] — ⭐⭐⭐⭐ **11-11 期方法论必读**（35页/9表）：**"referent × realization" 双轴分类法**（导数指向：有限计算/收敛方程/连续动力学 × 反传组织：自动微分/方程级伴随/自定义伴随）；**证明"精确性↔内存"权衡是实现派生物而非物理约束**；第二条正交轴**接触非光滑**；**4 种"有用梯度被丢失"机制**实测 → **零阶方法在梯度失效区间可优于模拟器梯度**；附**报告清单 + 已发布诊断工具**
+- [[2026-11-11-Liu-Hydrograd-Shallow-Water-Differentiable-Model]] — ⭐⭐⭐ **11-11 期可微模拟典范**：**按问题类型定制梯度**——稳态用**牛顿法 + 隐函数定理（图着色精确稀疏 Jacobian）**，梯度成本 = 1 次线性解；非稳态用反向模式+checkpointing（≈2 次前向）；梯度与有限差分一致至 **1e-8**；**稳态闭合学习快 96×** 且损失更低；**可辨识性 SVD 分析**：总阻力敏感度比分布高 **70–160×** → 只有全分区布站才能恢复全部 5 个糙率
+- [[2026-11-11-Stewart-Menke-Egya-Conservative-Darcy-Brinkman-Stokes-DBS2]] — **守恒形式 + 中心差分自动保留第二 Brinkman 项 (SBT)**，无需单独离散化 → **DBS2 渗透率误差 1.5–3.8%**（DNS 级），而 **DBS1 系统性高估 14.1–37.9%**，且**保留 DBS1 计算效率**；GeoChemFoam (OpenFOAM) 开源；**教训：把守恒形式做对，很多项会"免费"带上**
+- [[2026-11-11-Zhang-Su-Li-Xu-CLUGKS-Hypersonic-Receptivity]] — **复线性化 UGKS**：特征值问题 → **稳态复值椭圆问题**（伪时间推进 + LU-SGS），**无需混合耦合**地内在捕捉壁面滑移/温度跳变/非傅里叶热流；40 km 处 UGKS 与 NS 壁面响应周期相位吻合，**50 km 处出现"动理学温度前驱"** → 渲染价值：**高空稀薄火焰的黑体色空间分布**
+- [[2026-11-11-Flachberger-Einkemmer-Variational-Principles-Dissipative-Continua]] — **最小-最大对偶**：耗散变分原理两族（最小：Helmholtz/Kirchhoff/Prigogine；最大：Ziegler/Hackl/Fischer）的区别**由 regime 决定**（闭系统冻结态弛豫 vs 开系统受驱定态），**Rayleighian 泛函在两者下均凸且均最小化**；澄清**惯性争议**（变分须冻结驱动力）；NS 需**变换到物质坐标**（对流项消失）
 - [[2026-11-08-HGKS-Compact-ALE-Gas-Kinetic-Unstructured-Mesh]] — ⭐⭐⭐ **11-08 期新增**：三维非结构网格上的**紧凑高阶气体动理学格式（HGKS）**；**降内存重构**——单元及邻居**平均梯度**最小二乘替代矩阵求逆（**3×3 系数矩阵 + 4 次最小二乘**），正对 ALE 移动网格每步重算几何的开销；**GENO + 梯度压缩**抑制强间断振荡；**CUDA + MPI 多 GPU** 全显式（cell-level 并行）→ 离线火/爆炸渲染的扩展范式；算例含**直升机旋翼**；⚠️ 全显式 CFL 严、无渲染实验
 - [[2026-11-05-Zhang-Ren-FastVEM-Fluid-Simulation]] — ⭐⭐⭐⭐⭐ **SIG/TOG 2026 Article 65**：**二阶 VEM 压力离散 + 保凸性 BSP cut-cell + Galerkin 几何多重网格**；压力投影 **最高 100× 加速**；128³ 上复杂/超薄边界烟雾模拟 **< 1 min/frame**；稳健处理窄缝/无人机扫描几何/**相对厚度 10⁻⁵ 超薄壳体**；**代码开源**（南开）
 - [[2026-10-25-KPM-FR-High-Order-Flux-Reconstruction]] — SIGGRAPH 2026 矩空间 GKS + 通量重构（8G 解点/s，显存降 5×，18 亿解点单机）
@@ -103,6 +119,8 @@ domain: fluid-rendering
 
 ### 🌊 体积渲染 / 神经表示
 
+- [[2026-11-11-Leonard-Westermann-Real-Time-Volumetric-Light-Transport-Inference]] — ⭐⭐⭐⭐ **11-11 期最贴近渲染**：**跳过路径追踪**，从"一次主光线 + 环境采样"的廉价特征**直接回归像素辐亮度**（attention I2I 网络）；**相机推近/拉远成本稳定**、对体积密度依赖低；挑战性体积云场景**实时**；⚠️ 需离线训练数据、换介质类型需重训
+- [[2026-11-11-Sifakis-Williams-Horvath-Dynamic-GPU-Voxel-Grids-NanoVDB]] — ⭐⭐⭐⭐ **11-11 期基础设施级突破**（NVIDIA）：给 NanoVDB 加**动态 GPU 原生拓扑**（膨胀/合并/剪枝/跨分辨率粗化细化，**位并行**，**数亿体素数毫秒重建**）+ **voxel-sequential 流式访问**（免树遍历 → stencil 逼近**峰值显存带宽**）→ **移除只读约束**，稀疏网格可直接跑**流体模拟与动态几何**
 - [[2026-10-16-ResStreamGS-Volumetric-Video-Streaming-3DGS]] — 体积视频流式传输
 - [[2026-10-15-CAGS-Volumetric-Video-Streaming-3DGS]] — 压缩感知高斯流式传输
 - `2604.12217` [[2026-04-21-VVGT-Volumetric-Visual-Grounded-Transformer]] — 视觉体积接地 Transformer
@@ -147,6 +165,7 @@ domain: fluid-rendering
 
 ## 📊 每日报告
 
+- [[2026-11-11-Daily-Research-Summary]] — ⭐⭐⭐⭐⭐ **11-11 期是本周期最丰盛的一天（23 篇全部新增）**：**打破 11-06~11-08 "cs.GR 连续三轮零流体新论文"的空窗**；三大主线——① **渲染直击**：NanoVDB **动态 GPU 拓扑 + voxel-sequential**（稀疏网格解锁流体模拟）、**跳过路径追踪的实时光照传输推理**、**Spaghetti Splatting**（3DGS 严格超集 + 细丝直送物理模拟）；② **方法论转向**：**可微模拟双轴分类法**（35 页综述）、**Hydrograd 定制梯度**（稳态 1 次线性解）、**守恒形式白送第二 Brinkman 项**；③ **物理约束下沉**：**奇异射流**（射流速度/临界夹角/We-Fr 相图）、**弹跳-合并临界速度定量吻合**、**Q-R 图三区域物理分区**、**弹性锋生**（无涡层级也能出宽带谱）；**海洋方向首次有实质突破**（HaiRuo，代码开源，15 天涡心误差 −18%）
 - [[2026-11-08-Daily-Research-Summary]] — ⚠️ **cs.GR 连续三轮零流体新论文**（11-06 批次 11 篇逐条核对）；**新增 5 篇**（EnKF 温度→速度重建 ⭐ / HGKS 紧凑 ALE 气体动理学 ⭐ / GPU-Native 体积视频 / FIB-SEM 毛细浸润 / FlowRig）；**重大修正：上轮"SIGGRAPH Asia 2026 论文未公布"结论有误**——清单实可查，**24 篇流体论文已 100% 覆盖入库**；SIGGRAPH 2026 另有独立分类 **"Fluid Reconstruction & Optimization"**；**发现 `dedup.py` 递归扫描 bug**（只扫顶层，漏 `2026/11/` 子目录，导致去重失效、本轮误判 11 篇新增实为 5 篇）
 - [[2026-11-07-Daily-Research-Summary]] — ⚠️ **近 48h cs.GR 零流体新论文**（11-06 批次 11 篇 + 11-05 批次 9 篇**逐条核对**）；跨全 arXiv 扫描仅 **1 篇新增**（SIM-PINN，方法论价值最高）；**SIGGRAPH Asia 2026（12/01–04 吉隆坡）论文清单尚未公布**，距开幕约 3.5 周 → 下轮重点盯会议列表页
 - [[2026-11-05-daily-report-2026-11-05]] — ⭐⭐⭐⭐⭐ **SIGGRAPH 2026 流体板块全景**（5 篇重磅 + 7 篇补充）：3DGS 流体重建双路线（GauSmoke 光学-物理 / LagrangianSplats 构造性无散）+ FastVEM 边界贴合 100× + DiffSurFlow 流图代理梯度 + KPM-FR 动理学高阶格式 + 涡核时空变分框架；24h 窗口 arXiv cs.GR **无流体新论文**，转向会议论文深挖
